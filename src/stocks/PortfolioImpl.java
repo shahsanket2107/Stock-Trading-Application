@@ -1,31 +1,42 @@
 package stocks;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class PortfolioImpl implements Portfolio {
 
-  Map<Stocks, Integer> stocks = new HashMap<>();
   final String date;
   final String name;
+  final Map<Stocks, Integer> stocks;
 
-  public PortfolioImpl(String date, String name) {
+  public PortfolioImpl(String date, String name, Map<Stocks, Integer> stocks) {
     this.date = date;
     this.name = name;
+    this.stocks = stocks;
   }
 
   @Override
-  public void getStockComposition() {
-
+  public Map<Stocks, Integer> getStockComposition() {
+    return this.stocks;
   }
 
   @Override
-  public void getValuationAtDate() {
-
+  public double getValuationAtDate(String date) {
+    Map<Stocks, Integer> stock = this.stocks;
+    List<Double> temp = new ArrayList<>();
+    stock.forEach((k, v) -> {
+      temp.add(k.getValuationFromDate(v, date));
+    });
+    double ans = 0;
+    for (double i : temp) {
+      ans += i;
+    }
+    return ans;
   }
 
   @Override
-  public void showInvestmentAmount() {
-
+  public double showInvestmentAmount() {
+    return getValuationAtDate(this.date);
   }
 }

@@ -1,10 +1,12 @@
 package stocks;
 
+import java.util.Map;
+
 public interface Portfolio {
 
-  void getStockComposition();
+  Map<Stocks, Integer> getStockComposition();
 
-  void getValuationAtDate();
+  double getValuationAtDate(String date);
 
-  void showInvestmentAmount();
+  double showInvestmentAmount();
 }

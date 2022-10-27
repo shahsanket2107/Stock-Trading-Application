@@ -1,8 +1,11 @@
 package stocks;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public interface User {
 
-  void createPortfolio(String ticker);
+  ArrayList<Portfolio> createPortfolio(Map<Stocks, Integer> stocks, String name);
 
   void getValuationAtDate(String date);
 
