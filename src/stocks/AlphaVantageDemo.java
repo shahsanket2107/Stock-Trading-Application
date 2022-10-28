@@ -1,60 +1,79 @@
 package stocks;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 public class AlphaVantageDemo {
   public static void main(String[] args) {
-    //the API key needed to use this web service.
-    //Please get your own free API key here: https://www.alphavantage.co/
-    //Please look at documentation here: https://www.alphavantage.co/documentation/
-    String apiKey = "FHA1IC5A17Q0SPLG";
-    String stockSymbol = "AAPL"; //ticker symbol
-    URL url = null;
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter the ticker: ");
+    String stockSymbol = sc.nextLine();
+    System.out.println("Enter the date: ");
+    String date = sc.nextLine();
+    if (isValidFormat("yyyy-mm-dd", date)) {
+      perform(stockSymbol, date);
+    } else {
+      System.out.println("Date is not in proper format!!");
+    }
+  }
 
+  public static boolean isValidFormat(String format, String value) {
+    Date date = null;
     try {
-      /*
-      create the URL. This is the query to the web service. The query string
-      includes the type of query (DAILY stock prices), stock symbol to be
-      looked up, the API key and the format of the returned
-      data (comma-separated values:csv). This service also supports JSON
-      which you are welcome to use.
-       */
+      SimpleDateFormat sdf = new SimpleDateFormat(format);
+      date = sdf.parse(value);
+      if (!value.equals(sdf.format(date))) {
+        date = null;
+      }
+    } catch (ParseException ex) {
+      ex.printStackTrace();
+    }
+    return date != null;
+  }
+
+  public static void perform(String stockSymbol, String date) {
+    String apiKey = "FHA1IC5A17Q0SPLG";
+    URL url = null;
+    try {
       url = new URL("https://www.alphavantage"
               + ".co/query?function=TIME_SERIES_DAILY"
               + "&outputsize=full"
               + "&symbol"
               + "=" + stockSymbol + "&apikey=" + apiKey + "&datatype=csv");
-    } catch (MalformedURLException e) {
-      throw new RuntimeException("the alphavantage API has either changed or "
-              + "no longer works");
+    } catch (Exception e) {
+      System.out.println("Please Enter a valid ticker symbol!!");
     }
 
     InputStream in = null;
     StringBuilder output = new StringBuilder();
 
     try {
-      /*
-      Execute this query. This returns an InputStream object.
-      In the csv format, it returns several lines, each line being separated
-      by commas. Each line contains the date, price at opening time, highest
-      price for that date, lowest price for that date, price at closing time
-      and the volume of trade (no. of shares bought/sold) on that date.
-
-      This is printed below.
-       */
       in = url.openStream();
       int b;
 
       while ((b = in.read()) != -1) {
         output.append((char) b);
       }
-    } catch (IOException e) {
-      throw new IllegalArgumentException("No price data found for " + stockSymbol);
+      int index = output.indexOf(date);
+      int endIndex = output.indexOf("\n", index);
+      //System.out.println("Return value: ");
+      //System.out.println(index + " " + endIndex);
+      //System.out.println("Output is:");
+      //System.out.println(output);
+      String temp = output.substring(index, endIndex);
+      //System.out.println(temp);
+      String[] res = temp.split(",", 0);
+      //for (String myStr : res) {
+      //  System.out.println(myStr);
+      //}
+      String closeValue = res[4];
+      System.out.println("Closing Value for " + stockSymbol + " on " + date + " is:" + closeValue);
+    } catch (Exception e) {
+      System.out.println("Please enter a valid ticker symbol!!");
     }
-    System.out.println("Return value: ");
-    System.out.println(output.toString());
   }
 }
