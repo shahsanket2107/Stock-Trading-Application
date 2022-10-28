@@ -1,11 +1,12 @@
 package stocks;
 
+import java.io.InputStreamReader;
+
 public class Main {
 
   public static void main(String[] args) {
     User user_model = new UserImpl("Deadpool");
-    UserController controller = new UserControllerImpl(user_model, System.in);
-    controller.go();
+    new UserControllerImpl(new InputStreamReader(System.in), System.out,user_model).go();
   }
 
 }
