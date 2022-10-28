@@ -2,8 +2,11 @@
 
 package stocks;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.spec.ECField;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +35,8 @@ public class UserControllerImpl implements UserController {
     this.out = out;
   }
 
-  public void createPortfolio(String ticker, int qty, String portfolioName) {
+  public void createPortfolio(String portfolioName) {
+
     String fileName = "portfolio.xml";
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
@@ -61,7 +65,30 @@ public class UserControllerImpl implements UserController {
 
       // carname element
       //perform(doc, portfolio, "AAPL", "20");
-      perform(doc, portfolio, ticker, String.valueOf(qty));
+      int flag = 0;
+      while (true) {
+        System.out.println("Enter 1 to add stocks to your portfolio");
+        System.out.println("Enter q to exit");
+        if (flag == 1) {
+          break;
+        }
+        Scanner scan = new Scanner(this.in);
+        switch (scan.next()) {
+          case "1" -> {
+            System.out.println("Enter ticker of stock you want to add to the portfolio");
+            String ticker = scan.next();
+            System.out.println("Enter quantity of stocks");
+            int qty = scan.nextInt();
+            if (ifStocksExist(ticker)) {
+              perform(doc, portfolio, ticker, String.valueOf(qty));
+            } else {
+              System.out.println("This ticker does not exist!! Please enter a valid ticker");
+            }
+
+          }
+          case "q" -> flag = 1;
+        }
+      }
 
       // write the content into xml file
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -121,8 +148,8 @@ public class UserControllerImpl implements UserController {
           + "&outputsize=full"
           + "&symbol"
           + "=" + stockSymbol + "&apikey=" + apiKey + "&datatype=csv");
-    } catch (Exception e) {
-      System.out.println("Please Enter a valid ticker symbol!!");
+    } catch (MalformedURLException e) {
+      System.out.println(e.getMessage());
     }
 
     InputStream in = null;
@@ -164,27 +191,9 @@ public class UserControllerImpl implements UserController {
       switch (scan.next()) {
         case "1":
           Scanner sc = new Scanner(this.in);
-          int flag = 0;
           System.out.println("Enter your portfolio name");
           String portfolioName = sc.next();
-          while (true) {
-            System.out.println("Enter 1 to add stocks to your portfolio");
-            System.out.println("Enter q to exit");
-            if (flag == 1) {
-              break;
-            }
-            switch (scan.next()) {
-              case "1" -> {
-                System.out.println("Enter ticker of stock you want to add to the portfolio");
-                String ticker = sc.next();
-                System.out.println("Enter quantity of stocks");
-                int qty = sc.nextInt();
-                createPortfolio(ticker, qty, portfolioName);
-
-              }
-              case "q" -> flag = 1;
-            }
-          }
+          createPortfolio(portfolioName);
           break;
         case "3":
           Scanner s = new Scanner(System.in);
@@ -203,5 +212,29 @@ public class UserControllerImpl implements UserController {
           return;
       }
     }
+  }
+
+  private boolean ifStocksExist(String ticker) {
+    String apiKey = "FHA1IC5A17Q0SPLG";
+    URL url = null;
+    try {
+      url = new URL("https://www.alphavantage"
+          + ".co/query?function=TIME_SERIES_DAILY"
+          + "&outputsize=full"
+          + "&symbol"
+          + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
+    } catch (MalformedURLException e) {
+      System.out.println(e.getMessage());
+    }
+    InputStream in = null;
+    char b = '0';
+    try {
+      assert url != null;
+      in = url.openStream();
+      b = (char) in.read();
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+    }
+    return b != '{';
   }
 }
