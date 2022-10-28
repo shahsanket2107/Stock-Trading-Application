@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<portfolio>
+    <portfolio name="retirement_portfolio">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">20</stocks>
+        <stocks parameter="ticker">TSLA</stocks>
+        <stocks parameter="quantity">10</stocks>
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">15</stocks>
+    </portfolio>
+    <portfolio name="college_portfolio">
+        <stocks parameter="ticker">TSLA</stocks>
+        <stocks parameter="quantity">17</stocks>
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">45</stocks>
+    </portfolio>
+</portfolio>
