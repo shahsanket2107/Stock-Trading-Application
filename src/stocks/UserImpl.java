@@ -183,7 +183,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getTotalValuation(String date) {
+  public StringBuilder getTotalValuation(String date, String pName) {
     String temp_date = date.replaceAll("[\\s\\-()]", "");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDateTime now = LocalDateTime.now();
@@ -198,13 +198,15 @@ public class UserImpl implements User {
     Portfolio p;
     for (int i = 0; i < this.portfolio.size(); i++) {
       p = this.portfolio.get(i);
-      temp.append("Portfolio_Name: " + p.getName());
-      temp.append("\n");
-      temp.append("Portfolio_Valuation at " + date + " : " + p.getValuationAtDate(date));
-      temp.append("\n\n");
+      if (p.getName().equals(pName)) {
+        temp.append("Portfolio_Name: " + p.getName());
+        temp.append("\n");
+        temp.append("Portfolio_Valuation at " + date + " : " + p.getValuationAtDate(date));
+        temp.append("\n\n");
+      }
     }
     if (temp.toString().equals("")) {
-      temp.append("Please add a portfolio first!!");
+      temp.append("Given portfolio doesn't exist!!");
     }
     return temp;
   }

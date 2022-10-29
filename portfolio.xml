@@ -67,4 +67,8 @@
         <stocks parameter="ticker">GOOGL</stocks>
         <stocks parameter="quantity">2</stocks>
     </portfolio>
+    <portfolio name="s3">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">12</stocks>
+    </portfolio>
 </portfolios>

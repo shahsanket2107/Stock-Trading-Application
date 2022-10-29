@@ -16,7 +16,7 @@ public interface User {
 
   boolean isValidFormat(String value);
 
-  StringBuilder getTotalValuation(String date);
+  StringBuilder getTotalValuation(String date,String pName);
 
   boolean ifStocksExist(String ticker);
 }

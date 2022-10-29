@@ -64,10 +64,10 @@ public class UserControllerImpl implements UserController {
           view.viewComposition(composition);
           break;
         case "3":
-
+          String pName = view.getPortfolioName();
           String date = view.getDate();
           if (user.isValidFormat(date)) {
-            StringBuilder result = user.getTotalValuation(date);
+            StringBuilder result = user.getTotalValuation(date, pName);
             view.getPortfolioValue(result);
           } else {
             view.invalidDate();
