@@ -1,6 +1,5 @@
 package stocks;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 public interface User {
@@ -17,7 +16,7 @@ public interface User {
 
   boolean isValidFormat(String value);
 
-  void getClosingValue(String stockSymbol, String date) throws MalformedURLException;
+  StringBuilder getTotalValuation(String date);
 
   boolean ifStocksExist(String ticker);
 }

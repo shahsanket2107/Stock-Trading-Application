@@ -1,5 +1,6 @@
 package stocks;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +16,16 @@ public class PortfolioImpl implements Portfolio {
   }
 
   @Override
-  public Map<String, Integer> getStockComposition() {
-    return this.stocks;
-  }
-
-  @Override
-  public double getValuationAtDate(String date) {
+  public double getValuationAtDate(String date){
     Map<String, Integer> stock = this.stocks;
     List<Double> temp = new ArrayList<>();
     stock.forEach((k, v) -> {
-      //temp.add(k.getValuationFromDate(v, date));
+      Stocks s = new StocksImpl(k);
+      try {
+        temp.add(s.getValuationFromDate(v,date));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     });
     double ans = 0;
     for (double i : temp) {

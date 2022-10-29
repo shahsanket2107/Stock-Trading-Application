@@ -69,12 +69,11 @@ public class UserControllerImpl implements UserController {
           break;
         case "3":
           Scanner s = new Scanner(System.in);
-          System.out.println("Enter the ticker: ");
-          String stockSymbol = s.nextLine();
           System.out.println("Enter the date: ");
           String date = s.nextLine();
           if (user.isValidFormat(date)) {
-            user.getClosingValue(stockSymbol, date);
+            StringBuilder result = user.getTotalValuation(date);
+            System.out.println(result.toString());
           } else {
             System.out.println("Date is not in proper format!!");
           }

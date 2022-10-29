@@ -5,9 +5,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -116,44 +113,6 @@ public class UserImpl implements User {
     portfolio.appendChild(stocks1);
   }
 
-  @Override
-  public void getClosingValue(String stockSymbol, String date) throws MalformedURLException {
-    String apiKey = "FHA1IC5A17Q0SPLG";
-    URL url = null;
-    try {
-      url = new URL("https://www.alphavantage"
-              + ".co/query?function=TIME_SERIES_DAILY"
-              + "&outputsize=full"
-              + "&symbol"
-              + "=" + stockSymbol + "&apikey=" + apiKey + "&datatype=csv");
-    } catch (MalformedURLException e) {
-      throw new MalformedURLException("Malformed URL Exception!!");
-    }
-
-    InputStream in = null;
-    StringBuilder output = new StringBuilder();
-
-    try {
-      assert url != null;
-      in = url.openStream();
-      int b;
-
-      while ((b = in.read()) != -1) {
-        output.append((char) b);
-      }
-      int index = output.indexOf(date);
-      int endIndex = output.indexOf("\n", index);
-
-      String temp = output.substring(index, endIndex);
-
-      String[] res = temp.split(",", 0);
-
-      String closeValue = res[4];
-      System.out.println("Closing Value for " + stockSymbol + " on " + date + " is:" + closeValue);
-    } catch (Exception e) {
-      System.out.println("Please enter a valid ticker symbol!!");
-    }
-  }
 
   private boolean fileExists(String filePath) {
     if (new File(filePath).isFile()) {
@@ -175,6 +134,23 @@ public class UserImpl implements User {
       ex.printStackTrace();
     }
     return date != null;
+  }
+
+  @Override
+  public StringBuilder getTotalValuation(String date) {
+    StringBuilder temp = new StringBuilder();
+    Portfolio p;
+    for (int i = 0; i < this.portfolio.size(); i++) {
+      p = this.portfolio.get(i);
+      temp.append("Portfolio_Name: " + p.getName());
+      temp.append("\n");
+      temp.append("Portfolio_Valuation at " + date + " : " + p.getValuationAtDate(date));
+      temp.append("\n\n");
+    }
+    if (temp.toString().equals("")) {
+      temp.append("Please add a portfolio first!!");
+    }
+    return temp;
   }
 
   @Override
