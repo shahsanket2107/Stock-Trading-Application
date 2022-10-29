@@ -17,6 +17,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class UserImpl implements User {
 
@@ -137,7 +139,17 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getTotalValuation(String date) {
+  public StringBuilder getTotalValuation(String date)  {
+    String temp_date = date.replaceAll("[\\s\\-()]", "");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime now = LocalDateTime.now();
+    String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
+    if(Integer.valueOf(temp_date)>=Integer.valueOf(curr_date)){
+      return new StringBuilder("Date cannot be greater or equal to current date. Try a different date");
+    }
+    if(Integer.valueOf(temp_date)<=20000101){
+      return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
+    }
     StringBuilder temp = new StringBuilder();
     Portfolio p;
     for (int i = 0; i < this.portfolio.size(); i++) {
