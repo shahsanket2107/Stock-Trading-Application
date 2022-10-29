@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <portfolio>
-  <portfolio name="college_savings">
-    <stocks parameter="ticker">aapl</stocks>
-    <stocks parameter="quantity">123</stocks>
-    <stocks parameter="ticker">googl</stocks>
-    <stocks parameter="quantity">24</stocks>
-    <stocks parameter="ticker">tsla</stocks>
-    <stocks parameter="quantity">45</stocks>
-  </portfolio>
+    <portfolio name="college_pflo">
+        <stocks parameter="ticker">googl</stocks>
+        <stocks parameter="quantity">500</stocks>
+    </portfolio>
+    <portfolio name="student_pflo">
+        <stocks parameter="ticker">aapl</stocks>
+        <stocks parameter="quantity">50</stocks>
+        <stocks parameter="ticker">tsla</stocks>
+        <stocks parameter="quantity">53</stocks>
+    </portfolio>
+    <portfolio name="samved_pfl">
+        <stocks parameter="ticker">googl</stocks>
+        <stocks parameter="quantity">357</stocks>
+        <stocks parameter="ticker">amzn</stocks>
+        <stocks parameter="quantity">100</stocks>
+    </portfolio>
 </portfolio>

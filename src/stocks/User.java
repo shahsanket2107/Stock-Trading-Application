@@ -1,15 +1,21 @@
 package stocks;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public interface User {
 
-  ArrayList<Portfolio> createPortfolio(Map<Stocks, Integer> stocks, String name);
+  void createPortfolio(String portfolioName, Map<String, Integer> stocks);
 
+  StringBuilder getPortfolioComposition();
   void getValuationAtDate(String date);
 
   void savePortfolio();
 
   void loadPortfolio();
+
+  boolean isValidFormat(String value);
+
+  void getClosingValue(String stockSymbol, String date);
+
+  boolean ifStocksExist(String ticker);
 }

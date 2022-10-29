@@ -6,27 +6,25 @@ import java.util.Map;
 
 public class PortfolioImpl implements Portfolio {
 
-  final String date;
-  final String name;
-  final Map<Stocks, Integer> stocks;
+  private final String name;
+  private final Map<String, Integer> stocks;
 
-  public PortfolioImpl(String date, String name, Map<Stocks, Integer> stocks) {
-    this.date = date;
+  public PortfolioImpl(String name, Map<String, Integer> stocks) {
     this.name = name;
     this.stocks = stocks;
   }
 
   @Override
-  public Map<Stocks, Integer> getStockComposition() {
+  public Map<String, Integer> getStockComposition() {
     return this.stocks;
   }
 
   @Override
   public double getValuationAtDate(String date) {
-    Map<Stocks, Integer> stock = this.stocks;
+    Map<String, Integer> stock = this.stocks;
     List<Double> temp = new ArrayList<>();
     stock.forEach((k, v) -> {
-      temp.add(k.getValuationFromDate(v, date));
+      //temp.add(k.getValuationFromDate(v, date));
     });
     double ans = 0;
     for (double i : temp) {
@@ -36,7 +34,13 @@ public class PortfolioImpl implements Portfolio {
   }
 
   @Override
-  public double showInvestmentAmount() {
-    return getValuationAtDate(this.date);
+  public String getName() {
+    return this.name;
   }
+
+  @Override
+  public Map<String, Integer> getStocks() {
+    return this.stocks;
+  }
+
 }

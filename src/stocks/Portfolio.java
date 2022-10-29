@@ -4,9 +4,11 @@ import java.util.Map;
 
 public interface Portfolio {
 
-  Map<Stocks, Integer> getStockComposition();
+  Map<String, Integer> getStockComposition();
 
   double getValuationAtDate(String date);
 
-  double showInvestmentAmount();
+  String getName();
+
+  Map<String, Integer> getStocks();
 }
