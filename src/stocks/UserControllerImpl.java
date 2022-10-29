@@ -68,6 +68,7 @@ public class UserControllerImpl implements UserController {
       int flag = 0;
       while (true) {
         System.out.println("Enter 1 to add stocks to your portfolio");
+        System.out.println("Enter 0 to return to main menu");
         System.out.println("Enter q to exit");
         if (flag == 1) {
           break;
@@ -86,7 +87,10 @@ public class UserControllerImpl implements UserController {
             }
 
           }
-          case "q" -> flag = 1;
+          case "0" -> flag = 1;
+          case "q" -> {
+            return;
+          }
         }
       }
 

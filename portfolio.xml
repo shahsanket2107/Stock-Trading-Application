@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<portfolio>
+  <portfolio name="college_savings">
+    <stocks parameter="ticker">aapl</stocks>
+    <stocks parameter="quantity">123</stocks>
+    <stocks parameter="ticker">googl</stocks>
+    <stocks parameter="quantity">24</stocks>
+    <stocks parameter="ticker">tsla</stocks>
+    <stocks parameter="quantity">45</stocks>
+  </portfolio>
+</portfolio>
