@@ -71,10 +71,11 @@ public class UserControllerImpl implements UserController {
             view.getPortfolioValue(result);
           } else {
             view.invalidDate();
-
           }
           break;
-
+        case "5":
+          user.loadPortfolio();
+          break;
         case "q":
           return;
         default:
