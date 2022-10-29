@@ -5,7 +5,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -90,29 +88,15 @@ public class UserImpl implements User {
 
   }
 
-  @Override
-  public boolean ifStocksExist(String ticker) {
-    String apiKey = "FHA1IC5A17Q0SPLG";
-    URL url = null;
-    try {
-      url = new URL("https://www.alphavantage"
-              + ".co/query?function=TIME_SERIES_DAILY"
-              + "&outputsize=full"
-              + "&symbol"
-              + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
-    } catch (MalformedURLException e) {
-      System.out.println(e.getMessage());
+  public static boolean ifStocksExist(String ticker) {
+
+    for(Ticker i: Ticker.values()){
+      if (!i.name().equalsIgnoreCase(String.valueOf(ticker))) {
+        return false;
+      }
     }
-    InputStream in = null;
-    char b = '0';
-    try {
-      assert url != null;
-      in = url.openStream();
-      b = (char) in.read();
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-    }
-    return b != '{';
+    return  true;
+
   }
 
   private void perform(Document doc, Element portfolio, String ticker, String qty) {

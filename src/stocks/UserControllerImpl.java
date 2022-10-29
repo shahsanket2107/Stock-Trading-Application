@@ -1,5 +1,7 @@
 package stocks;
 
+import static stocks.UserImpl.ifStocksExist;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,24 +11,22 @@ public class UserControllerImpl implements UserController {
   private final Readable in;
   private final Appendable out;
   private User user;
+  private View view;
 
-  public UserControllerImpl(Readable in, Appendable out, User user) {
+  public UserControllerImpl(Readable in, Appendable out, User user, View view) {
     this.in = in;
     this.out = out;
     this.user = user;
+    this.view = view;
   }
 
   public Map<String, Integer> perform() {
 
     Map<String, Integer> stocks = new HashMap<>();
-    int flag = 0;
     while (true) {
       System.out.println("Enter 1 to add stocks to your portfolio");
 
       System.out.println("Enter q to exit");
-      if (flag == 1) {
-        break;
-      }
       Scanner scan = new Scanner(this.in);
       switch (scan.next()) {
         case "1" -> {
@@ -34,7 +34,7 @@ public class UserControllerImpl implements UserController {
           String ticker = scan.next();
           System.out.println("Enter quantity of stocks");
           int qty = scan.nextInt();
-          if (user.ifStocksExist(ticker)) {
+          if (ifStocksExist(ticker)) {
             if (!stocks.containsKey(ticker)) {
               stocks.put(ticker, qty);
             } else {
@@ -50,19 +50,13 @@ public class UserControllerImpl implements UserController {
         }
       }
     }
-    return stocks;
   }
 
   @Override
   public void go() {
     Scanner scan = new Scanner(this.in);
     while (true) {
-      System.out.println("Enter 1 for making portfolio");
-      System.out.println("Enter 2 to examine the composition of portfolio");
-      System.out.println("Enter 3 to determine the total value of portfolio on a certain date");
-      System.out.println("Enter 4 to save your portfolio");
-      System.out.println("Enter 5 to load your portfolio");
-      System.out.println("Enter q to exit");
+      view.getMenu();
       switch (scan.next()) {
         case "1":
           Scanner sc = new Scanner(this.in);
@@ -71,7 +65,8 @@ public class UserControllerImpl implements UserController {
           user.createPortfolio(portfolioName, perform());
           break;
         case "2":
-          System.out.println(user.getPortfolioComposition());
+          StringBuilder composition = user.getPortfolioComposition();
+          this.view.viewComposition(composition);
           break;
         case "3":
           Scanner s = new Scanner(System.in);

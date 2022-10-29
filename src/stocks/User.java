@@ -17,5 +17,5 @@ public interface User {
 
   void getClosingValue(String stockSymbol, String date);
 
-  boolean ifStocksExist(String ticker);
+
 }
