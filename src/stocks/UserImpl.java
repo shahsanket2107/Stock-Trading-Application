@@ -88,15 +88,16 @@ public class UserImpl implements User {
 
   }
 
-  public static boolean ifStocksExist(String ticker) {
-
-    for(Ticker i: Ticker.values()){
-      if (!i.name().equalsIgnoreCase(String.valueOf(ticker))) {
-        return false;
+  @Override
+  public boolean ifStocksExist(String ticker) {
+    boolean flag = false;
+    for (Ticker i : Ticker.values()) {
+      if (i.name().equalsIgnoreCase(String.valueOf(ticker))) {
+        flag = true;
+        break;
       }
     }
-    return  true;
-
+    return flag;
   }
 
   private void perform(Document doc, Element portfolio, String ticker, String qty) {
@@ -116,7 +117,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void getClosingValue(String stockSymbol, String date) {
+  public void getClosingValue(String stockSymbol, String date) throws MalformedURLException {
     String apiKey = "FHA1IC5A17Q0SPLG";
     URL url = null;
     try {
@@ -126,7 +127,7 @@ public class UserImpl implements User {
               + "&symbol"
               + "=" + stockSymbol + "&apikey=" + apiKey + "&datatype=csv");
     } catch (MalformedURLException e) {
-      System.out.println(e.getMessage());
+      throw new MalformedURLException("Malformed URL Exception!!");
     }
 
     InputStream in = null;

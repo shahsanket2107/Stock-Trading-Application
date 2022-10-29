@@ -1,7 +1,5 @@
 package stocks;
 
-import static stocks.UserImpl.ifStocksExist;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -32,9 +30,10 @@ public class UserControllerImpl implements UserController {
         case "1" -> {
           System.out.println("Enter ticker of stock you want to add to the portfolio");
           String ticker = scan.next();
+          ticker = ticker.toUpperCase();
           System.out.println("Enter quantity of stocks");
           int qty = scan.nextInt();
-          if (ifStocksExist(ticker)) {
+          if (user.ifStocksExist(ticker)) {
             if (!stocks.containsKey(ticker)) {
               stocks.put(ticker, qty);
             } else {

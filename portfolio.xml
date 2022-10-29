@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><portfolio>
-    <portfolio name="college_pflo">
-        <stocks parameter="ticker">googl</stocks>
-        <stocks parameter="quantity">500</stocks>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<portfolio>
+    <portfolio name="college_savings">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">20</stocks>
+        <stocks parameter="ticker">TSLA</stocks>
+        <stocks parameter="quantity">23</stocks>
     </portfolio>
-    <portfolio name="student_pflo">
-        <stocks parameter="ticker">aapl</stocks>
-        <stocks parameter="quantity">50</stocks>
-        <stocks parameter="ticker">tsla</stocks>
-        <stocks parameter="quantity">53</stocks>
+    <portfolio name="old_age">
+        <stocks parameter="ticker">ZS</stocks>
+        <stocks parameter="quantity">98</stocks>
+        <stocks parameter="ticker">AMZN</stocks>
+        <stocks parameter="quantity">23</stocks>
     </portfolio>
-    <portfolio name="samved_pfl">
-        <stocks parameter="ticker">googl</stocks>
-        <stocks parameter="quantity">357</stocks>
-        <stocks parameter="ticker">amzn</stocks>
-        <stocks parameter="quantity">100</stocks>
-    </portfolio>
-<portfolio name="sam_pflo"><stocks parameter="ticker">aapl</stocks><stocks parameter="quantity">43</stocks><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">50</stocks></portfolio><portfolio name="sp1"><stocks parameter="ticker">aapl</stocks><stocks parameter="quantity">23</stocks></portfolio><portfolio name="sp2"><stocks parameter="ticker">aapl</stocks><stocks parameter="quantity">256</stocks></portfolio><portfolio name="p1"/><portfolio name="p2"/></portfolio>
+</portfolio>

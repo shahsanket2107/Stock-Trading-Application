@@ -103,6 +103,4 @@ public enum Ticker {
   XEL,
   ZM,
   ZS,
-
-
 }
