@@ -78,7 +78,9 @@ public class UserControllerImpl implements UserController {
             System.out.println("Date is not in proper format!!");
           }
           break;
-
+        case "5":
+          user.loadPortfolio();
+          break;
         case "q":
           return;
       }

@@ -3,12 +3,15 @@ package stocks;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -40,7 +43,7 @@ public class UserImpl implements User {
       Element rootElement = null;
       if (!fileExist) {
         doc = dBuilder.newDocument();
-        rootElement = doc.createElement("portfolio");
+        rootElement = doc.createElement("portfolios");
         doc.appendChild(rootElement);
       } else {
         doc = dBuilder.parse(file);
@@ -77,11 +80,6 @@ public class UserImpl implements User {
 
   @Override
   public void savePortfolio() {
-
-  }
-
-  @Override
-  public void loadPortfolio() {
 
   }
 
@@ -175,5 +173,51 @@ public class UserImpl implements User {
       temp.append("Please add a portfolio first!!");
     }
     return temp;
+  }
+
+  @Override
+  public void loadPortfolio() {
+    try {
+      File file = new File("portfolio.xml");
+      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+      DocumentBuilder db = dbf.newDocumentBuilder();
+      Document doc = db.parse(file);
+      doc.getDocumentElement().normalize();
+      Portfolio p;
+      NodeList nodeList = doc.getElementsByTagName("portfolio");
+      for (int i = 0; i < nodeList.getLength(); i++) {
+        String name;
+        String type;
+        Map<String, Integer> m = new HashMap<>();
+        ArrayList<String> ticker = new ArrayList<>();
+        ArrayList<String> qty = new ArrayList<>();
+        Node portfolio = nodeList.item(i);
+        if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
+          Element portfolioElement = (Element) portfolio;
+          name = portfolioElement.getAttribute("name");
+          NodeList portfolio_details = portfolio.getChildNodes();
+          for (int j = 0; j < portfolio_details.getLength(); j++) {
+            Node detail = portfolio_details.item(j);
+            if (detail.getNodeType() == Node.ELEMENT_NODE) {
+              Element detailElement = (Element) detail;
+              type = detailElement.getAttribute("parameter");
+              if (type.equals("ticker")) {
+                ticker.add(detailElement.getTextContent());
+              }
+              if (type.equals("quantity")) {
+                qty.add(detailElement.getTextContent());
+              }
+            }
+          }
+          for (int k = 0; k < ticker.size(); k++) {
+            m.put(ticker.get(k), Integer.valueOf(qty.get(k)));
+          }
+          p = new PortfolioImpl(name, m);
+          this.portfolio.add(p);
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
