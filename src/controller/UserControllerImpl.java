@@ -1,8 +1,10 @@
-package stocks;
+package controller;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import model.User;
+import view.View;
 
 public class UserControllerImpl implements UserController {
 
@@ -18,7 +20,7 @@ public class UserControllerImpl implements UserController {
     this.view = view;
   }
 
-  public Map<String, Integer> perform() {
+  private Map<String, Integer> perform() {
 
     Map<String, Integer> stocks = new HashMap<>();
     while (true) {
@@ -26,20 +28,22 @@ public class UserControllerImpl implements UserController {
       Scanner scan = new Scanner(this.in);
       switch (scan.next()) {
         case "1" -> {
-
           String ticker = view.getTicker();
-          if (user.ifStocksExist(ticker)) {
-            ticker = ticker.toUpperCase();
-            int qty = view.getQty();
-            if (!stocks.containsKey(ticker)) {
-              stocks.put(ticker, qty);
-            } else {
-              int temp = stocks.get(ticker);
-              stocks.put(ticker, qty + temp);
+          if (!user.ifStocksExist(ticker)) {
+            while (!user.ifStocksExist(ticker)) {
+              view.invalidTicker();
+              ticker = view.getTicker();
             }
-          } else {
-            view.invalidTicker();
           }
+          ticker = ticker.toUpperCase();
+          int qty = view.getQty();
+          if (!stocks.containsKey(ticker)) {
+            stocks.put(ticker, qty);
+          } else {
+            int temp = stocks.get(ticker);
+            stocks.put(ticker, qty + temp);
+          }
+
         }
         case "q" -> {
           return stocks;
@@ -52,6 +56,9 @@ public class UserControllerImpl implements UserController {
   @Override
   public void go() {
     Scanner scan = new Scanner(this.in);
+    String name = view.getName();
+    user.setName(name);
+    view.displayName(user.getName());
     while (true) {
       view.getMenu();
       switch (scan.next()) {
@@ -74,7 +81,9 @@ public class UserControllerImpl implements UserController {
           }
           break;
         case "5":
-          user.loadPortfolio();
+          String pfName = view.getFileName();
+          String output = user.loadPortfolio(pfName);
+          view.getLoadPortfolio(output);
           break;
         case "q":
           return;

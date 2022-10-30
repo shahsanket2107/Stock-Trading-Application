@@ -1,4 +1,4 @@
-package stocks;
+package model;
 
 import java.util.Map;
 
@@ -8,15 +8,15 @@ public interface User {
 
   StringBuilder getPortfolioComposition();
 
-  void getValuationAtDate(String date);
-
-  void savePortfolio();
-
-  void loadPortfolio();
+  String loadPortfolio(String pfName);
 
   boolean isValidFormat(String value);
 
-  StringBuilder getTotalValuation(String date,String pName);
+  StringBuilder getTotalValuation(String date, String pName);
 
   boolean ifStocksExist(String ticker);
+
+  void setName(String name);
+
+  String getName();
 }

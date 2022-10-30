@@ -1,4 +1,4 @@
-package stocks;
+package model;
 
 import java.util.Map;
 

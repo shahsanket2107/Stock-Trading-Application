@@ -1,74 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<portfolios>
-    <portfolio name="college_savings">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">20</stocks>
-        <stocks parameter="ticker">TSLA</stocks>
-        <stocks parameter="quantity">23</stocks>
-    </portfolio>
-    <portfolio name="old_age">
-        <stocks parameter="ticker">ZS</stocks>
-        <stocks parameter="quantity">98</stocks>
-        <stocks parameter="ticker">AMZN</stocks>
-        <stocks parameter="quantity">23</stocks>
-    </portfolio>
-    <portfolio name="sam_pf">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">23</stocks>
-        <stocks parameter="ticker">TSLA</stocks>
-        <stocks parameter="quantity">100</stocks>
-    </portfolio>
-    <portfolio name="sam_pf2">
-        <stocks parameter="ticker">AMD</stocks>
-        <stocks parameter="quantity">50</stocks>
-        <stocks parameter="ticker">AMZN</stocks>
-        <stocks parameter="quantity">150</stocks>
-    </portfolio>
-    <portfolio name="savings">
-        <stocks parameter="ticker">GOOGL</stocks>
-        <stocks parameter="quantity">3</stocks>
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">10</stocks>
-    </portfolio>
-    <portfolio name="retirement">
-        <stocks parameter="ticker">ZS</stocks>
-        <stocks parameter="quantity">4</stocks>
-        <stocks parameter="ticker">AMZN</stocks>
-        <stocks parameter="quantity">12</stocks>
-    </portfolio>
-    <portfolio name="sam_p1">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">20</stocks>
-        <stocks parameter="ticker">TSLA</stocks>
-        <stocks parameter="quantity">50</stocks>
-    </portfolio>
-    <portfolio name="s1">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">2</stocks>
-    </portfolio>
-    <portfolio name="q1">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">2</stocks>
-    </portfolio>
-    <portfolio name="qw1">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">3</stocks>
-    </portfolio>
-    <portfolio name="r1">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">50</stocks>
-    </portfolio>
-    <portfolio name="e1">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">12</stocks>
-    </portfolio>
-    <portfolio name="lp1"/>
-    <portfolio name="po1">
-        <stocks parameter="ticker">GOOGL</stocks>
-        <stocks parameter="quantity">2</stocks>
-    </portfolio>
-    <portfolio name="s3">
-        <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">12</stocks>
-    </portfolio>
-</portfolios>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><portfolio>
+  <portfolio name="college_savings">
+    <stocks parameter="ticker">aapl</stocks>
+    <stocks parameter="quantity">123</stocks>
+    <stocks parameter="ticker">googl</stocks>
+    <stocks parameter="quantity">24</stocks>
+    <stocks parameter="ticker">tsla</stocks>
+    <stocks parameter="quantity">45</stocks>
+  </portfolio>
+  <portfolio name="chodu">
+    <stocks parameter="ticker">stocks.StocksImpl@65b3120a</stocks>
+    <stocks parameter="quantity">22</stocks>
+    <stocks parameter="ticker">stocks.StocksImpl@6f539caf</stocks>
+    <stocks parameter="quantity">33</stocks>
+  </portfolio>
+  <portfolio name="bhosdino">
+    <stocks parameter="ticker">stocks.StocksImpl@65b3120a</stocks>
+    <stocks parameter="quantity">22</stocks>
+    <stocks parameter="ticker">stocks.StocksImpl@198e2867</stocks>
+    <stocks parameter="quantity">100</stocks>
+    <stocks parameter="ticker">stocks.StocksImpl@6f539caf</stocks>
+    <stocks parameter="quantity">33</stocks>
+  </portfolio>
+<portfolio name="samved"><stocks parameter="ticker">GOOGL</stocks><stocks parameter="quantity">50</stocks><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">23</stocks></portfolio></portfolio>

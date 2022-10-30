@@ -1,9 +1,10 @@
-package stocks;
+package model;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import model.Stocks;
 
 public class StocksImpl implements Stocks {
   final String ticker;
@@ -19,8 +20,7 @@ public class StocksImpl implements Stocks {
     return closing_value * quantity;
   }
 
-  @Override
-  public String getClosingValue(String date) throws IOException {
+  private String getClosingValue(String date) throws IOException {
     String apiKey = "FHA1IC5A17Q0SPLG";
     URL url = null;
     try {

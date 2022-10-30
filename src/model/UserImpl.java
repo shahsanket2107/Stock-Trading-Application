@@ -1,4 +1,4 @@
-package stocks;
+package model;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -26,11 +26,21 @@ import javax.xml.transform.stream.StreamResult;
 public class UserImpl implements User {
 
   private String name;
-  private ArrayList<Portfolio> portfolio;
+  private final ArrayList<Portfolio> portfolio;
 
-  public UserImpl(String name) {
-    this.name = name;
+  public UserImpl() {
+    this.name="John Doe";
     this.portfolio = new ArrayList<>();
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return this.name;
   }
 
   @Override
@@ -75,59 +85,59 @@ public class UserImpl implements User {
     portfolio.add(new PortfolioImpl(portfolioName, stocks));
   }
 
-  @Override
-  public void getValuationAtDate(String date) {
-
-  }
 
   @Override
-  public void savePortfolio() {
-
-  }
-
-  @Override
-  public void loadPortfolio() {
+  public String loadPortfolio(String pfName) {
     try {
-      File file = new File("portfolio.xml");
+      boolean fileExist = fileExists(pfName);
+      if (!fileExist) {
+        return "Invalid file name. Please try again!";
+      }
+      File file = new File(pfName);
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = db.parse(file);
       doc.getDocumentElement().normalize();
-      Portfolio p;
       NodeList nodeList = doc.getElementsByTagName("portfolio");
       for (int i = 0; i < nodeList.getLength(); i++) {
-        String name;
-        String type;
         Map<String, Integer> m = new HashMap<>();
         ArrayList<String> ticker = new ArrayList<>();
         ArrayList<String> qty = new ArrayList<>();
         Node portfolio = nodeList.item(i);
-        if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
-          Element portfolioElement = (Element) portfolio;
-          name = portfolioElement.getAttribute("name");
-          NodeList portfolio_details = portfolio.getChildNodes();
-          for (int j = 0; j < portfolio_details.getLength(); j++) {
-            Node detail = portfolio_details.item(j);
-            if (detail.getNodeType() == Node.ELEMENT_NODE) {
-              Element detailElement = (Element) detail;
-              type = detailElement.getAttribute("parameter");
-              if (type.equals("ticker")) {
-                ticker.add(detailElement.getTextContent());
-              }
-              if (type.equals("quantity")) {
-                qty.add(detailElement.getTextContent());
-              }
-            }
-          }
-          for (int k = 0; k < ticker.size(); k++) {
-            m.put(ticker.get(k), Integer.valueOf(qty.get(k)));
-          }
-          p = new PortfolioImpl(name, m);
-          this.portfolio.add(p);
-        }
+        loadPortfolioHelper(ticker, qty, m, portfolio);
       }
     } catch (Exception e) {
       e.printStackTrace();
+    }
+    return "Portfolio loaded successfully!";
+  }
+
+  private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
+      Map<String, Integer> m, Node portfolio) {
+    String name;
+    String type;
+    if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
+      Element portfolioElement = (Element) portfolio;
+      name = portfolioElement.getAttribute("name");
+      NodeList portfolio_details = portfolio.getChildNodes();
+      for (int j = 0; j < portfolio_details.getLength(); j++) {
+        Node detail = portfolio_details.item(j);
+        if (detail.getNodeType() == Node.ELEMENT_NODE) {
+          Element detailElement = (Element) detail;
+          type = detailElement.getAttribute("parameter");
+          if (type.equals("ticker")) {
+            ticker.add(detailElement.getTextContent());
+          }
+          if (type.equals("quantity")) {
+            qty.add(detailElement.getTextContent());
+          }
+        }
+      }
+      for (int k = 0; k < ticker.size(); k++) {
+        m.put(ticker.get(k), Integer.valueOf(qty.get(k)));
+      }
+      Portfolio p = new PortfolioImpl(name, m);
+      this.portfolio.add(p);
     }
   }
 
@@ -188,20 +198,22 @@ public class UserImpl implements User {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDateTime now = LocalDateTime.now();
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-    if (Integer.valueOf(temp_date) >= Integer.valueOf(curr_date)) {
-      return new StringBuilder("Date cannot be greater or equal to current date. Try a different date");
+    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+      return new StringBuilder(
+          "Date cannot be greater or equal to current date. Try a different date");
     }
-    if (Integer.valueOf(temp_date) <= 20000101) {
+    if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
     }
     StringBuilder temp = new StringBuilder();
     Portfolio p;
-    for (int i = 0; i < this.portfolio.size(); i++) {
-      p = this.portfolio.get(i);
+    for (Portfolio value : this.portfolio) {
+      p = value;
       if (p.getName().equals(pName)) {
-        temp.append("Portfolio_Name: " + p.getName());
+        temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
-        temp.append("Portfolio_Valuation at " + date + " : " + p.getValuationAtDate(date));
+        temp.append("Portfolio_Valuation at ").append(date).append(" : ")
+            .append(p.getValuationAtDate(date));
         temp.append("\n\n");
       }
     }
@@ -215,15 +227,15 @@ public class UserImpl implements User {
   public StringBuilder getPortfolioComposition() {
     StringBuilder temp = new StringBuilder();
     Portfolio p;
-    for (int i = 0; i < this.portfolio.size(); i++) {
-      p = this.portfolio.get(i);
-      temp.append("Portfolio_Name: " + p.getName());
+    for (Portfolio value : this.portfolio) {
+      p = value;
+      temp.append("Portfolio_Name: ").append(p.getName());
       temp.append("\n");
       Map<String, Integer> m = p.getStocks();
       for (Map.Entry<String, Integer> entry : m.entrySet()) {
         temp.append("{\n");
-        temp.append("\tStock_Ticker: " + entry.getKey() + "\n");
-        temp.append("\tQuantity: " + entry.getValue() + "\n");
+        temp.append("\tStock_Ticker: ").append(entry.getKey()).append("\n");
+        temp.append("\tQuantity: ").append(entry.getValue()).append("\n");
         temp.append("}\n");
       }
 

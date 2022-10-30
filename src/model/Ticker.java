@@ -1,4 +1,4 @@
-package stocks;
+package model;
 
 public enum Ticker {
   AMD,

@@ -1,4 +1,4 @@
-package stocks;
+package view;
 
 import java.util.Scanner;
 
@@ -28,7 +28,7 @@ public class View {
   public String getTicker() {
     System.out.println("Enter ticker of stock you want to add to the portfolio");
     Scanner scan = new Scanner(System.in);
-    return scan.next();
+    return scan.nextLine();
   }
 
   public int getQty() {
@@ -54,13 +54,19 @@ public class View {
   public String getPortfolioName() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Enter your portfolio name");
-    return sc.next();
+    return sc.nextLine();
+  }
+
+  public String getFileName() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter your file name");
+    return sc.nextLine();
   }
 
   public String getDate() {
     Scanner s = new Scanner(System.in);
-    System.out.println("Enter the date: ");
-    return s.next();
+    System.out.println("Enter the date (in format yyyy-MM-dd): ");
+    return s.nextLine();
   }
 
   public void getPortfolioValue(StringBuilder result) {
@@ -73,5 +79,17 @@ public class View {
 
   public void seeDefault() {
     System.out.println("Invalid input. Please try again!");
+  }
+  public void getLoadPortfolio(String output){
+    System.out.println(output);
+  }
+  public String getName(){
+    System.out.println("Please Enter your name:");
+    Scanner s=new Scanner(System.in);
+    return s.nextLine();
+  }
+
+  public void displayName(String name){
+    System.out.println("Welcome "+name+" !!\nPlease select an option from the menu!!\n");
   }
 }
