@@ -6,7 +6,7 @@ public interface User {
 
   void createPortfolio(String portfolioName, Map<String, Integer> stocks);
 
-  StringBuilder getPortfolioComposition();
+  StringBuilder getPortfolioComposition(String pName);
 
   String loadPortfolio(String pfName);
 
@@ -16,7 +16,9 @@ public interface User {
 
   boolean ifStocksExist(String ticker);
 
+  String getName();
+
   void setName(String name);
 
-  String getName();
+  StringBuilder getPortfoliosName();
 }

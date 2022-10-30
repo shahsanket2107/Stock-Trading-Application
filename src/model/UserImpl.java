@@ -25,12 +25,17 @@ import javax.xml.transform.stream.StreamResult;
 
 public class UserImpl implements User {
 
-  private String name;
   private final ArrayList<Portfolio> portfolio;
+  private String name;
 
   public UserImpl() {
-    this.name="John Doe";
+    this.name = "John Doe";
     this.portfolio = new ArrayList<>();
+  }
+
+  @Override
+  public String getName() {
+    return this.name;
   }
 
   @Override
@@ -39,8 +44,21 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String getName() {
-    return this.name;
+  public StringBuilder getPortfoliosName() {
+    StringBuilder temp = new StringBuilder();
+    StringBuilder tp = new StringBuilder();
+    Portfolio p;
+    tp.append("The list of portfolios is:\n");
+    for (Portfolio value : this.portfolio) {
+      p = value;
+      temp.append(p.getName() + "\n");
+    }
+    if (temp.toString().equals("")) {
+      temp.append("No portfolios exist at this time!! ");
+      return temp;
+    }
+    tp.append(temp);
+    return tp;
   }
 
   @Override
@@ -113,7 +131,7 @@ public class UserImpl implements User {
   }
 
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-      Map<String, Integer> m, Node portfolio) {
+                                   Map<String, Integer> m, Node portfolio) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -200,7 +218,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -212,8 +230,8 @@ public class UserImpl implements User {
       if (p.getName().equals(pName)) {
         temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
-        temp.append("Portfolio_Valuation at ").append(date).append(" : ")
-            .append(p.getValuationAtDate(date));
+        temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
+                .append(p.getValuationAtDate(date));
         temp.append("\n\n");
       }
     }
@@ -224,25 +242,29 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getPortfolioComposition() {
+  public StringBuilder getPortfolioComposition(String pName) {
     StringBuilder temp = new StringBuilder();
     Portfolio p;
+    int flg = 0;
     for (Portfolio value : this.portfolio) {
       p = value;
-      temp.append("Portfolio_Name: ").append(p.getName());
-      temp.append("\n");
-      Map<String, Integer> m = p.getStocks();
-      for (Map.Entry<String, Integer> entry : m.entrySet()) {
-        temp.append("{\n");
-        temp.append("\tStock_Ticker: ").append(entry.getKey()).append("\n");
-        temp.append("\tQuantity: ").append(entry.getValue()).append("\n");
-        temp.append("}\n");
+      if (p.getName().equals(pName)) {
+        flg = 1;
+        temp.append("Portfolio_Name: ").append(p.getName());
+        temp.append("\n");
+        Map<String, Integer> m = p.getStocks();
+        for (Map.Entry<String, Integer> entry : m.entrySet()) {
+          temp.append("{\n");
+          temp.append("\tStock_Ticker: ").append(entry.getKey()).append("\n");
+          temp.append("\tQuantity: ").append(entry.getValue()).append("\n");
+          temp.append("}\n");
+        }
+        temp.append("\n\n");
+        break;
       }
-
-      temp.append("\n\n");
     }
-    if (temp.toString().equals("")) {
-      temp.append("Please add a portfolio first!!");
+    if (flg == 0) {
+      temp.append("The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }

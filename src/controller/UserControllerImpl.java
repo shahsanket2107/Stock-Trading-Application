@@ -3,6 +3,7 @@ package controller;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 import model.User;
 import view.View;
 
@@ -67,18 +68,28 @@ public class UserControllerImpl implements UserController {
           user.createPortfolio(portfolioName, perform());
           break;
         case "2":
-          StringBuilder composition = user.getPortfolioComposition();
+          String p_name = view.getPortfolioName();
+          StringBuilder composition = user.getPortfolioComposition(p_name);
           view.viewComposition(composition);
           break;
         case "3":
           String pName = view.getPortfolioName();
           String date = view.getDate();
           if (user.isValidFormat(date)) {
-            StringBuilder result = user.getTotalValuation(date, pName);
-            view.getPortfolioValue(result);
+            StringBuilder result = new StringBuilder();
+            try {
+              result.append(user.getTotalValuation(date, pName));
+            } catch (IllegalArgumentException e) {
+              result.append(e.getMessage());
+            }
+            view.displayResult(result);
           } else {
             view.invalidDate();
           }
+          break;
+        case "4":
+          StringBuilder result = user.getPortfoliosName();
+          view.displayResult(result);
           break;
         case "5":
           String pfName = view.getFileName();

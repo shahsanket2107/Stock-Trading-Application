@@ -12,10 +12,11 @@ public class View {
   }
 
   public void getMenu() {
+    System.out.println();
     System.out.println("Enter 1 for making portfolio");
-    System.out.println("Enter 2 to examine the composition of portfolio");
+    System.out.println("Enter 2 to examine the composition of a particular portfolio");
     System.out.println("Enter 3 to determine the total value of portfolio on a certain date");
-    System.out.println("Enter 4 to save your portfolio");
+    System.out.println("Enter 4 to view all portfolio names");
     System.out.println("Enter 5 to load your portfolio");
     System.out.println("Enter q to exit");
   }
@@ -69,7 +70,7 @@ public class View {
     return s.nextLine();
   }
 
-  public void getPortfolioValue(StringBuilder result) {
+  public void displayResult(StringBuilder result) {
     System.out.println(result);
   }
 

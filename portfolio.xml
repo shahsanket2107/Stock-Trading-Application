@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><portfolio>
-  <portfolio name="college_savings">
-    <stocks parameter="ticker">aapl</stocks>
-    <stocks parameter="quantity">123</stocks>
-    <stocks parameter="ticker">googl</stocks>
-    <stocks parameter="quantity">24</stocks>
-    <stocks parameter="ticker">tsla</stocks>
-    <stocks parameter="quantity">45</stocks>
-  </portfolio>
-  <portfolio name="chodu">
-    <stocks parameter="ticker">stocks.StocksImpl@65b3120a</stocks>
-    <stocks parameter="quantity">22</stocks>
-    <stocks parameter="ticker">stocks.StocksImpl@6f539caf</stocks>
-    <stocks parameter="quantity">33</stocks>
-  </portfolio>
-  <portfolio name="bhosdino">
-    <stocks parameter="ticker">stocks.StocksImpl@65b3120a</stocks>
-    <stocks parameter="quantity">22</stocks>
-    <stocks parameter="ticker">stocks.StocksImpl@198e2867</stocks>
-    <stocks parameter="quantity">100</stocks>
-    <stocks parameter="ticker">stocks.StocksImpl@6f539caf</stocks>
-    <stocks parameter="quantity">33</stocks>
-  </portfolio>
-<portfolio name="samved"><stocks parameter="ticker">GOOGL</stocks><stocks parameter="quantity">50</stocks><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">23</stocks></portfolio></portfolio>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<portfolios>
+    <portfolio name="school_savings">
+        <stocks parameter="ticker">aapl</stocks>
+        <stocks parameter="quantity">123</stocks>
+        <stocks parameter="ticker">googl</stocks>
+        <stocks parameter="quantity">24</stocks>
+        <stocks parameter="ticker">tsla</stocks>
+        <stocks parameter="quantity">45</stocks>
+    </portfolio>
+    <portfolio name="college_savings">
+        <stocks parameter="ticker">AMZN</stocks>
+        <stocks parameter="quantity">22</stocks>
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">33</stocks>
+    </portfolio>
+    <portfolio name="retirement">
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">50</stocks>
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">23</stocks>
+    </portfolio>
+</portfolios>

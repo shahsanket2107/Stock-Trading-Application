@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import model.Stocks;
 
 public class StocksImpl implements Stocks {
   final String ticker;
@@ -20,7 +19,7 @@ public class StocksImpl implements Stocks {
     return closing_value * quantity;
   }
 
-  private String getClosingValue(String date) throws IOException {
+  private String getClosingValue(String date) throws IOException, IllegalArgumentException {
     String apiKey = "FHA1IC5A17Q0SPLG";
     URL url = null;
     try {
@@ -44,6 +43,9 @@ public class StocksImpl implements Stocks {
         output.append((char) b);
       }
       int index = output.indexOf(date);
+      if (index == -1) {
+        throw new IllegalArgumentException("Data for given date does not exist!!");
+      }
       int endIndex = output.indexOf("\n", index);
 
       String temp = output.substring(index, endIndex);
@@ -53,7 +55,7 @@ public class StocksImpl implements Stocks {
       String closeValue = res[4];
       return closeValue;
     } catch (IOException e) {
-      throw new IOException("Please enter a valid ticker!!");
+      return "Unable to fetch URL right now!!";
     }
   }
 }
