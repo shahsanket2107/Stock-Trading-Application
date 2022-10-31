@@ -1,17 +1,14 @@
 package model;
 
-import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -23,11 +20,13 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.xml.sax.SAXException;
 
 public class UserImpl implements User {
 
@@ -69,7 +68,7 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     String fileName = "portfolio.xml";
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
@@ -118,7 +117,6 @@ public class UserImpl implements User {
     } catch (TransformerException e) {
       throw new RuntimeException(e);
     }
-
   }
 
 
@@ -139,6 +137,9 @@ public class UserImpl implements User {
       Document doc = db.parse(file);
       doc.getDocumentElement().normalize();
       NodeList nodeList = doc.getElementsByTagName("portfolio");
+      if (nodeList.getLength() == 0) {
+        throw new IllegalArgumentException("Parsed XML file has no portfolio associated with it!!");
+      }
       for (int i = 0; i < nodeList.getLength(); i++) {
         Map<String, Integer> m = new HashMap<>();
         ArrayList<String> ticker = new ArrayList<>();
@@ -148,13 +149,13 @@ public class UserImpl implements User {
       }
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new IllegalArgumentException(
-          "Unable to read xml file!!\n Please check proper xml format and try again!!");
+              "Unable to read xml file!!\n Please check proper xml format and try again!!");
     }
     return "Portfolio loaded successfully!";
   }
 
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-      Map<String, Integer> m, Node portfolio) {
+                                   Map<String, Integer> m, Node portfolio) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -241,7 +242,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -254,7 +255,7 @@ public class UserImpl implements User {
         temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-            .append(p.getValuationAtDate(date));
+                .append(p.getValuationAtDate(date));
         temp.append("\n\n");
       }
     }
@@ -288,7 +289,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
