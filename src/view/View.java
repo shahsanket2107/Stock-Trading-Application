@@ -27,23 +27,26 @@ public class View {
   }
 
   public String getTicker() {
-    System.out.println("Enter ticker of stock you want to add to the portfolio");
+    System.out.println("Enter ticker of stock you want to add to the portfolio: ");
     Scanner scan = new Scanner(System.in);
     return scan.nextLine();
   }
 
-  public int getQty() {
-    Integer input = null;
+  public int getQty(){
+    int input = 0;
     Scanner sc = new Scanner(System.in);
     do {
-      System.out.println("Enter quantity of stocks");
+      System.out.println("Enter quantity of stocks: ");
       String s = sc.nextLine();
       try {
         input = Integer.parseInt(s);
+        if(input<=0){
+          System.out.println("Quantity should be a positive value!");
+        }
       } catch (NumberFormatException e) {
-        System.out.println("Quantity should be an integer value");
+        System.out.println("Quantity should be an integer value!");
       }
-    } while (input == null);
+    } while (input <= 0);
 
     return input;
   }
@@ -54,13 +57,13 @@ public class View {
 
   public String getPortfolioName() {
     Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your portfolio name");
+    System.out.println("Enter your portfolio name: ");
     return sc.nextLine();
   }
 
   public String getFileName() {
     Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your file name");
+    System.out.println("Enter your file name (with extension): ");
     return sc.nextLine();
   }
 
@@ -74,6 +77,10 @@ public class View {
     System.out.println(result);
   }
 
+  public void displayExceptions(String exception) {
+    System.out.println(exception);
+  }
+
   public void invalidDate() {
     System.out.println("Date is not in proper format!!");
   }
@@ -81,16 +88,21 @@ public class View {
   public void seeDefault() {
     System.out.println("Invalid input. Please try again!");
   }
-  public void getLoadPortfolio(String output){
+
+  public void getLoadPortfolio(String output) {
     System.out.println(output);
   }
-  public String getName(){
+
+  public String getName() {
     System.out.println("Please Enter your name:");
-    Scanner s=new Scanner(System.in);
+    Scanner s = new Scanner(System.in);
     return s.nextLine();
   }
 
-  public void displayName(String name){
-    System.out.println("Welcome "+name+" !!\nPlease select an option from the menu!!\n");
+  public void displayName(String name) {
+    System.out.println("Welcome " + name + " !!\nPlease select an option from the menu!!\n");
+  }
+  public void alreadyExists(){
+    System.out.println("The entered portfolio already exists. Try a different name!");
   }
 }

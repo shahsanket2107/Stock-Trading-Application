@@ -1,5 +1,10 @@
 package model;
 
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,6 +27,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.xml.sax.SAXException;
 
 public class UserImpl implements User {
 
@@ -62,7 +68,8 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void createPortfolio(String portfolioName, Map<String, Integer> stocks) {
+  public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
+      throws IllegalArgumentException {
     String fileName = "portfolio.xml";
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
@@ -90,26 +97,41 @@ public class UserImpl implements User {
       for (Map.Entry<String, Integer> entry : stocks.entrySet()) {
         perform(doc, portfolio, entry.getKey(), String.valueOf(entry.getValue()));
       }
+      try {
+        writeXMLHelper(doc);
+      } catch (TransformerConfigurationException e) {
+        throw new IllegalArgumentException("Error in writing to xml file!!");
+      }
+    } catch (ParserConfigurationException | IOException | SAXException e) {
+      throw new IllegalArgumentException("Error in parsing xml!!");
+    }
+    portfolio.add(new PortfolioImpl(portfolioName, stocks));
+  }
 
+  private void writeXMLHelper(Document doc) throws TransformerConfigurationException {
+    try {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();
       DOMSource source = new DOMSource(doc);
       StreamResult result = new StreamResult(new File("portfolio.xml"));
       transformer.transform(source, result);
-
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
     }
-    portfolio.add(new PortfolioImpl(portfolioName, stocks));
+
   }
 
 
   @Override
-  public String loadPortfolio(String pfName) {
+  public String loadPortfolio(String pfName) throws IllegalArgumentException {
     try {
       boolean fileExist = fileExists(pfName);
       if (!fileExist) {
         return "Invalid file name. Please try again!";
+      }
+      String[] checkXML = pfName.split("\\.");
+      if (!checkXML[1].equals("xml")) {
+        return "Invalid file format. Only xml files can be loaded!";
       }
       File file = new File(pfName);
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -124,14 +146,15 @@ public class UserImpl implements User {
         Node portfolio = nodeList.item(i);
         loadPortfolioHelper(ticker, qty, m, portfolio);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IOException | SAXException | ParserConfigurationException e) {
+      throw new IllegalArgumentException(
+          "Unable to read xml file!!\n Please check proper xml format and try again!!");
     }
     return "Portfolio loaded successfully!";
   }
 
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-                                   Map<String, Integer> m, Node portfolio) {
+      Map<String, Integer> m, Node portfolio) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -218,7 +241,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-              "Date cannot be greater or equal to current date. Try a different date");
+          "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -231,7 +254,7 @@ public class UserImpl implements User {
         temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(p.getValuationAtDate(date));
+            .append(p.getValuationAtDate(date));
         temp.append("\n\n");
       }
     }
@@ -264,8 +287,21 @@ public class UserImpl implements User {
       }
     }
     if (flg == 0) {
-      temp.append("The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+      temp.append(
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
+  }
+
+  @Override
+  public boolean checkPortfolioExists(String pName) {
+    int flg = 0;
+    for (Portfolio value : this.portfolio) {
+      if (value.getName().equals(pName)) {
+        flg = 1;
+        break;
+      }
+    }
+    return flg == 1;
   }
 }

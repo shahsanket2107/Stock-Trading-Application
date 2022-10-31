@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<portfolios>
-    <portfolio name="school_savings">
-        <stocks parameter="ticker">aapl</stocks>
-        <stocks parameter="quantity">123</stocks>
-        <stocks parameter="ticker">googl</stocks>
-        <stocks parameter="quantity">24</stocks>
-        <stocks parameter="ticker">tsla</stocks>
-        <stocks parameter="quantity">45</stocks>
-    </portfolio>
-    <portfolio name="college_savings">
-        <stocks parameter="ticker">AMZN</stocks>
-        <stocks parameter="quantity">22</stocks>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><portfolios>
+        
+    <portfolio name="p1">
+                
         <stocks parameter="ticker">GOOGL</stocks>
-        <stocks parameter="quantity">33</stocks>
-    </portfolio>
-    <portfolio name="retirement">
-        <stocks parameter="ticker">GOOGL</stocks>
-        <stocks parameter="quantity">50</stocks>
+                
+        <stocks parameter="quantity">30</stocks>
+                
         <stocks parameter="ticker">AAPL</stocks>
-        <stocks parameter="quantity">23</stocks>
+                
+        <stocks parameter="quantity">20</stocks>
+            
     </portfolio>
-</portfolios>
+    
+    <portfolio name="p2">
+        <stocks parameter="ticker">TSLA</stocks>
+        <stocks parameter="quantity">100</stocks>
+    </portfolio>
+<portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">2</stocks></portfolio><portfolio name="p3"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p4"/></portfolios>

@@ -65,7 +65,15 @@ public class UserControllerImpl implements UserController {
       switch (scan.next()) {
         case "1":
           String portfolioName = view.getPortfolioName();
-          user.createPortfolio(portfolioName, perform());
+          while (user.checkPortfolioExists(portfolioName)) {
+            view.alreadyExists();
+            portfolioName = view.getPortfolioName();
+          }
+          try {
+            user.createPortfolio(portfolioName, perform());
+          } catch (IllegalArgumentException e) {
+            view.displayExceptions(e.getMessage());
+          }
           break;
         case "2":
           String p_name = view.getPortfolioName();
@@ -93,8 +101,12 @@ public class UserControllerImpl implements UserController {
           break;
         case "5":
           String pfName = view.getFileName();
-          String output = user.loadPortfolio(pfName);
-          view.getLoadPortfolio(output);
+          try {
+            String output = user.loadPortfolio(pfName);
+            view.getLoadPortfolio(output);
+          } catch (IllegalArgumentException e) {
+            view.displayExceptions(e.getMessage());
+          }
           break;
         case "q":
           return;
