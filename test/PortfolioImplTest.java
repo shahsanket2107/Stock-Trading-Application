@@ -26,7 +26,6 @@ public class PortfolioImplTest {
     stocks = new HashMap<>();
     stocks.put("aapl", 25);
     p = new PortfolioImpl(name, stocks);
-    stocks.put("ticker", 10);
   }
 
   /**

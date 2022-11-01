@@ -12,6 +12,12 @@ import model.UserImpl;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * In this test class we test the UserImpl model. We test various methods that are used by the user
+ * like createPortfolio,loadPortfolio, getPortfolioNames, getPortfolioComposition etc. For invalid
+ * this class only tests those invalid inputs that are handled in this UserImpl class. Some
+ * invalid inputs are invalidated at view so those are tested there.
+ */
 public class UserImplTest {
   private String name;
   private User u;
@@ -61,8 +67,7 @@ public class UserImplTest {
     m.put("zs", 13);
     m.put("amzn", 3);
     u1.createPortfolio("testNewPortfolio", m);
-    assertEquals("The list of portfolios is:\n" +
-            "testNewPortfolio\n", u1.getPortfoliosName().toString());
+    assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
     assertEquals("Portfolio_Name: testNewPortfolio\n" +
             "{\n" +
             "\tStock_Ticker: tsla\n" +
@@ -82,13 +87,11 @@ public class UserImplTest {
   @Test
   public void testValidCreatePortfolioForUserWithExistingPortfolios() {
     Map<String, Integer> m = new HashMap<>();
-    User u1 = new UserImpl();
     m.put("tsla", 10);
     m.put("zs", 13);
     m.put("amzn", 3);
-    u1.createPortfolio("testNewPortfolio", m);
-    assertEquals("The list of portfolios is:\n" +
-            "testNewPortfolio\n", u1.getPortfoliosName().toString());
+    u.createPortfolio("testNewPortfolio", m);
+    assertEquals(true, u.checkPortfolioExists("testNewPortfolio"));
     assertEquals("Portfolio_Name: testNewPortfolio\n" +
             "{\n" +
             "\tStock_Ticker: tsla\n" +
@@ -102,7 +105,20 @@ public class UserImplTest {
             "\tStock_Ticker: amzn\n" +
             "\tQuantity: 3\n" +
             "}\n" +
-            "\n\n", u1.getPortfolioComposition("testNewPortfolio").toString());
+            "\n\n", u.getPortfolioComposition("testNewPortfolio").toString());
+  }
+
+  @Test
+  public void testWritingToFileOnSuccessfulCreationOfPortfolio() {
+    Map<String, Integer> m = new HashMap<>();
+    User u1 = new UserImpl("Sanket", new ArrayList<>());
+    m.put("tsla", 10);
+    m.put("zs", 13);
+    m.put("amzn", 3);
+    u1.createPortfolio("testNewPortfolio", m);
+    assertEquals("Portfolio loaded successfully!",
+            u1.loadPortfolio("Sanket_portfolios.xml"));
+    assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
   }
 
   @Test

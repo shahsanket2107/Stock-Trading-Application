@@ -36,10 +36,10 @@ public class StocksImpl implements Stocks {
     URL url = null;
     try {
       url = new URL("https://www.alphavantage"
-          + ".co/query?function=TIME_SERIES_DAILY"
-          + "&outputsize=full"
-          + "&symbol"
-          + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
+              + ".co/query?function=TIME_SERIES_DAILY"
+              + "&outputsize=full"
+              + "&symbol"
+              + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
     } catch (MalformedURLException e) {
       throw new IllegalArgumentException("Malformed URL Exception!!");
     }
@@ -55,6 +55,15 @@ public class StocksImpl implements Stocks {
         output.append((char) b);
       }
       int index = output.indexOf(date);
+      int error_message = output.indexOf("Error Message");
+      int max_limit = output.indexOf("Note");
+
+      if (error_message != -1) {
+        throw new IllegalArgumentException("Invalid Ticker Symbol!!");
+      }
+      if (max_limit != -1) {
+        throw new IllegalArgumentException("Max limit of 5 API calls per min. reached!!");
+      }
       if (index == -1) {
         throw new IllegalArgumentException("Data for given parameter does not exist!!");
       }

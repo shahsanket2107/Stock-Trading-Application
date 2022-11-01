@@ -35,6 +35,7 @@ public class StocksImplTest {
     double price = 227.54;
     double ans = price * qty;
     assertEquals(ans, s.getValuationFromDate(25, "2022-10-31"), 0.00);
+
   }
 
   @Test(expected = IllegalArgumentException.class)
