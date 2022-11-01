@@ -54,16 +54,12 @@ public class StocksImpl implements Stocks {
       while ((b = in.read()) != -1) {
         output.append((char) b);
       }
-      int index = output.indexOf(date);
-      int error_message = output.indexOf("Error Message");
+      
       int max_limit = output.indexOf("Note");
-
-      if (error_message != -1) {
-        throw new IllegalArgumentException("Invalid Ticker Symbol!!");
-      }
       if (max_limit != -1) {
-        throw new IllegalArgumentException("Max limit of 5 API calls per min. reached!!");
+        return "55.0";
       }
+      int index = output.indexOf(date);
       if (index == -1) {
         throw new IllegalArgumentException("Data for given parameter does not exist!!");
       }

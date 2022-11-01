@@ -13,9 +13,10 @@ public interface Portfolio {
    * which calls the AlphaVantage api and fetches the closing value of stocks.
    *
    * @param date the date at which you want to find the value
-   * @return the value of portfolio at that particular date
+   * @return a map containing the stock ticker mapped to it's value based on the quantity at that
+   * date.
    */
-  double getValuationAtDate(String date);
+  Map<String, Double> getValuationAtDate(String date);
 
   /**
    * This function returns the name of portfolio.

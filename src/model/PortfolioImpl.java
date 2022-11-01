@@ -1,8 +1,6 @@
 package model;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,18 +26,15 @@ public class PortfolioImpl implements Portfolio {
   }
 
   @Override
-  public double getValuationAtDate(String date) {
+  public Map<String, Double> getValuationAtDate(String date) throws IllegalArgumentException {
     Map<String, Integer> stock = this.stocks;
-    List<Double> temp = new ArrayList<>();
+    Map<String, Double> m = new HashMap<>();
     stock.forEach((k, v) -> {
       Stocks s = new StocksImpl(k);
-      temp.add(s.getValuationFromDate(v, date));
+      double ans = s.getValuationFromDate(v, date);
+      m.put(k, ans);
     });
-    double ans = 0;
-    for (double i : temp) {
-      ans += i;
-    }
-    return ans;
+    return m;
   }
 
   @Override

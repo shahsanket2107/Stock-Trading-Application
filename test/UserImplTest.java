@@ -121,20 +121,77 @@ public class UserImplTest {
     assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testAlreadyExistingPortfolio() {
+    Map<String, Integer> m = new HashMap<>();
+    m.put("tsla", 10);
+    m.put("zs", 13);
+    m.put("amzn", 3);
+    u.createPortfolio("testNewPortfolio", m);
+    Map<String, Integer> m2 = new HashMap<>();
+    m2.put("tsla", 10);
+    m2.put("zs", 13);
+    u.createPortfolio("testNewPortfolio", m2);
+  }
+
   @Test
   public void testLoadPortfolio() {
+    assertEquals("Portfolio loaded successfully!",
+            u.loadPortfolio("portfolio.xml"));
+  }
+
+  @Test
+  public void testLoadPortfolioFailDueTOInvalidName() {
+    assertEquals("Invalid file name. Please try again!",
+            u.loadPortfolio("NotExistingPortfolio.xml"));
+  }
+
+  @Test
+  public void testLoadPortfolioFailDueTOInvalidType() {
+    assertEquals("Invalid file format. Only xml files can be loaded!",
+            u.loadPortfolio("pf.txt"));
   }
 
   @Test
   public void testIfStocksExist() {
+    assertEquals(true, u.ifStocksExist("aapl"));
+    assertEquals(true, u.ifStocksExist("zs"));
+    assertEquals(true, u.ifStocksExist("amzn"));
+    assertEquals(true, u.ifStocksExist("googl"));
+    assertEquals(false, u.ifStocksExist("test"));
+    assertEquals(false, u.ifStocksExist("invalid"));
+    assertEquals(false, u.ifStocksExist("dummy"));
   }
 
   @Test
   public void testIsValidFormat() {
+    assertEquals(true, u.isValidFormat("2022-11-01"));
+    assertEquals(false, u.isValidFormat("2022-11-1"));
+    assertEquals(false, u.isValidFormat("2022/11/01"));
+    assertEquals(false, u.isValidFormat("1-11-2022"));
+    assertEquals(false, u.isValidFormat("1-11-22"));
+    assertEquals(false, u.isValidFormat("2022-18-2"));
+    assertEquals(false, u.isValidFormat("2022-8-40"));
+    assertEquals(false, u.isValidFormat("2022-18-60"));
   }
 
   @Test
-  public void testGetTotalValuation() {
+  public void testGetTotalValuationForPortFolio1() {
+    assertEquals("Portfolio_Name: test_portfolio_single_stock\n" +
+            "Portfolio_Valuation at 2022-10-28 is : $ 3114.8\n" +
+            "The stock valuation breakdown is: \n" +
+            "aapl : $3114.8\n", u.getTotalValuation("2022-10-28",
+            "test_portfolio_single_stock").toString());
+  }
+
+  @Test
+  public void testGetTotalValuationForPortFolio2() {
+    assertEquals("Portfolio_Name: test_portfolio_two_stock\n" +
+            "Portfolio_Valuation at 2022-10-28 is : $ 3596.25\n" +
+            "The stock valuation breakdown is: \n" +
+            "aapl : $3114.8\n" +
+            "googl : $481.45000000000005\n", u.getTotalValuation("2022-10-28",
+            "test_portfolio_two_stock").toString());
   }
 
   @Test
@@ -189,6 +246,5 @@ public class UserImplTest {
     assertEquals(true, u.checkPortfolioExists("test_portfolio_two_stock"));
     assertEquals(true, u.checkPortfolioExists("test_portfolio_three_stock"));
     assertEquals(false, u.checkPortfolioExists("Not_existing_portfolio"));
-
   }
 }
