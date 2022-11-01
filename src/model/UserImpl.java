@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -79,6 +80,9 @@ public class UserImpl implements User {
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
           throws IllegalArgumentException {
+    if (checkPortfolioExists(portfolioName)) {
+      throw new IllegalArgumentException("Portfolio with the given name already exists!!");
+    }
     String fileName = this.name + "_portfolios.xml";
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
@@ -217,7 +221,7 @@ public class UserImpl implements User {
         break;
       }
     }
-    return !flag;
+    return flag;
   }
 
   /**
@@ -269,7 +273,7 @@ public class UserImpl implements User {
         date = null;
       }
     } catch (ParseException ex) {
-      ex.printStackTrace();
+      return false;
     }
     return date != null;
   }
@@ -294,15 +298,27 @@ public class UserImpl implements User {
       if (p.getName().equals(pName)) {
         temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
+        Map<String, Double> m = p.getValuationAtDate(date);
+        Double ans = computeValue(m);
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(p.getValuationAtDate(date));
-        temp.append("\n\n");
+                .append(ans);
+        temp.append("\n");
+        temp.append("The stock valuation breakdown is: \n");
+        m.forEach((k, v) -> {
+          temp.append(k + " : $" + v + "\n");
+        });
       }
     }
     if (temp.toString().equals("")) {
       temp.append("Given portfolio doesn't exist!!");
     }
     return temp;
+  }
+
+  private double computeValue(Map<String, Double> m) {
+    AtomicReference<Double> ans = new AtomicReference<>((double) 0);
+    m.forEach((k, v) -> ans.updateAndGet(v1 -> v1 + v));
+    return ans.get();
   }
 
   @Override

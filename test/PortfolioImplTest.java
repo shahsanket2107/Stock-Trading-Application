@@ -28,39 +28,25 @@ public class PortfolioImplTest {
     p = new PortfolioImpl(name, stocks);
   }
 
-  /**
-   * This method tests for 25 apple shares at 28 Oct 2022.
-   */
-  @Test
-  public void testGetValuationAtDateForSingleStockPortfolio() {
-    int qty = 25;
-    double price = 155.74;
-    double ans = price * qty;
-    assertEquals(ans, p.getValuationAtDate("2022-10-28"), 0.00);
-  }
-
-  /**
-   * This method tests for 25 Apple and 25 Tesla shares at 28 Oct 2011.
-   */
   @Test
   public void testGetValuationAtDateForTwoStockPortfolio() {
     int qty1 = 25;
     double price1 = 155.74;
     double temp1 = price1 * qty1;
-
     stocks.put("tsla", 25);
+
     Portfolio p2 = new PortfolioImpl(name, stocks);
     int qty2 = 25;
     double price2 = 228.52;
     double temp2 = price2 * qty2;
 
-    double ans = temp1 + temp2;
-    assertEquals(ans, p2.getValuationAtDate("2022-10-28"), 0.00);
+    Map<String, Double> check = new HashMap<>();
+    check.put("aapl", temp1);
+    check.put("tsla", temp2);
+    Map<String, Double> m = p2.getValuationAtDate("2022-10-28");
+    assertEquals(m.toString(), check.toString());
   }
 
-  /**
-   * This method tests for 25 Apple, 25 Tesla and 10 Amazon shares at 28 Oct 2011.
-   */
   @Test
   public void testGetValuationAtDateForThreeStockPortfolio() {
     int qty1 = 25;
@@ -78,8 +64,12 @@ public class PortfolioImplTest {
     double price3 = 103.41;
     double temp3 = price3 * qty3;
 
-    double ans = temp1 + temp2 + temp3;
-    assertEquals(ans, p2.getValuationAtDate("2022-10-28"), 0.00);
+    Map<String, Double> check = new HashMap<>();
+    check.put("aapl", temp1);
+    check.put("tsla", temp2);
+    check.put("amzn", temp3);
+    Map<String, Double> m = p2.getValuationAtDate("2022-10-28");
+    assertEquals(m.toString(), check.toString());
   }
 
   @Test

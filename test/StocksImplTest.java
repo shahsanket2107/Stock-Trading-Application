@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import model.Stocks;
@@ -10,6 +11,12 @@ import static org.junit.Assert.assertEquals;
  * passing in static values of quantity, ticker and date for valid as well as invalid inputs.
  */
 public class StocksImplTest {
+  private Stocks s;
+
+  @Before
+  public void setup() {
+    s = new StocksImpl("AAPL");
+  }
 
   /**
    * In this test we assume and test the valuation of 25 shares of apple on 28th October 2022.
@@ -17,7 +24,6 @@ public class StocksImplTest {
    */
   @Test
   public void testGetValuationFromDate28Oct() {
-    Stocks s = new StocksImpl("AAPL");
     int qty = 25;
     double price = 155.74;
     double ans = price * qty;
@@ -30,47 +36,11 @@ public class StocksImplTest {
    */
   @Test
   public void testGetValuationFromDate31Oct() {
-    Stocks s = new StocksImpl("tsla");
+    Stocks s1 = new StocksImpl("tsla");
     int qty = 25;
     double price = 227.54;
     double ans = price * qty;
-    assertEquals(ans, s.getValuationFromDate(25, "2022-10-31"), 0.00);
+    assertEquals(ans, s1.getValuationFromDate(25, "2022-10-31"), 0.00);
 
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidTicker() {
-    Stocks s = new StocksImpl("tony");
-    int qty = 25;
-    double price = 155.74;
-    double ans = price * qty;
-    assertEquals(ans, s.getValuationFromDate(25, "2022-10-28"), 0.00);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidFutureDate() {
-    Stocks s = new StocksImpl("AAPL");
-    int qty = 25;
-    double price = 155.74;
-    double ans = price * qty;
-    assertEquals(ans, s.getValuationFromDate(25, "2022-12-3"), 0.00);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidWeekendDate() {
-    Stocks s = new StocksImpl("AAPL");
-    int qty = 25;
-    double price = 155.74;
-    double ans = price * qty;
-    assertEquals(ans, s.getValuationFromDate(25, "2022-10-29"), 0.00);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidDateFormat() {
-    Stocks s = new StocksImpl("AAPL");
-    int qty = 25;
-    double price = 155.74;
-    double ans = price * qty;
-    assertEquals(ans, s.getValuationFromDate(25, "21-10-2022"), 0.00);
   }
 }
