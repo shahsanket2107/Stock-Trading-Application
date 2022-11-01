@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class has all the functions of Portfolio model. The portfolio contains stocks, so this class
+ * also uses stock object to call Stock methods.
+ */
+
 public class PortfolioImpl implements Portfolio {
 
   private final String name;

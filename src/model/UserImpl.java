@@ -1,16 +1,7 @@
 package model;
 
-import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -19,14 +10,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+/**
+ * This class has all the functions of user model. As the user has a portfolio, this class has a
+ * portfolio object which calls its methods. This class is called by the controller.
+ */
 
 public class UserImpl implements User {
 
@@ -129,7 +132,6 @@ public class UserImpl implements User {
     } catch (TransformerException e) {
       throw new RuntimeException(e);
     }
-
   }
 
 
@@ -150,6 +152,9 @@ public class UserImpl implements User {
       Document doc = db.parse(file);
       doc.getDocumentElement().normalize();
       NodeList nodeList = doc.getElementsByTagName("portfolio");
+      if (nodeList.getLength() == 0) {
+        throw new IllegalArgumentException("Parsed XML file has no portfolio associated with it!!");
+      }
       for (int i = 0; i < nodeList.getLength(); i++) {
         Map<String, Integer> m = new HashMap<>();
         ArrayList<String> ticker = new ArrayList<>();

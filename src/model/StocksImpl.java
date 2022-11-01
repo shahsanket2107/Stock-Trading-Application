@@ -5,6 +5,10 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * This class has all the functions of Stock model. The alpha vantage API is also called in this
+ * class to fetch the stock values.
+ */
 public class StocksImpl implements Stocks {
 
   private final String ticker;

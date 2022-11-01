@@ -62,9 +62,16 @@ public class ViewImpl implements View {
 
   @Override
   public String getPortfolioName() {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your portfolio name: ");
-    return sc.nextLine();
+    String pName;
+    do {
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Enter your portfolio name: ");
+       pName = sc.nextLine();
+       if(pName.equals("")){
+         System.out.println("Portfolio name cannot be empty!");
+       }
+    }while(pName.equals(""));
+    return pName;
   }
 
   @Override
