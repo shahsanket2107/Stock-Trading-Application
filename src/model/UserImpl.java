@@ -2,7 +2,6 @@ package model;
 
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.w3c.dom.Attr;
@@ -37,6 +36,11 @@ public class UserImpl implements User {
   public UserImpl() {
     this.name = "John Doe";
     this.portfolio = new ArrayList<>();
+  }
+
+  public UserImpl(String name, ArrayList<Portfolio> portfolio) {
+    this.name = name;
+    this.portfolio = portfolio;
   }
 
   @Override
@@ -108,6 +112,13 @@ public class UserImpl implements User {
     portfolio.add(new PortfolioImpl(portfolioName, stocks));
   }
 
+  /**
+   * This function is a helper function for writing to xml file
+   *
+   * @param doc the dom parser for xml
+   * @throws TransformerConfigurationException if there is an error in xml syntax.
+   */
+
   private void writeXMLHelper(Document doc) throws TransformerConfigurationException {
     try {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -153,6 +164,14 @@ public class UserImpl implements User {
     return "Portfolio loaded successfully!";
   }
 
+  /**
+   * This function is a helper function for loading portfolio.
+   *
+   * @param ticker    The ticker of stocks in the portfolio.
+   * @param qty       The quantities of stocks in portfolio.
+   * @param m         the map mapping the ticker to quantity.
+   * @param portfolio XML parsing node passed to helper method to write portfolio to xml file.
+   */
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
       Map<String, Integer> m, Node portfolio) {
     String name;
@@ -191,9 +210,19 @@ public class UserImpl implements User {
         break;
       }
     }
-    return flag;
+    return !flag;
   }
 
+  /**
+   * This is a helper function which writes xml file in the form of tags of portfolio, ticker and
+   * quantity
+   *
+   * @param doc       the xml document where the portfolio is to be written.
+   * @param portfolio it's the element or the child of root element which stores tickers and
+   *                  quantities of various stocks.
+   * @param ticker    the ticker of stock
+   * @param qty       the quantity of stock
+   */
   private void perform(Document doc, Element portfolio, String ticker, String qty) {
     Element stocks = doc.createElement("stocks");
     Attr attrType = doc.createAttribute("parameter");
@@ -210,7 +239,12 @@ public class UserImpl implements User {
     portfolio.appendChild(stocks1);
   }
 
-
+  /**
+   * This function is used to check if the file exists or not
+   *
+   * @param filePath the filePath which needed to be checked if it exists or not
+   * @return true if the filepath exists and false otherwise.
+   */
   private boolean fileExists(String filePath) {
     if (new File(filePath).isFile()) {
       return new File(filePath).exists();

@@ -6,30 +6,39 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class StocksImpl implements Stocks {
-  final String ticker;
+
+  private final String ticker;
 
   public StocksImpl(String ticker) {
     this.ticker = ticker;
   }
 
   @Override
-  public double getValuationFromDate(int quantity, String date) throws IOException {
+  public double getValuationFromDate(int quantity, String date) throws IllegalArgumentException {
     String temp = getClosingValue(date);
-    double closing_value = Double.valueOf(temp);
+    double closing_value = Double.parseDouble(temp);
     return closing_value * quantity;
   }
 
-  private String getClosingValue(String date) throws IOException, IllegalArgumentException {
+  /**
+   * This function hits the api to fetch the closing value of a ticker at a particulare date.
+   *
+   * @param date the date at which we need to find the value
+   * @return the closing value of that ticker on inputted date.
+   * @throws IllegalArgumentException if url is unable to fetch data or the data for given date does
+   *                                  not exist.
+   */
+  private String getClosingValue(String date) throws IllegalArgumentException {
     String apiKey = "FHA1IC5A17Q0SPLG";
     URL url = null;
     try {
       url = new URL("https://www.alphavantage"
-              + ".co/query?function=TIME_SERIES_DAILY"
-              + "&outputsize=full"
-              + "&symbol"
-              + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
+          + ".co/query?function=TIME_SERIES_DAILY"
+          + "&outputsize=full"
+          + "&symbol"
+          + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
     } catch (MalformedURLException e) {
-      throw new MalformedURLException("Malformed URL Exception!!");
+      throw new IllegalArgumentException("Malformed URL Exception!!");
     }
 
     InputStream in = null;
@@ -44,7 +53,7 @@ public class StocksImpl implements Stocks {
       }
       int index = output.indexOf(date);
       if (index == -1) {
-        throw new IllegalArgumentException("Data for given date does not exist!!");
+        throw new IllegalArgumentException("Data for given parameter does not exist!!");
       }
       int endIndex = output.indexOf("\n", index);
 
@@ -55,7 +64,7 @@ public class StocksImpl implements Stocks {
       String closeValue = res[4];
       return closeValue;
     } catch (IOException e) {
-      return "Unable to fetch URL right now!!";
+      throw new IllegalArgumentException("Unable to fetch URL right now!!");
     }
   }
 }
