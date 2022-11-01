@@ -1,12 +1,5 @@
 package model;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +19,17 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+/**
+ * This class has all the functions of user model. As the user has a portfolio, this class has a
+ * portfolio object which calls its methods. This class is called by the controller.
+ */
 
 public class UserImpl implements User {
 
@@ -73,7 +76,7 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     String fileName = "portfolio.xml";
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
@@ -111,6 +114,13 @@ public class UserImpl implements User {
     }
     portfolio.add(new PortfolioImpl(portfolioName, stocks));
   }
+
+  /**
+   * This function is a helper function for writing to xml file
+   *
+   * @param doc the dom parser for xml
+   * @throws TransformerConfigurationException if there is an error in xml syntax.
+   */
 
   private void writeXMLHelper(Document doc) throws TransformerConfigurationException {
     try {
@@ -154,13 +164,21 @@ public class UserImpl implements User {
       }
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new IllegalArgumentException(
-              "Unable to read xml file!!\n Please check proper xml format and try again!!");
+          "Unable to read xml file!!\n Please check proper xml format and try again!!");
     }
     return "Portfolio loaded successfully!";
   }
 
+  /**
+   * This function is a helper function for loading portfolio.
+   *
+   * @param ticker    The ticker of stocks in the portfolio.
+   * @param qty       The quantities of stocks in portfolio.
+   * @param m         the map mapping the ticker to quantity.
+   * @param portfolio XML parsing node passed to helper method to write portfolio to xml file.
+   */
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-                                   Map<String, Integer> m, Node portfolio) {
+      Map<String, Integer> m, Node portfolio) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -197,9 +215,19 @@ public class UserImpl implements User {
         break;
       }
     }
-    return flag;
+    return !flag;
   }
 
+  /**
+   * This is a helper function which writes xml file in the form of tags of portfolio, ticker and
+   * quantity
+   *
+   * @param doc       the xml document where the portfolio is to be written.
+   * @param portfolio it's the element or the child of root element which stores tickers and
+   *                  quantities of various stocks.
+   * @param ticker    the ticker of stock
+   * @param qty       the quantity of stock
+   */
   private void perform(Document doc, Element portfolio, String ticker, String qty) {
     Element stocks = doc.createElement("stocks");
     Attr attrType = doc.createAttribute("parameter");
@@ -216,7 +244,12 @@ public class UserImpl implements User {
     portfolio.appendChild(stocks1);
   }
 
-
+  /**
+   * This function is used to check if the file exists or not
+   *
+   * @param filePath the filePath which needed to be checked if it exists or not
+   * @return true if the filepath exists and false otherwise.
+   */
   private boolean fileExists(String filePath) {
     if (new File(filePath).isFile()) {
       return new File(filePath).exists();
@@ -247,7 +280,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-              "Date cannot be greater or equal to current date. Try a different date");
+          "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -260,7 +293,7 @@ public class UserImpl implements User {
         temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(p.getValuationAtDate(date));
+            .append(p.getValuationAtDate(date));
         temp.append("\n\n");
       }
     }
@@ -294,7 +327,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }

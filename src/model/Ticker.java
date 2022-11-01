@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This is an enum class consisting of ticker symbols of all the stocks listed in NASDAQ 100. So we
+ * can check the validity that any ticker not defined in this enum would be invalid.
+ */
 public enum Ticker {
   AMD,
   ADBE,

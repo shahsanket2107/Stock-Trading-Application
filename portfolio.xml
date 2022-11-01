@@ -16,4 +16,4 @@
         <stocks parameter="ticker">TSLA</stocks>
         <stocks parameter="quantity">100</stocks>
     </portfolio>
-<portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">2</stocks></portfolio><portfolio name="p3"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p4"/></portfolios>
+<portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">2</stocks></portfolio><portfolio name="p3"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p4"/><portfolio name="p4"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">7000</stocks></portfolio></portfolios>

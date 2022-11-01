@@ -5,21 +5,38 @@ import java.util.Map;
 import java.util.Scanner;
 
 import model.User;
-import view.View;
+import view.ViewImpl;
 
 public class UserControllerImpl implements UserController {
 
   private final Readable in;
   private final Appendable out;
   private final User user;
-  private final View view;
+  private final ViewImpl view;
 
-  public UserControllerImpl(Readable in, Appendable out, User user, View view) {
+  /**
+   * This is the constructor for UserControllerImpl which initializes user model and view along with
+   * Readable in and appendable out for reading and writing.
+   *
+   * @param in   Used for reading input.
+   * @param out  Used for writing output.
+   * @param user Object of User model.
+   * @param view Object of view class.
+   */
+  public UserControllerImpl(Readable in, Appendable out, User user, ViewImpl view) {
     this.in = in;
     this.out = out;
     this.user = user;
     this.view = view;
   }
+
+  /**
+   * This is a helper method for creating portfolio which takes the ticker of stock and the quantity
+   * which the user wants to add to his portfolio. He can add as many stocks as he wants and he can
+   * quit adding by entering q.
+   *
+   * @return A map of Stock's sticker symbol mapped to its quantity.
+   */
 
   private Map<String, Integer> perform() {
 
@@ -30,8 +47,8 @@ public class UserControllerImpl implements UserController {
       switch (scan.next()) {
         case "1" -> {
           String ticker = view.getTicker();
-          if (!user.ifStocksExist(ticker)) {
-            while (!user.ifStocksExist(ticker)) {
+          if (user.ifStocksExist(ticker)) {
+            while (user.ifStocksExist(ticker)) {
               view.invalidTicker();
               ticker = view.getTicker();
             }
@@ -49,6 +66,7 @@ public class UserControllerImpl implements UserController {
         case "q" -> {
           return stocks;
         }
+        default -> view.seeDefault();
       }
     }
   }

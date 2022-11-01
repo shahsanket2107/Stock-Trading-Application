@@ -1,108 +1,120 @@
 package view;
 
-import java.util.Scanner;
+public interface View {
 
-public class View {
+  /**
+   * This function views the composition of the portfolio.
+   *
+   * @param pName the portfolio name whose composition you want to see.
+   */
+  void viewComposition(StringBuilder pName);
 
-  public View() {
-  }
+  /**
+   * This function prints the menu which gives user options to choose.
+   */
 
-  public void viewComposition(StringBuilder composition) {
-    System.out.println(composition);
-  }
+  void getMenu();
 
-  public void getMenu() {
-    System.out.println();
-    System.out.println("Enter 1 for making portfolio");
-    System.out.println("Enter 2 to examine the composition of a particular portfolio");
-    System.out.println("Enter 3 to determine the total value of portfolio on a certain date");
-    System.out.println("Enter 4 to view all portfolio names");
-    System.out.println("Enter 5 to load your portfolio");
-    System.out.println("Enter q to exit");
-  }
+  /**
+   * This function gives user option to add stocks or return to main menu.
+   */
+  void getAddStockMenu();
 
-  public void getAddStockMenu() {
-    System.out.println("Enter 1 to add stocks to your portfolio");
-    System.out.println("Enter q to exit");
-  }
+  /**
+   * This function takes the ticker symbol of stock as an input from user.
+   *
+   * @return the ticker which user inputted.
+   */
+  String getTicker();
 
-  public String getTicker() {
-    System.out.println("Enter ticker of stock you want to add to the portfolio: ");
-    Scanner scan = new Scanner(System.in);
-    return scan.nextLine();
-  }
+  /**
+   * This function takes the quantity of stocks as input from user.
+   *
+   * @return the quantity which user inputted.
+   */
+  int getQty();
 
-  public int getQty(){
-    int input = 0;
-    Scanner sc = new Scanner(System.in);
-    do {
-      System.out.println("Enter quantity of stocks: ");
-      String s = sc.nextLine();
-      try {
-        input = Integer.parseInt(s);
-        if(input<=0){
-          System.out.println("Quantity should be a positive value!");
-        }
-      } catch (NumberFormatException e) {
-        System.out.println("Quantity should be an integer value!");
-      }
-    } while (input <= 0);
+  /**
+   * This function displays error message if the inputted ticker is invalid.
+   */
+  void invalidTicker();
 
-    return input;
-  }
+  /**
+   * This function takes the name of portfolio as input from user.
+   *
+   * @return the name of portfolio which user inputted.
+   */
 
-  public void invalidTicker() {
-    System.out.println("This ticker does not exist!! Please enter a valid ticker");
-  }
+  String getPortfolioName();
 
-  public String getPortfolioName() {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your portfolio name: ");
-    return sc.nextLine();
-  }
+  /**
+   * This function takes the file name/path as input from the user.
+   *
+   * @return the file name/path which user inputted
+   */
+  String getFileName();
 
-  public String getFileName() {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your file name (with extension): ");
-    return sc.nextLine();
-  }
+  /**
+   * This function takes the date as input from the user.
+   *
+   * @return the date which user inputted.
+   */
+  String getDate();
 
-  public String getDate() {
-    Scanner s = new Scanner(System.in);
-    System.out.println("Enter the date (in format yyyy-MM-dd): ");
-    return s.nextLine();
-  }
+  /**
+   * This function displays all the portfolio names
+   *
+   * @param result is the string consisting all the portfolio names which need to be displayed.
+   */
 
-  public void displayResult(StringBuilder result) {
-    System.out.println(result);
-  }
+  void displayResult(StringBuilder result);
 
-  public void displayExceptions(String exception) {
-    System.out.println(exception);
-  }
+  /**
+   * This function is used to display exception if the portfolio to be loaded does not exist.
+   *
+   * @param exception the message which needs to be displayed.
+   */
+  void displayExceptions(String exception);
 
-  public void invalidDate() {
-    System.out.println("Date is not in proper format!!");
-  }
+  /**
+   * This function is used to print out a message if the date is not in proper format.
+   */
 
-  public void seeDefault() {
-    System.out.println("Invalid input. Please try again!");
-  }
+  void invalidDate();
 
-  public void getLoadPortfolio(String output) {
-    System.out.println(output);
-  }
+  /**
+   * This function displays the message when user inputs any key which is not mentioned in the
+   * menu.
+   */
 
-  public String getName() {
-    System.out.println("Please Enter your name:");
-    Scanner s = new Scanner(System.in);
-    return s.nextLine();
-  }
+  void seeDefault();
 
-  public void displayName(String name) {
-    System.out.println("Welcome " + name + " !!\nPlease select an option from the menu!!\n");
-  }
-  public void alreadyExists(){
-    System.out.println("The entered portfolio already exists. Try a different name!");
-  }
+  /**
+   * This function displays the message when portfolio is successfully loaded.
+   *
+   * @param output the message which needs to be displayed
+   */
+
+  void getLoadPortfolio(String output);
+
+  /**
+   * This function is used to take name of the user as input.
+   *
+   * @return the name which is inputted by the user
+   */
+  String getName();
+
+  /**
+   * This function displays the message after the user enters his name.
+   *
+   * @param name the name of the user
+   */
+
+  void displayName(String name);
+
+  /**
+   * This function displays the message if the portfolio already exists.
+   */
+  void alreadyExists();
+
 }
