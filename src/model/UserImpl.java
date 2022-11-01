@@ -38,6 +38,11 @@ public class UserImpl implements User {
     this.portfolio = new ArrayList<>();
   }
 
+  public UserImpl(String name, ArrayList<Portfolio> portfolio) {
+    this.name = name;
+    this.portfolio = portfolio;
+  }
+
   @Override
   public String getName() {
     return this.name;

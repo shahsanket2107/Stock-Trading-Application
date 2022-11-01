@@ -6,20 +6,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class StocksImpl implements Stocks {
-  final String ticker;
+  private final String ticker;
 
   public StocksImpl(String ticker) {
     this.ticker = ticker;
   }
 
   @Override
-  public double getValuationFromDate(int quantity, String date) throws IOException {
+  public double getValuationFromDate(int quantity, String date) throws IllegalArgumentException {
     String temp = getClosingValue(date);
     double closing_value = Double.valueOf(temp);
     return closing_value * quantity;
   }
 
-  private String getClosingValue(String date) throws IOException, IllegalArgumentException {
+  private String getClosingValue(String date) throws IllegalArgumentException {
     String apiKey = "FHA1IC5A17Q0SPLG";
     URL url = null;
     try {
@@ -29,7 +29,7 @@ public class StocksImpl implements Stocks {
               + "&symbol"
               + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
     } catch (MalformedURLException e) {
-      throw new MalformedURLException("Malformed URL Exception!!");
+      throw new IllegalArgumentException("Malformed URL Exception!!");
     }
 
     InputStream in = null;
@@ -55,7 +55,7 @@ public class StocksImpl implements Stocks {
       String closeValue = res[4];
       return closeValue;
     } catch (IOException e) {
-      return "Unable to fetch URL right now!!";
+      throw new IllegalArgumentException("Unable to fetch URL right now!!");
     }
   }
 }
