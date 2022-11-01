@@ -1,13 +1,9 @@
 package view;
 
+import java.io.PrintStream;
+
 public interface View {
 
-  /**
-   * This function views the composition of the portfolio.
-   *
-   * @param pName the portfolio name whose composition you want to see.
-   */
-  void viewComposition(StringBuilder pName);
 
   /**
    * This function prints the menu which gives user options to choose.
@@ -16,23 +12,30 @@ public interface View {
   void getMenu();
 
   /**
-   * This function gives user option to add stocks or return to main menu.
+   * This function prints menu to add stocks or return to main menu.
    */
   void getAddStockMenu();
 
   /**
-   * This function takes the ticker symbol of stock as an input from user.
-   *
-   * @return the ticker which user inputted.
+   * This function prints appropriate Input ticker message.
    */
-  String getTicker();
+  void getTicker();
 
   /**
-   * This function takes the quantity of stocks as input from user.
-   *
-   * @return the quantity which user inputted.
+   * This function prints appropriate input quantity message.
    */
-  int getQty();
+  void getQty();
+
+  /**
+   * This function prints appropriate message if quantity passed is negative.
+   */
+
+  void qtyPositive();
+
+  /**
+   * This function prints appropriate message if quantity passed is not an integer.
+   */
+  void qtyInteger();
 
   /**
    * This function displays error message if the inputted ticker is invalid.
@@ -40,41 +43,35 @@ public interface View {
   void invalidTicker();
 
   /**
-   * This function takes the name of portfolio as input from user.
-   *
-   * @return the name of portfolio which user inputted.
+   * This function displays the name of portfolio as input from user.
    */
 
-  String getPortfolioName();
+  void getPortfolioName();
 
   /**
-   * This function takes the file name/path as input from the user.
-   *
-   * @return the file name/path which user inputted
+   * This function displays appropriate message if the portfolio name is empty.
    */
-  String getFileName();
+  void emptyPortfolioMessage();
 
   /**
-   * This function takes the date as input from the user.
-   *
-   * @return the date which user inputted.
+   * This function displays appropriate message while taking the file name/path as input from the
+   * user.
    */
-  String getDate();
+  void getFileName();
 
   /**
-   * This function displays all the portfolio names
-   *
-   * @param result is the string consisting all the portfolio names which need to be displayed.
+   * This function displays appropriate message while taking the date as input from the user.
    */
-
-  void displayResult(StringBuilder result);
+  void getDate();
 
   /**
-   * This function is used to display exception if the portfolio to be loaded does not exist.
+   * This function displays the message which needs to displayed
    *
-   * @param exception the message which needs to be displayed.
+   * @param message is the message which needs to be displayed.
    */
-  void displayExceptions(String exception);
+
+  void displayMessage(String message);
+
 
   /**
    * This function is used to print out a message if the date is not in proper format.
@@ -89,25 +86,14 @@ public interface View {
 
   void seeDefault();
 
-  /**
-   * This function displays the message when portfolio is successfully loaded.
-   *
-   * @param output the message which needs to be displayed
-   */
-
-  void getLoadPortfolio(String output);
 
   /**
    * This function is used to take name of the user as input.
-   *
-   * @return the name which is inputted by the user
    */
-  String getName();
+  void getName();
 
   /**
    * This function displays the message after the user enters his name.
-   *
-   * @param name the name of the user
    */
 
   void displayName(String name);
@@ -116,5 +102,12 @@ public interface View {
    * This function displays the message if the portfolio already exists.
    */
   void alreadyExists();
+
+  /**
+   * This function is a setter method which sets the PrintStream object
+   *
+   * @param out an object of PrintStream.
+   */
+  void setStream(PrintStream out);
 
 }
