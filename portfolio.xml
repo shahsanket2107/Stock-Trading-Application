@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><portfolios>
-        
+
     <portfolio name="p1">
-                
+
         <stocks parameter="ticker">GOOGL</stocks>
-                
+
         <stocks parameter="quantity">30</stocks>
-                
+
         <stocks parameter="ticker">AAPL</stocks>
-                
+
         <stocks parameter="quantity">20</stocks>
-            
+
     </portfolio>
-    
+
     <portfolio name="p2">
         <stocks parameter="ticker">TSLA</stocks>
         <stocks parameter="quantity">100</stocks>
     </portfolio>
-<portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">2</stocks></portfolio><portfolio name="p3"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p1"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">1</stocks></portfolio><portfolio name="p4"/><portfolio name="p4"><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">7000</stocks></portfolio></portfolios>
+    <portfolio name="p1">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">2</stocks>
+    </portfolio>
+    <portfolio name="p3">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">1</stocks>
+    </portfolio>
+    <portfolio name="p1">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">1</stocks>
+    </portfolio>
+    <portfolio name="p4"/>
+    <portfolio name="p4">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">7000</stocks>
+    </portfolio>
+<portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio></portfolios>
