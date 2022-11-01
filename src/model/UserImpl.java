@@ -217,7 +217,7 @@ public class UserImpl implements User {
         break;
       }
     }
-    return !flag;
+    return flag;
   }
 
   /**

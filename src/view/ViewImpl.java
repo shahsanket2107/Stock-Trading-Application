@@ -1,137 +1,122 @@
 package view;
 
-import java.util.Scanner;
+import java.io.PrintStream;
 
 public class ViewImpl implements View {
 
+  PrintStream out;
 
   @Override
-  public void viewComposition(StringBuilder pName) {
-    System.out.println(pName);
+  public void setStream(PrintStream out) {
+    this.out = out;
   }
+
 
   @Override
   public void getMenu() {
-    System.out.println();
-    System.out.println("Enter 1 for making portfolio");
-    System.out.println("Enter 2 to examine the composition of a particular portfolio");
-    System.out.println("Enter 3 to determine the total value of portfolio on a certain date");
-    System.out.println("Enter 4 to view all portfolio names");
-    System.out.println("Enter 5 to load your portfolio");
-    System.out.println("Enter q to exit");
+    this.out.println();
+    this.out.println("Enter 1 for making portfolio");
+    this.out.println("Enter 2 to examine the composition of a particular portfolio");
+    this.out.println("Enter 3 to determine the total value of portfolio on a certain date");
+    this.out.println("Enter 4 to view all portfolio names");
+    this.out.println("Enter 5 to load your portfolio");
+    this.out.println("Enter q to exit");
   }
 
   @Override
   public void getAddStockMenu() {
-    System.out.println("Enter 1 to add stocks to your portfolio");
-    System.out.println("Enter q to exit");
+    this.out.println("Enter 1 to add stocks to your portfolio");
+    this.out.println("Enter q to exit");
   }
 
   @Override
-  public String getTicker() {
-    System.out.println("Enter ticker of stock you want to add to the portfolio: ");
-    Scanner scan = new Scanner(System.in);
-    return scan.nextLine();
+  public void getTicker() {
+    this.out.println("Enter ticker of stock you want to add to the portfolio: ");
+
   }
 
   @Override
-  public int getQty() {
-    int input = 0;
-    Scanner sc = new Scanner(System.in);
-    do {
-      System.out.println("Enter quantity of stocks: ");
-      String s = sc.nextLine();
-      try {
-        input = Integer.parseInt(s);
-        if (input <= 0) {
-          System.out.println("Quantity should be a positive value!");
-        }
-      } catch (NumberFormatException e) {
-        System.out.println("Quantity should be an integer value!");
-      }
-    } while (input <= 0);
+  public void getQty() {
 
-    return input;
+    this.out.println("Enter quantity of stocks: ");
+
+  }
+
+  @Override
+  public void qtyPositive() {
+    this.out.println("Quantity should be a positive value!");
+  }
+
+  @Override
+  public void qtyInteger() {
+    this.out.println("Quantity should be an integer value!");
   }
 
   @Override
   public void invalidTicker() {
-    System.out.println("This ticker does not exist!! Please enter a valid ticker");
+    this.out.println("This ticker does not exist!! Please enter a valid ticker");
   }
 
 
   @Override
-  public String getPortfolioName() {
-    String pName;
-    do {
-      Scanner sc = new Scanner(System.in);
-      System.out.println("Enter your portfolio name: ");
-       pName = sc.nextLine();
-       if(pName.equals("")){
-         System.out.println("Portfolio name cannot be empty!");
-       }
-    }while(pName.equals(""));
-    return pName;
+  public void getPortfolioName() {
+
+    this.out.println("Enter your portfolio name: ");
+
   }
 
   @Override
-  public String getFileName() {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your file name (with extension): ");
-    return sc.nextLine();
+  public void emptyPortfolioMessage() {
+    this.out.println("Portfolio name cannot be empty!");
   }
 
   @Override
-  public String getDate() {
-    Scanner s = new Scanner(System.in);
-    System.out.println("Enter the date (in format yyyy-MM-dd): ");
-    return s.nextLine();
+  public void getFileName() {
+    this.out.println("Enter your file name (with extension): ");
+
+  }
+
+  @Override
+  public void getDate() {
+
+    this.out.println("Enter the date (in format yyyy-MM-dd): ");
+
   }
 
 
   @Override
-  public void displayResult(StringBuilder result) {
-    System.out.println(result);
+  public void displayMessage(String message) {
+    this.out.println(message);
   }
 
-  @Override
-  public void displayExceptions(String exception) {
-    System.out.println(exception);
-  }
 
   @Override
   public void invalidDate() {
-    System.out.println("Date is not in proper format!!");
+    this.out.println("Date is not in proper format!!");
   }
 
 
   @Override
   public void seeDefault() {
-    System.out.println("Invalid input. Please try again!");
+    this.out.println("Invalid input. Please try again!");
   }
 
 
   @Override
-  public void getLoadPortfolio(String output) {
-    System.out.println(output);
-  }
+  public void getName() {
+    this.out.println("Please Enter your name:");
 
-  @Override
-  public String getName() {
-    System.out.println("Please Enter your name:");
-    Scanner s = new Scanner(System.in);
-    return s.nextLine();
   }
 
 
   @Override
   public void displayName(String name) {
-    System.out.println("Welcome " + name + " !!\nPlease select an option from the menu!!\n");
+    this.out.println("Welcome " + name + " !!\nPlease select an option from the menu!!\n");
   }
 
 
   @Override
   public void alreadyExists() {
-    System.out.println("The entered portfolio already exists. Try a different name!");
+    this.out.println("The entered portfolio already exists. Try a different name!");
   }
 }

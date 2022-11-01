@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,8 +11,8 @@ import view.ViewImpl;
 
 public class UserControllerImpl implements UserController {
 
-  private final Readable in;
-  private final Appendable out;
+  private final InputStream in;
+  private final PrintStream out;
   private final User user;
   private final ViewImpl view;
 
@@ -23,11 +25,12 @@ public class UserControllerImpl implements UserController {
    * @param user Object of User model.
    * @param view Object of view class.
    */
-  public UserControllerImpl(Readable in, Appendable out, User user, ViewImpl view) {
+  public UserControllerImpl(InputStream in, PrintStream out, User user, ViewImpl view) {
     this.in = in;
     this.out = out;
     this.user = user;
     this.view = view;
+    view.setStream(this.out);
   }
 
   /**
@@ -43,18 +46,34 @@ public class UserControllerImpl implements UserController {
     Map<String, Integer> stocks = new HashMap<>();
     while (true) {
       view.getAddStockMenu();
-      Scanner scan = new Scanner(this.in);
-      switch (scan.next()) {
+      Scanner sc = new Scanner(this.in);
+      switch (sc.next()) {
         case "1" -> {
-          String ticker = view.getTicker();
-          if (user.ifStocksExist(ticker)) {
-            while (user.ifStocksExist(ticker)) {
+          view.getTicker();
+          Scanner sc1 = new Scanner(this.in);
+          String ticker = sc1.nextLine();
+          if (!user.ifStocksExist(ticker)) {
+            while (!user.ifStocksExist(ticker)) {
               view.invalidTicker();
-              ticker = view.getTicker();
+              view.getTicker();
+              ticker = sc1.nextLine();
             }
           }
           ticker = ticker.toUpperCase();
-          int qty = view.getQty();
+          int qty = 0;
+
+          do {
+            view.getQty();
+            String s = sc1.nextLine();
+            try {
+              qty = Integer.parseInt(s);
+              if (qty <= 0) {
+                view.qtyPositive();
+              }
+            } catch (NumberFormatException e) {
+              view.qtyInteger();
+            }
+          } while (qty <= 0);
           if (!stocks.containsKey(ticker)) {
             stocks.put(ticker, qty);
           } else {
@@ -71,36 +90,57 @@ public class UserControllerImpl implements UserController {
     }
   }
 
+  /**
+   * This helper method takes portfolio name as input from the user.
+   * @return the portfolio name.
+   */
+  private String portfolioName() {
+    String portfolioName;
+    do {
+      Scanner sc = new Scanner(this.in);
+      view.getPortfolioName();
+      portfolioName = sc.nextLine();
+      if (portfolioName.equals("")) {
+        view.emptyPortfolioMessage();
+      }
+    } while (portfolioName.equals(""));
+    return portfolioName;
+  }
+
 
   @Override
   public void go() {
     Scanner scan = new Scanner(this.in);
-    String name = view.getName();
+    view.getName();
+    String name = scan.nextLine();
     user.setName(name);
     view.displayName(user.getName());
     while (true) {
       view.getMenu();
       switch (scan.next()) {
         case "1":
-          String portfolioName = view.getPortfolioName();
+          String portfolioName = portfolioName();
+
           while (user.checkPortfolioExists(portfolioName)) {
             view.alreadyExists();
-            portfolioName = view.getPortfolioName();
+            portfolioName = portfolioName();
           }
           try {
             user.createPortfolio(portfolioName, perform());
           } catch (IllegalArgumentException e) {
-            view.displayExceptions(e.getMessage());
+            view.displayMessage(e.getMessage());
           }
           break;
         case "2":
-          String p_name = view.getPortfolioName();
+          String p_name = portfolioName();
           StringBuilder composition = user.getPortfolioComposition(p_name);
-          view.viewComposition(composition);
+          view.displayMessage(String.valueOf(composition));
           break;
         case "3":
-          String pName = view.getPortfolioName();
-          String date = view.getDate();
+          String pName = portfolioName();
+          view.getDate();
+          Scanner sc3 = new Scanner(this.in);
+          String date = sc3.nextLine();
           if (user.isValidFormat(date)) {
             StringBuilder result = new StringBuilder();
             try {
@@ -108,22 +148,24 @@ public class UserControllerImpl implements UserController {
             } catch (IllegalArgumentException e) {
               result.append(e.getMessage());
             }
-            view.displayResult(result);
+            view.displayMessage(String.valueOf(result));
           } else {
             view.invalidDate();
           }
           break;
         case "4":
           StringBuilder result = user.getPortfoliosName();
-          view.displayResult(result);
+          view.displayMessage(String.valueOf(result));
           break;
         case "5":
-          String pfName = view.getFileName();
+          view.getFileName();
+          Scanner sc5 = new Scanner(this.in);
+          String pfName = sc5.nextLine();
           try {
             String output = user.loadPortfolio(pfName);
-            view.getLoadPortfolio(output);
+            view.displayMessage(output);
           } catch (IllegalArgumentException e) {
-            view.displayExceptions(e.getMessage());
+            view.displayMessage(e.getMessage());
           }
           break;
         case "q":

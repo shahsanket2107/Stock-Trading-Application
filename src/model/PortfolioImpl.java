@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class PortfolioImpl implements Portfolio {
   }
 
   @Override
-  public double getValuationAtDate(String date) throws IllegalArgumentException {
+  public double getValuationAtDate(String date) {
     Map<String, Integer> stock = this.stocks;
     List<Double> temp = new ArrayList<>();
     stock.forEach((k, v) -> {
