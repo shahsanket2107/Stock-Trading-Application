@@ -10,7 +10,6 @@ import java.net.URL;
  * class to fetch the stock values.
  */
 public class StocksImpl implements Stocks {
-
   private final String ticker;
 
   public StocksImpl(String ticker) {
