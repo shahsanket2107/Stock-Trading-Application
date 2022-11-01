@@ -20,7 +20,7 @@ public class UserControllerImpl implements UserController {
    *
    * @param in   Used for reading input.
    * @param out  Used for writing output.
-   * @param user oObject of User model.
+   * @param user Object of User model.
    * @param view Object of view class.
    */
   public UserControllerImpl(Readable in, Appendable out, User user, ViewImpl view) {
