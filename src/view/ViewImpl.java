@@ -4,13 +4,12 @@ import java.io.PrintStream;
 
 public class ViewImpl implements View {
 
-  PrintStream out;
+  private PrintStream out;
 
   @Override
   public void setStream(PrintStream out) {
     this.out = out;
   }
-
 
   @Override
   public void getMenu() {
@@ -32,14 +31,11 @@ public class ViewImpl implements View {
   @Override
   public void getTicker() {
     this.out.println("Enter ticker of stock you want to add to the portfolio: ");
-
   }
 
   @Override
   public void getQty() {
-
     this.out.println("Enter quantity of stocks: ");
-
   }
 
   @Override
@@ -60,9 +56,7 @@ public class ViewImpl implements View {
 
   @Override
   public void getPortfolioName() {
-
     this.out.println("Enter your portfolio name: ");
-
   }
 
   @Override
@@ -73,14 +67,11 @@ public class ViewImpl implements View {
   @Override
   public void getFileName() {
     this.out.println("Enter your file name (with extension): ");
-
   }
 
   @Override
   public void getDate() {
-
     this.out.println("Enter the date (in format yyyy-MM-dd): ");
-
   }
 
 
