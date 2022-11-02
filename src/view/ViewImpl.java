@@ -2,6 +2,11 @@ package view;
 
 import java.io.PrintStream;
 
+/**
+ * This is the view class which implements its interface. It has different functions which prints
+ * different messages as and when required.
+ */
+
 public class ViewImpl implements View {
 
   private PrintStream out;
@@ -12,7 +17,7 @@ public class ViewImpl implements View {
   }
 
   @Override
-  public void getPortfolioMessage(){
+  public void getPortfolioMessage() {
     this.out.println("Portfolio created successfully!!");
   }
 

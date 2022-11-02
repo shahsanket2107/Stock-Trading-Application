@@ -3,7 +3,8 @@ package model;
 import java.util.Map;
 
 /**
- * This interface is the model of user.
+ * This interface is the model of user. Here we implement create and load portfolios.
+ * As user has a portfolio, it calls an object of portfolio and is able to access its methods.
  */
 public interface User {
 

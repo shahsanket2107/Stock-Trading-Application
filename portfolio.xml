@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <portfolios>
-    <portfolio name="testNewPortfolio">
+    <portfolio name="school_savings">
+        <stocks parameter="ticker">aapl</stocks>
+        <stocks parameter="quantity">123</stocks>
+        <stocks parameter="ticker">googl</stocks>
+        <stocks parameter="quantity">24</stocks>
         <stocks parameter="ticker">tsla</stocks>
-        <stocks parameter="quantity">10</stocks>
-        <stocks parameter="ticker">zs</stocks>
-        <stocks parameter="quantity">13</stocks>
-        <stocks parameter="ticker">amzn</stocks>
-        <stocks parameter="quantity">3</stocks>
+        <stocks parameter="quantity">45</stocks>
+    </portfolio>
+    <portfolio name="college_savings">
+        <stocks parameter="ticker">AMZN</stocks>
+        <stocks parameter="quantity">22</stocks>
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">33</stocks>
+    </portfolio>
+    <portfolio name="retirement">
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">50</stocks>
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">23</stocks>
+    </portfolio>
+    <portfolio name="neu_pf">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">22</stocks>
+        <stocks parameter="ticker">TSLA</stocks>
+        <stocks parameter="quantity">50</stocks>
     </portfolio>
 </portfolios>

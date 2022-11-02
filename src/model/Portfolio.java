@@ -3,7 +3,8 @@ package model;
 import java.util.Map;
 
 /**
- * This interface is a model of Portfolio.
+ * This interface is a model of Portfolio. It has method to getValuation of its stock composition
+ * at a particular date.
  */
 public interface Portfolio {
 

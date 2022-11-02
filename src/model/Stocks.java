@@ -1,7 +1,8 @@
 package model;
 
 /**
- * This interface is the model of stock.
+ * This interface is the model of stock. Here the Alpha Vantage api is called and the value of
+ * stocks on a particular date is found.
  */
 public interface Stocks {
 

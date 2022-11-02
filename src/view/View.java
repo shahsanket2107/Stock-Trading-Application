@@ -2,6 +2,10 @@ package view;
 
 import java.io.PrintStream;
 
+/**
+ * This is an interface of View. View basically consists of all the messages which needs to be
+ * shown to the user.
+ */
 public interface View {
 
 
