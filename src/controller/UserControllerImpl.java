@@ -9,6 +9,11 @@ import java.util.Scanner;
 import model.User;
 import view.ViewImpl;
 
+/**
+ * This is the controller class implementation which implements the UserController. This controller
+ * acts as a mediator between user model and view. It calls the different methods of user model,
+ * passes the results to view and view prints the output.
+ */
 public class UserControllerImpl implements UserController {
 
   private final InputStream in;
@@ -35,7 +40,7 @@ public class UserControllerImpl implements UserController {
 
   /**
    * This is a helper method for creating portfolio which takes the ticker of stock and the quantity
-   * which the user wants to add to his portfolio. He can add as many stocks as he wants and he can
+   * which the user wants to add to his portfolio. He can add as many stocks as he wants, and he can
    * quit adding by entering q.
    *
    * @return A map of Stock's sticker symbol mapped to its quantity.
@@ -105,6 +110,52 @@ public class UserControllerImpl implements UserController {
     return portfolioName;
   }
 
+  private void createPortfolio(Scanner scan) {
+    String portfolioName = portfolioName(scan);
+    while (user.checkPortfolioExists(portfolioName)) {
+      view.alreadyExists();
+      portfolioName = portfolioName(scan);
+    }
+    try {
+      user.createPortfolio(portfolioName, perform(scan));
+    } catch (IllegalArgumentException e) {
+      view.displayMessage(e.getMessage());
+    }
+  }
+
+  private void getPortfolioValuation(Scanner scan) {
+    String pName = portfolioName(scan);
+    view.getDate();
+    String date = scan.nextLine();
+    if (user.isValidFormat(date)) {
+      StringBuilder result = new StringBuilder();
+      try {
+        result.append(user.getTotalValuation(date, pName));
+      } catch (IllegalArgumentException e) {
+        result.append(e.getMessage());
+      }
+      view.displayMessage(String.valueOf(result));
+    } else {
+      view.invalidDate();
+    }
+  }
+
+  private void getPortfolioComposition(Scanner scan) {
+    String p_name = portfolioName(scan);
+    StringBuilder composition = user.getPortfolioComposition(p_name);
+    view.displayMessage(String.valueOf(composition));
+  }
+
+  private void loadPortfolio(Scanner scan) {
+    view.getFileName();
+    String pfName = scan.nextLine();
+    try {
+      String output = user.loadPortfolio(pfName);
+      view.displayMessage(output);
+    } catch (IllegalArgumentException e) {
+      view.displayMessage(e.getMessage());
+    }
+  }
 
   @Override
   public void go() {
@@ -117,52 +168,20 @@ public class UserControllerImpl implements UserController {
       view.getMenu();
       switch (scan.nextLine()) {
         case "1":
-          String portfolioName = portfolioName(scan);
-
-          while (user.checkPortfolioExists(portfolioName)) {
-            view.alreadyExists();
-            portfolioName = portfolioName(scan);
-          }
-          try {
-            user.createPortfolio(portfolioName, perform(scan));
-          } catch (IllegalArgumentException e) {
-            view.displayMessage(e.getMessage());
-          }
+          createPortfolio(scan);
           break;
         case "2":
-          String p_name = portfolioName(scan);
-          StringBuilder composition = user.getPortfolioComposition(p_name);
-          view.displayMessage(String.valueOf(composition));
+          getPortfolioComposition(scan);
           break;
         case "3":
-          String pName = portfolioName(scan);
-          view.getDate();
-          String date = scan.nextLine();
-          if (user.isValidFormat(date)) {
-            StringBuilder result = new StringBuilder();
-            try {
-              result.append(user.getTotalValuation(date, pName));
-            } catch (IllegalArgumentException e) {
-              result.append(e.getMessage());
-            }
-            view.displayMessage(String.valueOf(result));
-          } else {
-            view.invalidDate();
-          }
+          getPortfolioValuation(scan);
           break;
         case "4":
           StringBuilder result = user.getPortfoliosName();
           view.displayMessage(String.valueOf(result));
           break;
         case "5":
-          view.getFileName();
-          String pfName = scan.nextLine();
-          try {
-            String output = user.loadPortfolio(pfName);
-            view.displayMessage(output);
-          } catch (IllegalArgumentException e) {
-            view.displayMessage(e.getMessage());
-          }
+          loadPortfolio(scan);
           break;
         case "q":
           return;
