@@ -1,7 +1,7 @@
-package controller;
-
 import static org.junit.Assert.assertEquals;
 
+import controller.UserController;
+import controller.UserControllerImpl;
 import model.UserImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +14,8 @@ import view.ViewImpl;
 
 public class UserControllerImplTest {
 
-  PrintStream out;
-  ByteArrayOutputStream b;
+  private PrintStream out;
+  private ByteArrayOutputStream b;
 
   @Before
   public void Setup() {

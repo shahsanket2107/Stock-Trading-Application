@@ -41,22 +41,20 @@ public class UserControllerImpl implements UserController {
    * @return A map of Stock's sticker symbol mapped to its quantity.
    */
 
-  private Map<String, Integer> perform() {
+  private Map<String, Integer> perform(Scanner sc) {
 
     Map<String, Integer> stocks = new HashMap<>();
     while (true) {
       view.getAddStockMenu();
-      Scanner sc = new Scanner(this.in);
       switch (sc.nextLine()) {
         case "1" -> {
           view.getTicker();
-          Scanner sc1 = new Scanner(this.in);
-          String ticker = sc1.nextLine();
+          String ticker = sc.nextLine();
           if (!user.ifStocksExist(ticker)) {
             while (!user.ifStocksExist(ticker)) {
               view.invalidTicker();
               view.getTicker();
-              ticker = sc1.nextLine();
+              ticker = sc.nextLine();
             }
           }
           ticker = ticker.toUpperCase();
@@ -64,7 +62,7 @@ public class UserControllerImpl implements UserController {
 
           do {
             view.getQty();
-            String s = sc1.nextLine();
+            String s = sc.nextLine();
             try {
               qty = Integer.parseInt(s);
               if (qty <= 0) {
@@ -92,12 +90,12 @@ public class UserControllerImpl implements UserController {
 
   /**
    * This helper method takes portfolio name as input from the user.
+   *
    * @return the portfolio name.
    */
-  private String portfolioName() {
+  private String portfolioName(Scanner sc) {
     String portfolioName;
     do {
-      Scanner sc = new Scanner(this.in);
       view.getPortfolioName();
       portfolioName = sc.nextLine();
       if (portfolioName.equals("")) {
@@ -119,28 +117,27 @@ public class UserControllerImpl implements UserController {
       view.getMenu();
       switch (scan.nextLine()) {
         case "1":
-          String portfolioName = portfolioName();
+          String portfolioName = portfolioName(scan);
 
           while (user.checkPortfolioExists(portfolioName)) {
             view.alreadyExists();
-            portfolioName = portfolioName();
+            portfolioName = portfolioName(scan);
           }
           try {
-            user.createPortfolio(portfolioName, perform());
+            user.createPortfolio(portfolioName, perform(scan));
           } catch (IllegalArgumentException e) {
             view.displayMessage(e.getMessage());
           }
           break;
         case "2":
-          String p_name = portfolioName();
+          String p_name = portfolioName(scan);
           StringBuilder composition = user.getPortfolioComposition(p_name);
           view.displayMessage(String.valueOf(composition));
           break;
         case "3":
-          String pName = portfolioName();
+          String pName = portfolioName(scan);
           view.getDate();
-          Scanner sc3 = new Scanner(this.in);
-          String date = sc3.nextLine();
+          String date = scan.nextLine();
           if (user.isValidFormat(date)) {
             StringBuilder result = new StringBuilder();
             try {
@@ -159,8 +156,7 @@ public class UserControllerImpl implements UserController {
           break;
         case "5":
           view.getFileName();
-          Scanner sc5 = new Scanner(this.in);
-          String pfName = sc5.nextLine();
+          String pfName = scan.nextLine();
           try {
             String output = user.loadPortfolio(pfName);
             view.displayMessage(output);
