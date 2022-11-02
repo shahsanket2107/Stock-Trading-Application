@@ -148,7 +148,7 @@ public class ViewImplTest {
   public void displayName() {
     String name="Sanket";
     v.displayName(name);
-    out1.println("Welcome " + name + " !!\nPlease select an option from the menu!!\n");
+    out1.println("Welcome " + name + " !! Please select an option from the menu!!");
     assertEquals(b1.toString(), b.toString());
   }
 

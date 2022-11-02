@@ -22,7 +22,8 @@ public class UserControllerImplTest {
     b = new ByteArrayOutputStream();
     out = new PrintStream(b);
   }
-  private void outputMenu(){
+
+  private void outputMenu() {
     this.out.println("");
     this.out.println("Enter 1 for making portfolio");
     this.out.println("Enter 2 to examine the composition of a particular portfolio");
@@ -31,57 +32,312 @@ public class UserControllerImplTest {
     this.out.println("Enter 5 to load your portfolio");
     this.out.println("Enter q to exit");
   }
+
+  private void addStockToPortfolio() {
+    this.out.println("Enter 1 to add stocks to your portfolio");
+    this.out.println("Enter q to exit");
+  }
+
+  private void createPortfolioHelper() {
+    this.out.println("Please Enter your name:");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.addStockToPortfolio();
+    this.out.println("Enter ticker of stock you want to add to the portfolio: \r\n"
+        + "Enter quantity of stocks: ");
+    this.addStockToPortfolio();
+  }
+
   @Test
   public void testMenu() {
     InputStream input = new ByteArrayInputStream("samved\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-    UserController controller = new UserControllerImpl(input, output, new UserImpl(), new ViewImpl());
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
     controller.go();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
+
   @Test
-  public void testCreatePortfolio(){
+  public void testCreatePortfolio() {
     InputStream input = new ByteArrayInputStream("samved\n1\np1\n1\naapl\n100\nq\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-    UserController controller = new UserControllerImpl(input, output, new UserImpl(), new ViewImpl());
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
     controller.go();
-    this.out.println("Please Enter your name:");
-    this.out.println("Welcome " +"samved"+ " !! Please select an option from the menu!!");
+    this.createPortfolioHelper();
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
+
+  @Test
+  public void testCreatePortfolioWithAlreadyExistingName() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\naapl\n100\nq\n1\np1\np2\n1\naapl\n100\nq\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.createPortfolioHelper();
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("The entered portfolio already exists. Try a different name!");
+    this.out.println("Enter your portfolio name: ");
+    this.addStockToPortfolio();
+    this.out.println("Enter ticker of stock you want to add to the portfolio: \r\n"
+        + "Enter quantity of stocks: ");
+    addStockToPortfolio();
+    this.outputMenu();
+    assertEquals(b.toString(), bytes.toString());
+  }
+
+  @Test
+  public void testCreatePortfolioWithInvalidTicker() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\nhehe\naapl\n100\nq\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.out.println("Please Enter your name:");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.addStockToPortfolio();
+    this.out.println("Enter ticker of stock you want to add to the portfolio: ");
+    this.out.println("This ticker does not exist!! Please enter a valid ticker");
+    this.out.println("Enter ticker of stock you want to add to the portfolio: \r\n"
+        + "Enter quantity of stocks: ");
+    this.addStockToPortfolio();
+    this.outputMenu();
+    assertEquals(b.toString(), bytes.toString());
+  }
+
+  @Test
+  public void testCreatePortfolioWithInvalidQuantity() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\naapl\n1.2\n-3\n3\nq\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.out.println("Please Enter your name:");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.addStockToPortfolio();
+    this.out.println("Enter ticker of stock you want to add to the portfolio: \r\n"
+        + "Enter quantity of stocks: ");
+    this.out.println("Quantity should be an integer value!");
+    this.out.println("Enter quantity of stocks: ");
+    this.out.println("Quantity should be a positive value!");
+    this.out.println("Enter quantity of stocks: ");
+    this.addStockToPortfolio();
+    this.outputMenu();
+    assertEquals(b.toString(), bytes.toString());
+  }
+
+  @Test
+  public void testCompositionOfPortfolio() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\naapl\n100\nq\n2\np1\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.createPortfolioHelper();
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("Portfolio_Name: p1");
+    this.out.println("{");
+    this.out.println("\tStock_Ticker: AAPL");
+    this.out.println("\tQuantity: 100");
+    this.out.println("}");
+    this.out.println();
+    this.out.println();
+    this.out.println();
+    this.outputMenu();
+    assertEquals(b.toString().replace("\r", ""),
+        bytes.toString().replace("\r", ""));
+  }
+  @Test
+  public void testCompositionOfPortfolioWhoDoesNotExist() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n2\np1\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.out.println("Please Enter your name:");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("The given portfolio name does not exist!!");
+    this.out.println("Please enter a valid portfolio name!!");
+    this.outputMenu();
+    assertEquals(b.toString().replace("\r", ""),
+        bytes.toString().replace("\r", ""));
+  }
+  @Test
+  public void testTotalValueAtADate(){
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\naapl\n100\nq\n3\np1\n2022-10-20\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.createPortfolioHelper();
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("Enter the date (in format yyyy-MM-dd): ");
+    this.out.println("Portfolio_Name: p1\n"
+        + "Portfolio_Valuation at 2022-10-20 is : $ 14338.999999999998\n"
+        + "The stock valuation breakdown is: \n"
+        + "AAPL : $14338.999999999998");
+    this.out.println();
+    this.outputMenu();
+    assertEquals(b.toString().replace("\r", ""),
+        bytes.toString().replace("\r", ""));
+  }
+  @Test
+  public void testTotalValueAtInvalidDate(){
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\naapl\n100\nq\n3\np1\n2023-10-20\n3\np1\n2020-10-10\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.createPortfolioHelper();
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("Enter the date (in format yyyy-MM-dd): ");
+    this.out.println("Date cannot be greater or equal to current date. Try a different date");
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("Enter the date (in format yyyy-MM-dd): ");
+    this.out.println("Data for given parameter does not exist!!");
+    this.outputMenu();
+    assertEquals(b.toString().replace("\r", ""),
+        bytes.toString().replace("\r", ""));
+  }
   @Test
   public void testViewAllPortfolios(){
+    InputStream input = new ByteArrayInputStream(
+        "samved\n1\np1\n1\naapl\n100\nq\n1\np2\n1\ngoogl\n50\nq\n4\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.createPortfolioHelper();
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    addStockToPortfolio();
+    this.out.println("Enter ticker of stock you want to add to the portfolio: \n"
+        + "Enter quantity of stocks: ");
+    this.addStockToPortfolio();
+    this.outputMenu();
+    this.out.println("The list of portfolios is:\n"
+        + "p1\n"
+        + "p2\n");
+    this.outputMenu();
+    assertEquals(b.toString().replace("\r", ""),
+        bytes.toString().replace("\r", ""));
+  }
+  @Test
+  public void testViewAllPortfoliosIfNoneExist() {
     InputStream input = new ByteArrayInputStream("samved\n4\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-    UserController controller = new UserControllerImpl(input, output, new UserImpl(), new ViewImpl());
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
     controller.go();
     this.out.println("Please Enter your name:");
-    this.out.println("Welcome " + "samved" + " !!\nPlease select an option from the menu!!\n");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
     this.out.println("No portfolios exist at this time!! ");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
+
   @Test
-  public void testLoadPortfolio(){
-    InputStream input = new ByteArrayInputStream("samved\n5\nsamved_portfolios.xml\nq\n".getBytes());
+  public void testLoadPortfolio() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n5\nsamved_portfolios.xml\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-    UserController controller = new UserControllerImpl(input, output, new UserImpl(), new ViewImpl());
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
     controller.go();
     this.out.println("Please Enter your name:");
-    this.out.println("Welcome " + "samved" + " !!\nPlease select an option from the menu!!\n");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
+    this.out.println("Enter your file name (with extension): ");
     this.out.println("Portfolio loaded successfully!");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
+  }
+  @Test
+  public void testLoadPortfolioWIthInvalidPath() {
+    InputStream input = new ByteArrayInputStream(
+        "samved\n5\nhahaha.txt\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.out.println("Please Enter your name:");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
+    this.outputMenu();
+    this.out.println("Enter your file name (with extension): ");
+    this.out.println("Invalid file name. Please try again!");
+    this.outputMenu();
+    assertEquals(b.toString(), bytes.toString());
+  }
+  @Test
+  public void testLoadAndThenCheckComposition(){
+    InputStream input = new ByteArrayInputStream(
+        "samved\n5\nsamved_portfolios.xml\n2\np1\nq\n".getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    UserController controller = new UserControllerImpl(input, output, new UserImpl(),
+        new ViewImpl());
+    controller.go();
+    this.out.println("Please Enter your name:");
+    this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
+    this.outputMenu();
+    this.out.println("Enter your file name (with extension): ");
+    this.out.println("Portfolio loaded successfully!");
+    this.outputMenu();
+    this.out.println("Enter your portfolio name: ");
+    this.out.println("Portfolio_Name: p1");
+    this.out.println("{");
+    this.out.println("\tStock_Ticker: GOOGL");
+    this.out.println("\tQuantity: 30");
+    this.out.println("}");
+    this.out.println("{");
+    this.out.println("\tStock_Ticker: AAPL");
+    this.out.println("\tQuantity: 2");
+    this.out.println("}");
+    this.out.println();
+    this.out.println();
+    this.out.println();
+    this.outputMenu();
+    assertEquals(b.toString().replace("\r", ""),
+        bytes.toString().replace("\r", ""));
   }
 
 }
