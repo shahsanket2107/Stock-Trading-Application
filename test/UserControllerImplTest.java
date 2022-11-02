@@ -12,6 +12,12 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import view.ViewImpl;
 
+/**
+ * This is a test for UserControllerImpl. This class uses ByteArrayOutput Stream to test functions
+ * as all the inputs were user-specified, and it is compared with Inputstream. This class computes
+ * and asserts on actual value of model by passing in Inputstream object as if user were
+ * entering values by running Main function.
+ */
 public class UserControllerImplTest {
 
   private PrintStream out;
@@ -72,6 +78,7 @@ public class UserControllerImplTest {
         new ViewImpl());
     controller.go();
     this.createPortfolioHelper();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
@@ -86,6 +93,7 @@ public class UserControllerImplTest {
         new ViewImpl());
     controller.go();
     this.createPortfolioHelper();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     this.out.println("Enter your portfolio name: ");
     this.out.println("The entered portfolio already exists. Try a different name!");
@@ -94,6 +102,7 @@ public class UserControllerImplTest {
     this.out.println("Enter ticker of stock you want to add to the portfolio: \r\n"
         + "Enter quantity of stocks: ");
     addStockToPortfolio();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
@@ -117,6 +126,7 @@ public class UserControllerImplTest {
     this.out.println("Enter ticker of stock you want to add to the portfolio: \r\n"
         + "Enter quantity of stocks: ");
     this.addStockToPortfolio();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
@@ -142,6 +152,7 @@ public class UserControllerImplTest {
     this.out.println("Quantity should be a positive value!");
     this.out.println("Enter quantity of stocks: ");
     this.addStockToPortfolio();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
@@ -156,6 +167,7 @@ public class UserControllerImplTest {
         new ViewImpl());
     controller.go();
     this.createPortfolioHelper();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     this.out.println("Enter your portfolio name: ");
     this.out.println("Portfolio_Name: p1");
@@ -170,6 +182,7 @@ public class UserControllerImplTest {
     assertEquals(b.toString().replace("\r", ""),
         bytes.toString().replace("\r", ""));
   }
+
   @Test
   public void testCompositionOfPortfolioWhoDoesNotExist() {
     InputStream input = new ByteArrayInputStream(
@@ -189,8 +202,9 @@ public class UserControllerImplTest {
     assertEquals(b.toString().replace("\r", ""),
         bytes.toString().replace("\r", ""));
   }
+
   @Test
-  public void testTotalValueAtADate(){
+  public void testTotalValueAtADate() {
     InputStream input = new ByteArrayInputStream(
         "samved\n1\np1\n1\naapl\n100\nq\n3\np1\n2022-10-20\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -199,6 +213,7 @@ public class UserControllerImplTest {
         new ViewImpl());
     controller.go();
     this.createPortfolioHelper();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     this.out.println("Enter your portfolio name: ");
     this.out.println("Enter the date (in format yyyy-MM-dd): ");
@@ -211,8 +226,9 @@ public class UserControllerImplTest {
     assertEquals(b.toString().replace("\r", ""),
         bytes.toString().replace("\r", ""));
   }
+
   @Test
-  public void testTotalValueAtInvalidDate(){
+  public void testTotalValueAtInvalidDate() {
     InputStream input = new ByteArrayInputStream(
         "samved\n1\np1\n1\naapl\n100\nq\n3\np1\n2023-10-20\n3\np1\n2020-10-10\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -221,6 +237,7 @@ public class UserControllerImplTest {
         new ViewImpl());
     controller.go();
     this.createPortfolioHelper();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     this.out.println("Enter your portfolio name: ");
     this.out.println("Enter the date (in format yyyy-MM-dd): ");
@@ -233,8 +250,9 @@ public class UserControllerImplTest {
     assertEquals(b.toString().replace("\r", ""),
         bytes.toString().replace("\r", ""));
   }
+
   @Test
-  public void testViewAllPortfolios(){
+  public void testViewAllPortfolios() {
     InputStream input = new ByteArrayInputStream(
         "samved\n1\np1\n1\naapl\n100\nq\n1\np2\n1\ngoogl\n50\nq\n4\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -243,12 +261,14 @@ public class UserControllerImplTest {
         new ViewImpl());
     controller.go();
     this.createPortfolioHelper();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     this.out.println("Enter your portfolio name: ");
     addStockToPortfolio();
     this.out.println("Enter ticker of stock you want to add to the portfolio: \n"
         + "Enter quantity of stocks: ");
     this.addStockToPortfolio();
+    this.out.println("Portfolio created successfully!!");
     this.outputMenu();
     this.out.println("The list of portfolios is:\n"
         + "p1\n"
@@ -257,6 +277,7 @@ public class UserControllerImplTest {
     assertEquals(b.toString().replace("\r", ""),
         bytes.toString().replace("\r", ""));
   }
+
   @Test
   public void testViewAllPortfoliosIfNoneExist() {
     InputStream input = new ByteArrayInputStream("samved\n4\nq\n".getBytes());
@@ -290,6 +311,7 @@ public class UserControllerImplTest {
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
+
   @Test
   public void testLoadPortfolioWIthInvalidPath() {
     InputStream input = new ByteArrayInputStream(
@@ -307,8 +329,9 @@ public class UserControllerImplTest {
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
   }
+
   @Test
-  public void testLoadAndThenCheckComposition(){
+  public void testLoadAndThenCheckComposition() {
     InputStream input = new ByteArrayInputStream(
         "samved\n5\nsamved_portfolios.xml\n2\np1\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();

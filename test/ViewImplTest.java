@@ -109,14 +109,14 @@ public class ViewImplTest {
   }
 
   @Test
-  public void getDate() {
+  public void testGetDate() {
     v.getDate();
     out1.println("Enter the date (in format yyyy-MM-dd): ");
     assertEquals(b1.toString(), b.toString());
   }
 
   @Test
-  public void displayMessage() {
+  public void testDisplayMessage() {
     String message="This is a test message!";
     v.displayMessage(message);
     out1.println(message);
@@ -124,28 +124,28 @@ public class ViewImplTest {
   }
 
   @Test
-  public void invalidDate() {
+  public void testInvalidDate() {
     v.invalidDate();
     out1.println("Date is not in proper format!!");
     assertEquals(b1.toString(), b.toString());
   }
 
   @Test
-  public void seeDefault() {
+  public void testSeeDefault() {
     v.seeDefault();
     out1.println("Invalid input. Please try again!");
     assertEquals(b1.toString(), b.toString());
   }
 
   @Test
-  public void getName() {
+  public void testGetName() {
     v.getName();
     out1.println("Please Enter your name:");
     assertEquals(b1.toString(), b.toString());
   }
 
   @Test
-  public void displayName() {
+  public void testDisplayName() {
     String name="Sanket";
     v.displayName(name);
     out1.println("Welcome " + name + " !! Please select an option from the menu!!");
@@ -153,9 +153,16 @@ public class ViewImplTest {
   }
 
   @Test
-  public void alreadyExists() {
+  public void testAlreadyExists() {
     v.alreadyExists();
     out1.println("The entered portfolio already exists. Try a different name!");
     assertEquals(b1.toString(), b.toString());
+  }
+
+  @Test
+  public void testGetPortfolioMessage(){
+    v.getPortfolioMessage();
+    out1.println("Portfolio created successfully!!");
+    assertEquals(b1.toString(),b.toString());
   }
 }

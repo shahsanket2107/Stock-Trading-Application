@@ -110,4 +110,9 @@ public interface View {
    */
   void setStream(PrintStream out);
 
+  /**
+   * This function returns appropriate message when portfolio is successfully created.
+   */
+  void getPortfolioMessage();
+
 }

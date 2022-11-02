@@ -119,6 +119,7 @@ public class UserControllerImpl implements UserController {
     try {
       Map<String, Integer> m = perform(scan);
       user.createPortfolio(portfolioName, m);
+      view.getPortfolioMessage();
     } catch (IllegalArgumentException e) {
       view.displayMessage(e.getMessage());
     }

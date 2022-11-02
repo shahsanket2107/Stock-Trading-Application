@@ -12,6 +12,11 @@ public class ViewImpl implements View {
   }
 
   @Override
+  public void getPortfolioMessage(){
+    this.out.println("Portfolio created successfully!!");
+  }
+
+  @Override
   public void getMenu() {
     this.out.println();
     this.out.println("Enter 1 for making portfolio");
@@ -110,4 +115,5 @@ public class ViewImpl implements View {
   public void alreadyExists() {
     this.out.println("The entered portfolio already exists. Try a different name!");
   }
+
 }
