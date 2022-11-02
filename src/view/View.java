@@ -69,7 +69,7 @@ public interface View {
   void getDate();
 
   /**
-   * This function displays the message which needs to displayed
+   * This function displays the message which needs to displayed.
    *
    * @param message is the message which needs to be displayed.
    */
@@ -108,7 +108,7 @@ public interface View {
   void alreadyExists();
 
   /**
-   * This function is a setter method which sets the PrintStream object
+   * This function is a setter method which sets the PrintStream object.
    *
    * @param out an object of PrintStream.
    */

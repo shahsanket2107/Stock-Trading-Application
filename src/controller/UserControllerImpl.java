@@ -17,7 +17,6 @@ import view.ViewImpl;
 public class UserControllerImpl implements UserController {
 
   private final InputStream in;
-  private final PrintStream out;
   private final User user;
   private final ViewImpl view;
 
@@ -32,10 +31,9 @@ public class UserControllerImpl implements UserController {
    */
   public UserControllerImpl(InputStream in, PrintStream out, User user, ViewImpl view) {
     this.in = in;
-    this.out = out;
     this.user = user;
     this.view = view;
-    view.setStream(this.out);
+    view.setStream(out);
   }
 
   /**
@@ -52,7 +50,7 @@ public class UserControllerImpl implements UserController {
     while (true) {
       view.getAddStockMenu();
       switch (sc.nextLine()) {
-        case "1" -> {
+        case "1":
           view.getTicker();
           String ticker = sc.nextLine();
           if (!user.ifStocksExist(ticker)) {
@@ -76,19 +74,19 @@ public class UserControllerImpl implements UserController {
             } catch (NumberFormatException e) {
               view.qtyInteger();
             }
-          } while (qty <= 0);
+          }
+          while (qty <= 0);
           if (!stocks.containsKey(ticker)) {
             stocks.put(ticker, qty);
           } else {
             int temp = stocks.get(ticker);
             stocks.put(ticker, qty + temp);
           }
-
-        }
-        case "q" -> {
+          break;
+        case "q":
           return stocks;
-        }
-        default -> view.seeDefault();
+        default:
+          view.seeDefault();
       }
     }
   }
@@ -106,7 +104,8 @@ public class UserControllerImpl implements UserController {
       if (portfolioName.equals("")) {
         view.emptyPortfolioMessage();
       }
-    } while (portfolioName.equals(""));
+    }
+    while (portfolioName.equals(""));
     return portfolioName;
   }
 
@@ -160,7 +159,7 @@ public class UserControllerImpl implements UserController {
   }
 
   @Override
-  public void go() {
+  public void runGo() {
     Scanner scan = new Scanner(this.in);
     view.getName();
     String name = scan.nextLine();

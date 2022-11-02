@@ -15,16 +15,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class ViewImplTest {
 
-  private PrintStream out;
   private PrintStream out1;
   private ByteArrayOutputStream b;
   private ByteArrayOutputStream b1;
   private View v;
 
   @Before
-  public void Setup() {
+  public void setUp() {
     b = new ByteArrayOutputStream();
-    out = new PrintStream(b);
+    PrintStream out = new PrintStream(b);
     v = new ViewImpl();
     v.setStream(out);
     b1 = new ByteArrayOutputStream();
@@ -117,7 +116,7 @@ public class ViewImplTest {
 
   @Test
   public void testDisplayMessage() {
-    String message="This is a test message!";
+    String message = "This is a test message!";
     v.displayMessage(message);
     out1.println(message);
     assertEquals(b1.toString(), b.toString());
@@ -146,7 +145,7 @@ public class ViewImplTest {
 
   @Test
   public void testDisplayName() {
-    String name="Sanket";
+    String name = "Sanket";
     v.displayName(name);
     out1.println("Welcome " + name + " !! Please select an option from the menu!!");
     assertEquals(b1.toString(), b.toString());
@@ -160,9 +159,9 @@ public class ViewImplTest {
   }
 
   @Test
-  public void testGetPortfolioMessage(){
+  public void testGetPortfolioMessage() {
     v.getPortfolioMessage();
     out1.println("Portfolio created successfully!!");
-    assertEquals(b1.toString(),b.toString());
+    assertEquals(b1.toString(), b.toString());
   }
 }

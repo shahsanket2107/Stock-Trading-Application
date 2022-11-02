@@ -25,15 +25,15 @@ public class UserControllerTestUsingMockModel {
   private ByteArrayOutputStream b;
 
   @Before
-  public void Setup() {
+  public void setUp() {
     b = new ByteArrayOutputStream();
     out = new PrintStream(b);
   }
 
   @Test
   public void testCreatePortfolio() {
-    InputStream input = new ByteArrayInputStream("sanket\n1\nport1\n1\naapl\n100\nq\nq\n".
-            getBytes());
+    InputStream input = new ByteArrayInputStream("sanket\n1\nport1\n1\naapl\n100\nq\nq\n"
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -41,7 +41,7 @@ public class UserControllerTestUsingMockModel {
     PrintStream mock_output = new PrintStream(mock);
     User mockUser = new MockUser(mock_output);
     UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
-    controller.go();
+    controller.runGo();
     out.println("setName called with name as: sanket");
     out.println("getName called");
     out.println("checkPortfolioExists called with pName as: port1");
@@ -52,15 +52,15 @@ public class UserControllerTestUsingMockModel {
 
   @Test
   public void testGetPortfolioComposition() {
-    InputStream input = new ByteArrayInputStream("sanket\n1\nport1\n1\naapl\n100\nq\n2\nport1\nq\n".
-            getBytes());
+    InputStream input = new ByteArrayInputStream("sanket\n1\nport1\n1\naapl\n100\nq\n2\nport1\nq\n"
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ByteArrayOutputStream mock = new ByteArrayOutputStream();
     PrintStream mock_output = new PrintStream(mock);
     User mockUser = new MockUser(mock_output);
     UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
-    controller.go();
+    controller.runGo();
     out.println("setName called with name as: sanket");
     out.println("getName called");
     out.println("checkPortfolioExists called with pName as: port1");
@@ -72,15 +72,15 @@ public class UserControllerTestUsingMockModel {
 
   @Test
   public void testLoadPortfolio() {
-    InputStream input = new ByteArrayInputStream("sanket\n5\nportfolio.xml\nq\n".
-            getBytes());
+    InputStream input = new ByteArrayInputStream("sanket\n5\nportfolio.xml\nq\n"
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ByteArrayOutputStream mock = new ByteArrayOutputStream();
     PrintStream mock_output = new PrintStream(mock);
     User mockUser = new MockUser(mock_output);
     UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
-    controller.go();
+    controller.runGo();
     out.println("setName called with name as: sanket");
     out.println("getName called");
     out.println("loadPortfolio called with pfName as: portfolio.xml");
@@ -96,7 +96,7 @@ public class UserControllerTestUsingMockModel {
     PrintStream mock_output = new PrintStream(mock);
     User mockUser = new MockUser(mock_output);
     UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
-    controller.go();
+    controller.runGo();
     out.println("setName called with name as: sanket");
     out.println("getName called");
     out.println("getPortfoliosName called");
@@ -105,15 +105,15 @@ public class UserControllerTestUsingMockModel {
 
   @Test
   public void testGetTotalValuation() {
-    InputStream input = new ByteArrayInputStream(("sanket\n3\ntest_portfolio\n2022-10-28" +
-            "\nq\n").getBytes());
+    InputStream input = new ByteArrayInputStream(("sanket\n3\ntest_portfolio\n2022-10-28"
+            + "\nq\n").getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ByteArrayOutputStream mock = new ByteArrayOutputStream();
     PrintStream mock_output = new PrintStream(mock);
     User mockUser = new MockUser(mock_output);
     UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
-    controller.go();
+    controller.runGo();
     out.println("setName called with name as: sanket");
     out.println("getName called");
     out.println("isValidFormat called with value as: 2022-10-28");
@@ -137,8 +137,8 @@ public class UserControllerTestUsingMockModel {
     @Override
     public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
             throws IllegalArgumentException {
-      out.println("Create Portfolio called with portfolioName: " + portfolioName + " and stocks map " +
-              "as: " + stocks);
+      out.println("Create Portfolio called with portfolioName: " + portfolioName
+              + " and stocks map " + "as: " + stocks);
     }
 
     @Override

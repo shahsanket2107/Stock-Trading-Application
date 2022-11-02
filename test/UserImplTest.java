@@ -19,14 +19,13 @@ import static org.junit.Assert.assertEquals;
  * invalid inputs are invalidated at view so those are tested there.
  */
 public class UserImplTest {
-  private String name;
   private User u;
 
   @Before
   public void setup() {
     Portfolio p;
     ArrayList<Portfolio> list = new ArrayList<>();
-    name = "John Doe";
+    String name = "John Doe";
     Map<String, Integer> m = new HashMap<>();
     Map<String, Integer> m1 = new HashMap<>();
     Map<String, Integer> m2 = new HashMap<>();
@@ -236,8 +235,8 @@ public class UserImplTest {
   @Test
   public void testGetPortfolioCompositionForPortfolioThatDoesNotExist() {
     assertEquals("The given portfolio name does not exist!!\n" +
-            "Please enter a valid portfolio name!!", u.getPortfolioComposition
-            ("Not_existing_portfolio").toString());
+            "Please enter a valid portfolio name!!",
+            u.getPortfolioComposition("Not_existing_portfolio").toString());
   }
 
   @Test

@@ -10,6 +10,6 @@ public class Main {
 
   public static void main(String[] args) {
     new UserControllerImpl(System.in, System.out, new UserImpl(),
-            new ViewImpl()).go();
+            new ViewImpl()).runGo();
   }
 }

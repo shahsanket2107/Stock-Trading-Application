@@ -122,13 +122,14 @@ public class UserImpl implements User {
   }
 
   /**
-   * This function is a helper function for writing to xml file
+   * This function is a helper function for writing to xml file.
    *
-   * @param doc the dom parser for xml
+   * @param doc the dom parser for xml.
    * @throws TransformerConfigurationException if there is an error in xml syntax.
    */
 
-  private void writeXMLHelper(Document doc, String fileName) throws TransformerConfigurationException {
+  private void writeXMLHelper(Document doc, String fileName) throws
+          TransformerConfigurationException {
     try {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();
@@ -226,13 +227,13 @@ public class UserImpl implements User {
 
   /**
    * This is a helper function which writes xml file in the form of tags of portfolio, ticker and
-   * quantity
+   * quantity.
    *
    * @param doc       the xml document where the portfolio is to be written.
    * @param portfolio it's the element or the child of root element which stores tickers and
    *                  quantities of various stocks.
-   * @param ticker    the ticker of stock
-   * @param qty       the quantity of stock
+   * @param ticker    the ticker of stock.
+   * @param qty       the quantity of stock.
    */
   private void perform(Document doc, Element portfolio, String ticker, String qty) {
     Element stocks = doc.createElement("stocks");
@@ -251,9 +252,9 @@ public class UserImpl implements User {
   }
 
   /**
-   * This function is used to check if the file exists or not
+   * This function is used to check if the file exists or not.
    *
-   * @param filePath the filePath which needed to be checked if it exists or not
+   * @param filePath the filePath which needed to be checked if it exists or not.
    * @return true if the filepath exists and false otherwise.
    */
   private boolean fileExists(String filePath) {

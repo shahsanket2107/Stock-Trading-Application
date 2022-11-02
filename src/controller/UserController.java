@@ -12,6 +12,6 @@ public interface UserController {
    * This is the method of the controller where we define a switch case and give user a text-based
    * interface. All the model and view calls would be done from here.
    */
-  void go();
+  void runGo();
 }
 

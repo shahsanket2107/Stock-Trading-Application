@@ -24,7 +24,7 @@ public class UserControllerImplTest {
   private ByteArrayOutputStream b;
 
   @Before
-  public void Setup() {
+  public void setUp() {
     b = new ByteArrayOutputStream();
     out = new PrintStream(b);
   }
@@ -62,7 +62,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -76,7 +76,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.createPortfolioHelper();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
@@ -91,7 +91,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.createPortfolioHelper();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
@@ -115,7 +115,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -139,7 +139,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -165,7 +165,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.createPortfolioHelper();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
@@ -191,7 +191,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -211,7 +211,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.createPortfolioHelper();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
@@ -235,7 +235,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.createPortfolioHelper();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
@@ -259,7 +259,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.createPortfolioHelper();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
@@ -285,7 +285,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -302,7 +302,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -320,7 +320,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
@@ -338,7 +338,7 @@ public class UserControllerImplTest {
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
         new ViewImpl());
-    controller.go();
+    controller.runGo();
     this.out.println("Please Enter your name:");
     this.out.println("Welcome " + "samved" + " !! Please select an option from the menu!!");
     this.outputMenu();
