@@ -47,7 +47,7 @@ public class UserControllerImpl implements UserController {
     while (true) {
       view.getAddStockMenu();
       Scanner sc = new Scanner(this.in);
-      switch (sc.next()) {
+      switch (sc.nextLine()) {
         case "1" -> {
           view.getTicker();
           Scanner sc1 = new Scanner(this.in);
@@ -117,7 +117,7 @@ public class UserControllerImpl implements UserController {
     view.displayName(user.getName());
     while (true) {
       view.getMenu();
-      switch (scan.next()) {
+      switch (scan.nextLine()) {
         case "1":
           String portfolioName = portfolioName();
 

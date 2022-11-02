@@ -102,7 +102,7 @@ public class ViewImpl implements View {
 
   @Override
   public void displayName(String name) {
-    this.out.println("Welcome " + name + " !!\nPlease select an option from the menu!!\n");
+    this.out.println("Welcome " + name + " !! Please select an option from the menu!!");
   }
 
 
