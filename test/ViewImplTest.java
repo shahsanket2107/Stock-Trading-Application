@@ -16,10 +16,8 @@ import static org.junit.Assert.assertEquals;
 public class ViewImplTest {
 
   private PrintStream out;
-
   private PrintStream out1;
   private ByteArrayOutputStream b;
-
   private ByteArrayOutputStream b1;
   private View v;
 

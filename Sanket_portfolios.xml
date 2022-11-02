@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><portfolios>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<portfolios>
     <portfolio name="testNewPortfolio">
         <stocks parameter="ticker">tsla</stocks>
         <stocks parameter="quantity">10</stocks>
@@ -7,4 +8,37 @@
         <stocks parameter="ticker">amzn</stocks>
         <stocks parameter="quantity">3</stocks>
     </portfolio>
-<portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="testNewPortfolio"><stocks parameter="ticker">tsla</stocks><stocks parameter="quantity">10</stocks><stocks parameter="ticker">zs</stocks><stocks parameter="quantity">13</stocks><stocks parameter="ticker">amzn</stocks><stocks parameter="quantity">3</stocks></portfolio><portfolio name="abc"><stocks parameter="ticker">GOOGL</stocks><stocks parameter="quantity">2</stocks><stocks parameter="ticker">AAPL</stocks><stocks parameter="quantity">2</stocks></portfolio></portfolios>
+    <portfolio name="testNewPortfolio">
+        <stocks parameter="ticker">tsla</stocks>
+        <stocks parameter="quantity">10</stocks>
+        <stocks parameter="ticker">zs</stocks>
+        <stocks parameter="quantity">13</stocks>
+        <stocks parameter="ticker">amzn</stocks>
+        <stocks parameter="quantity">3</stocks>
+    </portfolio>
+    <portfolio name="testNewPortfolio">
+        <stocks parameter="ticker">tsla</stocks>
+        <stocks parameter="quantity">10</stocks>
+        <stocks parameter="ticker">zs</stocks>
+        <stocks parameter="quantity">13</stocks>
+        <stocks parameter="ticker">amzn</stocks>
+        <stocks parameter="quantity">3</stocks>
+    </portfolio>
+    <portfolio name="abc">
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">2</stocks>
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">2</stocks>
+    </portfolio>
+    <portfolio name="p1">
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">100</stocks>
+    </portfolio>
+    <portfolio name="sanket">
+        <stocks parameter="ticker">GOOGL</stocks>
+        <stocks parameter="quantity">23</stocks>
+        <stocks parameter="ticker">AAPL</stocks>
+        <stocks parameter="quantity">10</stocks>
+    </portfolio>
+    <portfolio name="test2"/>
+</portfolios>
