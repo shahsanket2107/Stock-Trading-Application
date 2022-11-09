@@ -1,16 +1,14 @@
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import model.Portfolio;
 import model.PortfolioImpl;
 import model.User;
 import model.UserImpl;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * In this test class we test the UserImpl model. We test various methods that are used by the user
@@ -42,7 +40,7 @@ public class UserImplTest {
     m2.put("tsla", 22);
     p = new PortfolioImpl("test_portfolio_three_stock", m2);
     list.add(p);
-    u = new UserImpl(name, list);
+    u = new UserImpl(name, list,new ArrayList<>());
   }
 
   @Test
@@ -111,7 +109,7 @@ public class UserImplTest {
   @Test
   public void testWritingToFileOnSuccessfulCreationOfPortfolio() {
     Map<String, Integer> m = new HashMap<>();
-    User u1 = new UserImpl("Sanket", new ArrayList<>());
+    User u1 = new UserImpl("Sanket", new ArrayList<>(),new ArrayList<>());
     m.put("tsla", 10);
     m.put("zs", 13);
     m.put("amzn", 3);

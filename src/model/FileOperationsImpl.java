@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,13 +16,14 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 public class FileOperationsImpl implements FileOperations {
 
   @Override
@@ -61,6 +63,22 @@ public class FileOperationsImpl implements FileOperations {
     } catch (ParserConfigurationException | IOException | SAXException e) {
       throw new IllegalArgumentException("Error in parsing xml!!");
     }
+  }
+
+  @Override
+  public void writeToJson(String fileName, String portfolioName, JSONArray jsonArray)
+      throws IllegalArgumentException {
+    JSONObject portfolio = new JSONObject();
+    portfolio.put(portfolioName,jsonArray.toString());
+    try (FileWriter file = new FileWriter(fileName)) {
+
+      file.write(portfolio.toString(3));
+      file.flush();
+
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Error in writing to json file!!");
+    }
+
   }
 
   @Override

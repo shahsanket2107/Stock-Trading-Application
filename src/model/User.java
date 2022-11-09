@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Map;
+import org.json.JSONArray;
 
 /**
  * This interface is the model of user. Here we implement create and load portfolios.
@@ -92,4 +93,6 @@ public interface User {
    */
 
   boolean checkPortfolioExists(String pName);
+  void createFlexiblePortfolio(String portfolioName, JSONArray jsonArray);
+  StringBuilder getFlexiblePortfolioComposition(String pName);
 }

@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class PortfolioImpl implements Portfolio {
 
-  private final String name;
-  private final Map<String, Integer> stocks;
+  private  String name;
+  private  Map<String, Integer> stocks;
 
   /**
    * This is the constructor for a portfolio which initializes name and map of stocks.

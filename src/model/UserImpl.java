@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import org.json.JSONArray;
 
 /**
  * This class has all the functions of user model. As the user has a portfolio, this class has a
@@ -19,15 +20,18 @@ public class UserImpl implements User {
 
   private List<Portfolio> portfolio;
   private String name;
+  private  List<FlexiblePortfolio> flexiblePortfolio;
 
   public UserImpl() {
     this.name = "John Doe";
     this.portfolio = new ArrayList<>();
+    this.flexiblePortfolio = new ArrayList<>();
   }
 
-  public UserImpl(String name, List<Portfolio> portfolio) {
+  public UserImpl(String name, List<Portfolio> portfolio,  List<FlexiblePortfolio> flexiblePortfolio) {
     this.name = name;
     this.portfolio = portfolio;
+    this.flexiblePortfolio = flexiblePortfolio;
   }
 
   @Override
@@ -180,12 +184,55 @@ public class UserImpl implements User {
   @Override
   public boolean checkPortfolioExists(String pName) {
     int flg = 0;
+    int flg2 = 0;
     for (Portfolio value : this.portfolio) {
       if (value.getName().equals(pName)) {
         flg = 1;
         break;
       }
     }
-    return flg == 1;
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      if (value.getName().equals(pName)) {
+        flg2 = 1;
+        break;
+      }
+    }
+    return flg == 1 || flg2 == 1;
+  }
+
+  @Override
+  public void createFlexiblePortfolio(String portfolioName, JSONArray jsonArray) {
+    if (checkPortfolioExists(portfolioName)) {
+      throw new IllegalArgumentException("Portfolio with the given name already exists!!");
+    }
+    String fileName = this.name + "_portfolios.json";
+    FileOperations write = new FileOperationsImpl();
+    write.writeToJson(fileName, portfolioName, jsonArray);
+    flexiblePortfolio.add(new FlexiblePortfolioImpl(portfolioName, jsonArray));
+  }
+  @Override
+  public StringBuilder getFlexiblePortfolioComposition(String pName){
+    StringBuilder temp = new StringBuilder();
+    FlexiblePortfolio p;
+    int flg = 0;
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      p = value;
+      if (p.getName().equals(pName)) {
+        flg = 1;
+        temp.append("Portfolio_Name: ").append(p.getName());
+        temp.append("\n");
+        JSONArray jsonArray = p.getPortfolio();
+        for(int i=0;i<jsonArray.length();i++){
+          temp.append(jsonArray.getJSONObject(i));
+          temp.append("\n");
+        }
+        break;
+      }
+    }
+    if (flg == 0) {
+      temp.append(
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+    }
+    return temp;
   }
 }

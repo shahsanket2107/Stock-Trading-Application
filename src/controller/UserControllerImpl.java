@@ -5,8 +5,9 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 import model.User;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import view.ViewImpl;
 
 /**
@@ -91,6 +92,63 @@ public class UserControllerImpl implements UserController {
     }
   }
 
+  private JSONArray performJson(Scanner sc) {
+    JSONArray jsonArray = new JSONArray();
+    while (true) {
+      view.getAddStockMenu();
+      switch (sc.nextLine()) {
+        case "1":
+          view.getTicker();
+          String ticker = sc.nextLine();
+          if (!user.ifStocksExist(ticker)) {
+            while (!user.ifStocksExist(ticker)) {
+              view.invalidTicker();
+              view.getTicker();
+              ticker = sc.nextLine();
+            }
+          }
+          ticker = ticker.toUpperCase();
+          int qty = 0;
+
+          do {
+            view.getQty();
+            String s = sc.nextLine();
+            try {
+              qty = Integer.parseInt(s);
+              if (qty <= 0) {
+                view.qtyPositive();
+              }
+            } catch (NumberFormatException e) {
+              view.qtyInteger();
+            }
+          }
+          while (qty <= 0);
+          view.getDate();
+          String date = sc.nextLine();
+          if (user.isValidFormat(date)) {
+            jsonArray.put(getJson(ticker, qty, date));
+          } else {
+            view.invalidDate();
+          }
+          break;
+        case "q":
+          return jsonArray;
+        default:
+          view.seeDefault();
+      }
+    }
+  }
+
+  private JSONObject getJson(String ticker, int qty, String date) {
+    JSONArray jsonArray = new JSONArray();
+    JSONObject obj = new JSONObject();
+    JSONObject objItem = new JSONObject();
+    objItem.put("ticker", ticker);
+    objItem.put("qty", qty);
+    obj.put(date, objItem);
+    return obj;
+  }
+
   /**
    * This helper method takes portfolio name as input from the user.
    *
@@ -124,6 +182,22 @@ public class UserControllerImpl implements UserController {
     }
   }
 
+  private void createFlexiblePortfolio(Scanner scan) {
+    String portfolioName = portfolioName(scan);
+    while (user.checkPortfolioExists(portfolioName)) {
+      view.alreadyExists();
+      portfolioName = portfolioName(scan);
+    }
+    try {
+      JSONArray jsonArray = performJson(scan);
+      user.createFlexiblePortfolio(portfolioName, jsonArray);
+      view.getPortfolioMessage();
+
+    } catch (IllegalArgumentException e) {
+      view.displayMessage(e.getMessage());
+    }
+  }
+
   private void getPortfolioValuation(Scanner scan) {
     String pName = portfolioName(scan);
     view.getDate();
@@ -147,6 +221,11 @@ public class UserControllerImpl implements UserController {
     view.displayMessage(String.valueOf(composition));
   }
 
+  private void getFlexiblePortfolioComposition(Scanner scan) {
+    String p_name = portfolioName(scan);
+    StringBuilder composition = user.getFlexiblePortfolioComposition(p_name);
+    view.displayMessage(String.valueOf(composition));
+  }
   private void loadPortfolio(Scanner scan) {
     view.getFileName();
     String pfName = scan.nextLine();
@@ -183,6 +262,12 @@ public class UserControllerImpl implements UserController {
           break;
         case "5":
           loadPortfolio(scan);
+          break;
+        case "6":
+          createFlexiblePortfolio(scan);
+          break;
+        case "7":
+          getFlexiblePortfolioComposition(scan);
           break;
         case "q":
           return;

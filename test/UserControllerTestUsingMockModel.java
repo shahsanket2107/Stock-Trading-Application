@@ -1,18 +1,17 @@
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
+import controller.UserController;
+import controller.UserControllerImpl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Map;
-
-import controller.UserController;
-import controller.UserControllerImpl;
 import model.User;
+import org.json.JSONArray;
+import org.junit.Before;
+import org.junit.Test;
 import view.ViewImpl;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This is a UserController Test class which uses mock model. The purpose of this class testing is
@@ -195,6 +194,16 @@ public class UserControllerTestUsingMockModel {
     public boolean checkPortfolioExists(String pName) {
       out.println("checkPortfolioExists called with pName as: " + pName);
       return false;
+    }
+
+    @Override
+    public void createFlexiblePortfolio(String portfolioName, JSONArray jsonArray) {
+
+    }
+
+    @Override
+    public StringBuilder getFlexiblePortfolioComposition(String pName) {
+      return null;
     }
   }
 }
