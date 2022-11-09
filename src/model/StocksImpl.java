@@ -32,47 +32,25 @@ public class StocksImpl implements Stocks {
    *                                  not exist.
    */
   private String getClosingValue(String date) throws IllegalArgumentException {
-    String apiKey = "FHA1IC5A17Q0SPLG";
-    URL url = null;
-    try {
-      url = new URL("https://www.alphavantage"
-              + ".co/query?function=TIME_SERIES_DAILY"
-              + "&outputsize=full"
-              + "&symbol"
-              + "=" + ticker + "&apikey=" + apiKey + "&datatype=csv");
-    } catch (MalformedURLException e) {
-      throw new IllegalArgumentException("Malformed URL Exception!!");
+    StringBuilder output ;
+    Api api = new ApiImpl();
+    output = api.getApiOutputFromTicker(ticker);
+
+    int max_limit = output.indexOf("Note");
+    if (max_limit != -1) {
+      return "55.0";
     }
-
-    InputStream in = null;
-    StringBuilder output = new StringBuilder();
-    try {
-      assert url != null;
-      in = url.openStream();
-      int b;
-
-      while ((b = in.read()) != -1) {
-        output.append((char) b);
-      }
-      
-      int max_limit = output.indexOf("Note");
-      if (max_limit != -1) {
-        return "55.0";
-      }
-      int index = output.indexOf(date);
-      if (index == -1) {
-        throw new IllegalArgumentException("Data for given parameter does not exist!!");
-      }
-      int endIndex = output.indexOf("\n", index);
-
-      String temp = output.substring(index, endIndex);
-
-      String[] res = temp.split(",", 0);
-
-      String closeValue = res[4];
-      return closeValue;
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Unable to fetch URL right now!!");
+    int index = output.indexOf(date);
+    if (index == -1) {
+      throw new IllegalArgumentException("Data for given parameter does not exist!!");
     }
+    int endIndex = output.indexOf("\n", index);
+
+    String temp = output.substring(index, endIndex);
+
+    String[] res = temp.split(",", 0);
+
+    String closeValue = res[4];
+    return closeValue;
   }
 }

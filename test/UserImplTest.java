@@ -15,10 +15,11 @@ import static org.junit.Assert.assertEquals;
 /**
  * In this test class we test the UserImpl model. We test various methods that are used by the user
  * like createPortfolio,loadPortfolio, getPortfolioNames, getPortfolioComposition etc. For invalid
- * this class only tests those invalid inputs that are handled in this UserImpl class. Some
- * invalid inputs are invalidated at view so those are tested there.
+ * this class only tests those invalid inputs that are handled in this UserImpl class. Some invalid
+ * inputs are invalidated at view so those are tested there.
  */
 public class UserImplTest {
+
   private User u;
 
   @Before
@@ -53,9 +54,9 @@ public class UserImplTest {
   @Test
   public void testGetPortfoliosName() {
     assertEquals("The list of portfolios is:\n" +
-            "test_portfolio_single_stock\n" +
-            "test_portfolio_two_stock\n" +
-            "test_portfolio_three_stock\n", u.getPortfoliosName().toString());
+        "test_portfolio_single_stock\n" +
+        "test_portfolio_two_stock\n" +
+        "test_portfolio_three_stock\n", u.getPortfoliosName().toString());
   }
 
   @Test
@@ -68,19 +69,19 @@ public class UserImplTest {
     u1.createPortfolio("testNewPortfolio", m);
     assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
     assertEquals("Portfolio_Name: testNewPortfolio\n" +
-            "{\n" +
-            "\tStock_Ticker: tsla\n" +
-            "\tQuantity: 10\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: zs\n" +
-            "\tQuantity: 13\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: amzn\n" +
-            "\tQuantity: 3\n" +
-            "}\n" +
-            "\n\n", u1.getPortfolioComposition("testNewPortfolio").toString());
+        "{\n" +
+        "\tStock_Ticker: tsla\n" +
+        "\tQuantity: 10\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: zs\n" +
+        "\tQuantity: 13\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: amzn\n" +
+        "\tQuantity: 3\n" +
+        "}\n" +
+        "\n\n", u1.getPortfolioComposition("testNewPortfolio").toString());
   }
 
   @Test
@@ -92,19 +93,19 @@ public class UserImplTest {
     u.createPortfolio("testNewPortfolio", m);
     assertEquals(true, u.checkPortfolioExists("testNewPortfolio"));
     assertEquals("Portfolio_Name: testNewPortfolio\n" +
-            "{\n" +
-            "\tStock_Ticker: tsla\n" +
-            "\tQuantity: 10\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: zs\n" +
-            "\tQuantity: 13\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: amzn\n" +
-            "\tQuantity: 3\n" +
-            "}\n" +
-            "\n\n", u.getPortfolioComposition("testNewPortfolio").toString());
+        "{\n" +
+        "\tStock_Ticker: tsla\n" +
+        "\tQuantity: 10\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: zs\n" +
+        "\tQuantity: 13\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: amzn\n" +
+        "\tQuantity: 3\n" +
+        "}\n" +
+        "\n\n", u.getPortfolioComposition("testNewPortfolio").toString());
   }
 
   @Test
@@ -116,7 +117,7 @@ public class UserImplTest {
     m.put("amzn", 3);
     u1.createPortfolio("testNewPortfolio", m);
     assertEquals("Portfolio loaded successfully!",
-            u1.loadPortfolio("Sanket_portfolios.xml"));
+        u1.loadPortfolio("Sanket_portfolios.xml"));
     assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
   }
 
@@ -136,19 +137,19 @@ public class UserImplTest {
   @Test
   public void testLoadPortfolio() {
     assertEquals("Portfolio loaded successfully!",
-            u.loadPortfolio("portfolio.xml"));
+        u.loadPortfolio("portfolio.xml"));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testLoadPortfolioFailDueTOInvalidName() {
     assertEquals("Invalid file name. Please try again!",
-            u.loadPortfolio("NotExistingPortfolio.xml"));
+        u.loadPortfolio("NotExistingPortfolio.xml"));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testLoadPortfolioFailDueTOInvalidType() {
     assertEquals("Invalid file format. Only xml files can be loaded!",
-            u.loadPortfolio("pf.txt"));
+        u.loadPortfolio("pf.txt"));
   }
 
   @Test
@@ -177,66 +178,66 @@ public class UserImplTest {
   @Test
   public void testGetTotalValuationForPortFolio1() {
     assertEquals("Portfolio_Name: test_portfolio_single_stock\n" +
-            "Portfolio_Valuation at 2022-10-28 is : $ 3114.8\n" +
-            "The stock valuation breakdown is: \n" +
-            "aapl : $3114.8\n", u.getTotalValuation("2022-10-28",
-            "test_portfolio_single_stock").toString());
+        "Portfolio_Valuation at 2022-10-28 is : $ 3114.8\n" +
+        "The stock valuation breakdown is: \n" +
+        "aapl : $3114.8\n", u.getTotalValuation("2022-10-28",
+        "test_portfolio_single_stock").toString());
   }
 
   @Test
   public void testGetTotalValuationForPortFolio2() {
     assertEquals("Portfolio_Name: test_portfolio_two_stock\n" +
-            "Portfolio_Valuation at 2022-10-28 is : $ 3596.25\n" +
-            "The stock valuation breakdown is: \n" +
-            "aapl : $3114.8\n" +
-            "googl : $481.45000000000005\n", u.getTotalValuation("2022-10-28",
-            "test_portfolio_two_stock").toString());
+        "Portfolio_Valuation at 2022-10-28 is : $ 3596.25\n" +
+        "The stock valuation breakdown is: \n" +
+        "aapl : $3114.8\n" +
+        "googl : $481.45000000000005\n", u.getTotalValuation("2022-10-28",
+        "test_portfolio_two_stock").toString());
   }
 
   @Test
   public void testGetPortfolioCompositionForPortfolio3() {
     assertEquals("Portfolio_Name: test_portfolio_three_stock\n" +
-            "{\n" +
-            "\tStock_Ticker: aapl\n" +
-            "\tQuantity: 20\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: tsla\n" +
-            "\tQuantity: 22\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: googl\n" +
-            "\tQuantity: 5\n" +
-            "}\n\n\n", u.getPortfolioComposition("test_portfolio_three_stock").toString());
+        "{\n" +
+        "\tStock_Ticker: aapl\n" +
+        "\tQuantity: 20\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: tsla\n" +
+        "\tQuantity: 22\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: googl\n" +
+        "\tQuantity: 5\n" +
+        "}\n\n\n", u.getPortfolioComposition("test_portfolio_three_stock").toString());
   }
 
   @Test
   public void testGetPortfolioCompositionForPortfolio2() {
     assertEquals("Portfolio_Name: test_portfolio_two_stock\n" +
-            "{\n" +
-            "\tStock_Ticker: aapl\n" +
-            "\tQuantity: 20\n" +
-            "}\n" +
-            "{\n" +
-            "\tStock_Ticker: googl\n" +
-            "\tQuantity: 5\n" +
-            "}\n\n\n", u.getPortfolioComposition("test_portfolio_two_stock").toString());
+        "{\n" +
+        "\tStock_Ticker: aapl\n" +
+        "\tQuantity: 20\n" +
+        "}\n" +
+        "{\n" +
+        "\tStock_Ticker: googl\n" +
+        "\tQuantity: 5\n" +
+        "}\n\n\n", u.getPortfolioComposition("test_portfolio_two_stock").toString());
   }
 
   @Test
   public void testGetPortfolioCompositionForPortfolio1() {
     assertEquals("Portfolio_Name: test_portfolio_single_stock\n" +
-            "{\n" +
-            "\tStock_Ticker: aapl\n" +
-            "\tQuantity: 20\n" +
-            "}\n\n\n", u.getPortfolioComposition("test_portfolio_single_stock").toString());
+        "{\n" +
+        "\tStock_Ticker: aapl\n" +
+        "\tQuantity: 20\n" +
+        "}\n\n\n", u.getPortfolioComposition("test_portfolio_single_stock").toString());
   }
 
   @Test
   public void testGetPortfolioCompositionForPortfolioThatDoesNotExist() {
     assertEquals("The given portfolio name does not exist!!\n" +
             "Please enter a valid portfolio name!!",
-            u.getPortfolioComposition("Not_existing_portfolio").toString());
+        u.getPortfolioComposition("Not_existing_portfolio").toString());
   }
 
   @Test
