@@ -2,12 +2,15 @@ package controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import model.Stocks;
+import model.StocksImpl;
 import model.User;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import view.ViewImpl;
 
 /**
@@ -92,8 +95,8 @@ public class UserControllerImpl implements UserController {
     }
   }
 
-  private JSONArray performJson(Scanner sc) {
-    JSONArray jsonArray = new JSONArray();
+  private List<Stocks> performJson(Scanner sc) {
+    List<Stocks> stocks = new ArrayList<>();
     while (true) {
       view.getAddStockMenu();
       switch (sc.nextLine()) {
@@ -126,27 +129,18 @@ public class UserControllerImpl implements UserController {
           view.getDate();
           String date = sc.nextLine();
           if (user.isValidFormat(date)) {
-            jsonArray.put(getJson(ticker, qty, date));
+            Stocks s = new StocksImpl(date, ticker, qty);
+            stocks.add(s);
           } else {
             view.invalidDate();
           }
           break;
         case "q":
-          return jsonArray;
+          return stocks;
         default:
           view.seeDefault();
       }
     }
-  }
-
-  private JSONObject getJson(String ticker, int qty, String date) {
-    JSONArray jsonArray = new JSONArray();
-    JSONObject obj = new JSONObject();
-    JSONObject objItem = new JSONObject();
-    objItem.put("ticker", ticker);
-    objItem.put("qty", qty);
-    obj.put(date, objItem);
-    return obj;
   }
 
   /**
@@ -189,7 +183,7 @@ public class UserControllerImpl implements UserController {
       portfolioName = portfolioName(scan);
     }
     try {
-      JSONArray jsonArray = performJson(scan);
+      List<Stocks> jsonArray = performJson(scan);
       user.createFlexiblePortfolio(portfolioName, jsonArray);
       view.getPortfolioMessage();
 
@@ -226,11 +220,23 @@ public class UserControllerImpl implements UserController {
     StringBuilder composition = user.getFlexiblePortfolioComposition(p_name);
     view.displayMessage(String.valueOf(composition));
   }
+
   private void loadPortfolio(Scanner scan) {
     view.getFileName();
     String pfName = scan.nextLine();
     try {
       String output = user.loadPortfolio(pfName);
+      view.displayMessage(output);
+    } catch (IllegalArgumentException e) {
+      view.displayMessage(e.getMessage());
+    }
+  }
+
+  private void loadFlexiblePortfolio(Scanner scan) {
+    view.getFileName();
+    String fName = scan.nextLine();
+    try {
+      String output = user.loadFlexiblePortfolio(fName);
       view.displayMessage(output);
     } catch (IllegalArgumentException e) {
       view.displayMessage(e.getMessage());
@@ -268,6 +274,9 @@ public class UserControllerImpl implements UserController {
           break;
         case "7":
           getFlexiblePortfolioComposition(scan);
+          break;
+        case "8":
+          loadFlexiblePortfolio(scan);
           break;
         case "q":
           return;

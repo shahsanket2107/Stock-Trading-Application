@@ -31,6 +31,7 @@ public class ViewImpl implements View {
     this.out.println("Enter 5 to load your portfolio");
     this.out.println("Enter 6 to create flexible portfolio");
     this.out.println("Enter 7 to examine composition of flexible portfolio");
+    this.out.println("Enter 8 to load a flexible portfolio");
     this.out.println("Enter q to exit");
   }
 

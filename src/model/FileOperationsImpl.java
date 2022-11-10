@@ -1,12 +1,24 @@
 package model;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.util.DefaultPrettyPrinter;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,21 +28,14 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+
 public class FileOperationsImpl implements FileOperations {
 
   @Override
   public void writeToFile(String fileName, String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
-    java.io.File file = new java.io.File(fileName);
+    File file = new File(fileName);
     try {
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -66,19 +71,48 @@ public class FileOperationsImpl implements FileOperations {
   }
 
   @Override
-  public void writeToJson(String fileName, String portfolioName, JSONArray jsonArray)
-      throws IllegalArgumentException {
-    JSONObject portfolio = new JSONObject();
-    portfolio.put(portfolioName,jsonArray.toString());
-    try (FileWriter file = new FileWriter(fileName)) {
-
-      file.write(portfolio.toString(3));
-      file.flush();
-
-    } catch (IOException e) {
+  public void writeToJson(String fileName, String portfolioName, List<Stocks> stocks)
+          throws IllegalArgumentException {
+    boolean fileExist = fileExists(fileName);
+    List<FlexiblePortfolio> result;
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+      if (!fileExist) {
+        result = new ArrayList<>();
+      } else {
+        result = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
+                FlexiblePortfolio[].class));
+      }
+      FlexiblePortfolio p = new FlexiblePortfolioImpl(portfolioName, stocks);
+      result.add(p);
+      writer.writeValue(Paths.get(fileName).toFile(), result);
+    } catch (Exception e) {
       throw new IllegalArgumentException("Error in writing to json file!!");
     }
+  }
 
+  @Override
+  public List<FlexiblePortfolio> readFromJson(String pfName) throws IllegalArgumentException {
+    List<FlexiblePortfolio> portfolios_list;
+    try {
+      boolean fileExist = fileExists(pfName);
+      if (!fileExist) {
+        throw new IllegalArgumentException("Invalid file name. Please try again!");
+      }
+      String[] checkXML = pfName.split("\\.");
+      if (!checkXML[1].equals("json")) {
+        throw new IllegalArgumentException("Invalid file format. Only json files can be loaded!");
+      }
+      ObjectMapper mapper = new ObjectMapper();
+      mapper.enableDefaultTypingAsProperty(ObjectMapper.DefaultTyping.NON_FINAL, "_class");
+      portfolios_list = Arrays.asList(mapper.readValue(Paths.get(pfName).toFile(),
+              FlexiblePortfolio[].class));
+      return portfolios_list;
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new IllegalArgumentException("Error in reading from json file!!!");
+    }
   }
 
   @Override
@@ -111,7 +145,7 @@ public class FileOperationsImpl implements FileOperations {
       }
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new IllegalArgumentException(
-          "Unable to read xml file!!\n Please check proper xml format and try again!!");
+              "Unable to read xml file!!\n Please check proper xml format and try again!!");
     }
     return portfolios_list;
   }
@@ -125,7 +159,7 @@ public class FileOperationsImpl implements FileOperations {
    * @param portfolio XML parsing node passed to helper method to write portfolio to xml file.
    */
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-      Map<String, Integer> m, Node portfolio, List<Portfolio> portfolios_list) {
+                                   Map<String, Integer> m, Node portfolio, List<Portfolio> portfolios_list) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -161,7 +195,7 @@ public class FileOperationsImpl implements FileOperations {
    */
 
   private void writeXMLHelper(Document doc, String fileName) throws
-      TransformerConfigurationException {
+          TransformerConfigurationException {
     try {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();

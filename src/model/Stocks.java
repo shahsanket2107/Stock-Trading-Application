@@ -13,10 +13,15 @@ public interface Stocks {
    * @param quantity the quantity of stocks in the portfolio
    * @param date     the date at which you need to find value.
    * @return the value of that particular ticker at the inputted date multiplied by its quantity, so
-   *         we get the final value of that stock in the portfolio.
+   * we get the final value of that stock in the portfolio.
    * @throws IllegalArgumentException when the data for entered date does not exist, or if the api
    *                                  is unable to fetch data
    */
   double getValuationFromDate(int quantity, String date) throws IllegalArgumentException;
 
+  String getTicker();
+
+  String getDate();
+
+  int getQty();
 }

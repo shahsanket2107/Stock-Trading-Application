@@ -1,5 +1,7 @@
 package model;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -9,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
-import org.json.JSONArray;
 
 /**
  * This class has all the functions of user model. As the user has a portfolio, this class has a
@@ -20,7 +21,7 @@ public class UserImpl implements User {
 
   private List<Portfolio> portfolio;
   private String name;
-  private  List<FlexiblePortfolio> flexiblePortfolio;
+  private List<FlexiblePortfolio> flexiblePortfolio;
 
   public UserImpl() {
     this.name = "John Doe";
@@ -28,7 +29,7 @@ public class UserImpl implements User {
     this.flexiblePortfolio = new ArrayList<>();
   }
 
-  public UserImpl(String name, List<Portfolio> portfolio,  List<FlexiblePortfolio> flexiblePortfolio) {
+  public UserImpl(String name, List<Portfolio> portfolio, List<FlexiblePortfolio> flexiblePortfolio) {
     this.name = name;
     this.portfolio = portfolio;
     this.flexiblePortfolio = flexiblePortfolio;
@@ -64,7 +65,7 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName)) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
@@ -117,7 +118,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -132,7 +133,7 @@ public class UserImpl implements User {
         Map<String, Double> m = p.getValuationAtDate(date);
         Double ans = computeValue(m);
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-            .append(ans);
+                .append(ans);
         temp.append("\n");
         temp.append("The stock valuation breakdown is: \n");
         m.forEach((k, v) -> {
@@ -176,7 +177,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -201,17 +202,18 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void createFlexiblePortfolio(String portfolioName, JSONArray jsonArray) {
+  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) {
     if (checkPortfolioExists(portfolioName)) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     String fileName = this.name + "_portfolios.json";
     FileOperations write = new FileOperationsImpl();
-    write.writeToJson(fileName, portfolioName, jsonArray);
-    flexiblePortfolio.add(new FlexiblePortfolioImpl(portfolioName, jsonArray));
+    write.writeToJson(fileName, portfolioName, stocks);
+    flexiblePortfolio.add(new FlexiblePortfolioImpl(portfolioName, stocks));
   }
+
   @Override
-  public StringBuilder getFlexiblePortfolioComposition(String pName){
+  public StringBuilder getFlexiblePortfolioComposition(String pName) {
     StringBuilder temp = new StringBuilder();
     FlexiblePortfolio p;
     int flg = 0;
@@ -219,20 +221,32 @@ public class UserImpl implements User {
       p = value;
       if (p.getName().equals(pName)) {
         flg = 1;
-        temp.append("Portfolio_Name: ").append(p.getName());
-        temp.append("\n");
-        JSONArray jsonArray = p.getPortfolio();
-        for(int i=0;i<jsonArray.length();i++){
-          temp.append(jsonArray.getJSONObject(i));
-          temp.append("\n");
+        try {
+          ObjectMapper mapper = new ObjectMapper();
+          String temp2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(p.getStocks());
+          temp.append(temp2);
+        } catch (Exception e) {
+          temp.append("Error in reading the portfolio!!");
         }
         break;
       }
     }
     if (flg == 0) {
       temp.append(
-          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
+  }
+
+  @Override
+  public String loadFlexiblePortfolio(String fileName) {
+    try {
+      FileOperations read = new FileOperationsImpl();
+      this.flexiblePortfolio = read.readFromJson(fileName);
+    } catch (Exception e) {
+      e.printStackTrace();
+      //throw new IllegalArgumentException("Error in loading flexible portfolio!!");
+    }
+    return "Flexible Portfolio loaded successfully!";
   }
 }

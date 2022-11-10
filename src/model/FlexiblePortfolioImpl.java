@@ -1,15 +1,16 @@
 package model;
 
-import org.json.JSONArray;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlexiblePortfolioImpl implements FlexiblePortfolio {
 
   private String name;
-  private JSONArray jsonArray;
+  private List<Stocks> stocks;
 
-  public FlexiblePortfolioImpl(String name, JSONArray jsonArray) {
+  public FlexiblePortfolioImpl(String name, List<Stocks> stocks) {
     this.name = name;
-    this.jsonArray = jsonArray;
+    this.stocks = stocks;
   }
 
   @Override
@@ -18,7 +19,7 @@ public class FlexiblePortfolioImpl implements FlexiblePortfolio {
   }
 
   @Override
-  public JSONArray getPortfolio() {
-    return this.jsonArray;
+  public List<Stocks> getStocks() {
+    return this.stocks;
   }
 }

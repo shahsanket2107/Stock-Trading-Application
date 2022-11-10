@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Map;
 import org.json.JSONArray;
 
@@ -93,6 +94,7 @@ public interface User {
    */
 
   boolean checkPortfolioExists(String pName);
-  void createFlexiblePortfolio(String portfolioName, JSONArray jsonArray);
+  void createFlexiblePortfolio(String portfolioName,  List<Stocks> stocks);
   StringBuilder getFlexiblePortfolioComposition(String pName);
+  String loadFlexiblePortfolio(String fileName) throws IllegalArgumentException;
 }

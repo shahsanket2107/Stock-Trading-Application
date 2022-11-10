@@ -1,8 +1,8 @@
 package model;
 
-import org.json.JSONArray;
+import java.util.List;
 
 public interface FlexiblePortfolio {
-String getName();
-JSONArray getPortfolio();
+  String getName();
+  List<Stocks> getStocks();
 }

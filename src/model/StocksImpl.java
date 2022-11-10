@@ -1,26 +1,45 @@
 package model;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * This class has all the functions of Stock model. The alpha vantage API is also called in this
  * class to fetch the stock values.
  */
 public class StocksImpl implements Stocks {
-  private final String ticker;
+  private String ticker;
+  private String date;
+  private int qty;
+
+  public StocksImpl(String date, String ticker, int qty) {
+    this.ticker = ticker;
+    this.qty = qty;
+    this.date = date;
+  }
 
   public StocksImpl(String ticker) {
     this.ticker = ticker;
   }
+
 
   @Override
   public double getValuationFromDate(int quantity, String date) throws IllegalArgumentException {
     String temp = getClosingValue(date);
     double closing_value = Double.parseDouble(temp);
     return closing_value * quantity;
+  }
+
+  @Override
+  public String getTicker() {
+    return this.ticker;
+  }
+
+  @Override
+  public String getDate() {
+    return this.date;
+  }
+
+  @Override
+  public int getQty() {
+    return this.qty;
   }
 
   /**
@@ -32,7 +51,7 @@ public class StocksImpl implements Stocks {
    *                                  not exist.
    */
   private String getClosingValue(String date) throws IllegalArgumentException {
-    StringBuilder output ;
+    StringBuilder output;
     Api api = new ApiImpl();
     output = api.getApiOutputFromTicker(ticker);
 
