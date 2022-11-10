@@ -75,19 +75,22 @@ public class FileOperationsImpl implements FileOperations {
           throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     List<FlexiblePortfolio> result;
+    List<FlexiblePortfolio> temp;
     try {
       ObjectMapper mapper = new ObjectMapper();
       ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
       if (!fileExist) {
-        result = new ArrayList<>();
+        temp = new ArrayList<>();
       } else {
-        result = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
+        temp = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
                 FlexiblePortfolio[].class));
       }
+      result = new ArrayList<>(temp);
       FlexiblePortfolio p = new FlexiblePortfolioImpl(portfolioName, stocks);
       result.add(p);
       writer.writeValue(Paths.get(fileName).toFile(), result);
     } catch (Exception e) {
+      e.printStackTrace();
       throw new IllegalArgumentException("Error in writing to json file!!");
     }
   }
@@ -105,12 +108,10 @@ public class FileOperationsImpl implements FileOperations {
         throw new IllegalArgumentException("Invalid file format. Only json files can be loaded!");
       }
       ObjectMapper mapper = new ObjectMapper();
-      mapper.enableDefaultTypingAsProperty(ObjectMapper.DefaultTyping.NON_FINAL, "_class");
       portfolios_list = Arrays.asList(mapper.readValue(Paths.get(pfName).toFile(),
               FlexiblePortfolio[].class));
       return portfolios_list;
     } catch (Exception e) {
-      e.printStackTrace();
       throw new IllegalArgumentException("Error in reading from json file!!!");
     }
   }

@@ -1,9 +1,12 @@
 package model;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
 /**
  * This interface is the model of stock. Here the Alpha Vantage api is called and the value of
  * stocks on a particular date is found.
  */
+@JsonDeserialize(as = StocksImpl.class)
 public interface Stocks {
 
   /**

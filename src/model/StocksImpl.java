@@ -9,6 +9,12 @@ public class StocksImpl implements Stocks {
   private String date;
   private int qty;
 
+  public StocksImpl() {
+    this.ticker = "";
+    this.date = "";
+    this.qty = 0;
+  }
+
   public StocksImpl(String date, String ticker, int qty) {
     this.ticker = ticker;
     this.qty = qty;
