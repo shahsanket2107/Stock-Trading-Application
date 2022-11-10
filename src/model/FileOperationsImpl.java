@@ -103,8 +103,8 @@ public class FileOperationsImpl implements FileOperations {
       if (!fileExist) {
         throw new IllegalArgumentException("Invalid file name. Please try again!");
       }
-      String[] checkXML = pfName.split("\\.");
-      if (!checkXML[1].equals("json")) {
+      String[] checkJson = pfName.split("\\.");
+      if (!checkJson[1].equals("json")) {
         throw new IllegalArgumentException("Invalid file format. Only json files can be loaded!");
       }
       ObjectMapper mapper = new ObjectMapper();
