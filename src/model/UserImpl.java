@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -30,7 +31,7 @@ public class UserImpl implements User {
   }
 
   public UserImpl(String name, List<Portfolio> portfolio,
-      List<FlexiblePortfolio> flexiblePortfolio) {
+                  List<FlexiblePortfolio> flexiblePortfolio) {
     this.name = name;
     this.portfolio = portfolio;
     this.flexiblePortfolio = flexiblePortfolio;
@@ -71,7 +72,7 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName)) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
@@ -124,7 +125,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -139,7 +140,7 @@ public class UserImpl implements User {
         Map<String, Double> m = p.getValuationAtDate(date);
         Double ans = computeValue(m);
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-            .append(ans);
+                .append(ans);
         temp.append("\n");
         temp.append("The stock valuation breakdown is: \n");
         m.forEach((k, v) -> {
@@ -183,7 +184,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -208,7 +209,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) {
+  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName)) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
@@ -216,6 +217,18 @@ public class UserImpl implements User {
     FileOperations write = new FileOperationsImpl();
     write.writeToJson(fileName, portfolioName, stocks);
     flexiblePortfolio.add(new FlexiblePortfolioImpl(portfolioName, stocks));
+    dataStoreHelper(stocks);
+  }
+
+  private void dataStoreHelper(List<Stocks> stocks) throws IllegalArgumentException {
+    DataStoreFromApi data = new DataStoreFromApiImpl();
+    Set set = data.getTickers();
+    for (Stocks s : stocks) {
+      System.out.println(s.getTicker());
+      if (!set.contains(s.getTicker())) {
+        data.fetchFromApi(s.getTicker());
+      }
+    }
   }
 
   @Override
@@ -239,7 +252,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -250,8 +263,10 @@ public class UserImpl implements User {
       FileOperations read = new FileOperationsImpl();
       this.flexiblePortfolio = read.readFromJson(fileName);
     } catch (Exception e) {
-      //e.printStackTrace();
       throw new IllegalArgumentException("Error in loading flexible portfolio!!");
+    }
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      dataStoreHelper(value.getStocks());
     }
     return "Flexible Portfolio loaded successfully!";
   }
@@ -259,6 +274,13 @@ public class UserImpl implements User {
   @Override
   public String buyStocks(String ticker, int qty, String pName, String date) {
 
+    String temp_date = date.replaceAll("[\\s\\-()]", "");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime now = LocalDateTime.now();
+    String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
+    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+      return "Date cannot be greater or equal to current date.";
+    }
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         Stocks stocks = new StocksImpl(date, ticker, qty);
@@ -266,16 +288,9 @@ public class UserImpl implements User {
         String fileName = this.name + "_portfolios.json";
         FileOperations write = new FileOperationsImpl();
         write.editJson(fileName, pName, value.getStocks());
-        String temp_date = date.replaceAll("[\\s\\-()]", "");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime now = LocalDateTime.now();
-        String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-        if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
-          return "Date cannot be greater or equal to current date.";
-        }
+        dataStoreHelper(value.getStocks());
         break;
       }
-
     }
     return "Stocks bought successfully and added to your portfolio!";
 

@@ -17,7 +17,7 @@ public interface User {
    * @throws IllegalArgumentException if there is some error in writing to a xml file.
    */
   void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * This function gives the composition of portfolio in terms of portfolio name, stock ticker and
@@ -68,12 +68,14 @@ public interface User {
 
   /**
    * This function is used to get the name of the user.
+   *
    * @return the name of the user.
    */
   String getName();
 
   /**
    * This function is used to set the name of the user.
+   *
    * @param name the name of user which needs to be set.
    */
 
@@ -81,6 +83,7 @@ public interface User {
 
   /**
    * This function returns the names of all the portfolios of a particular user.
+   *
    * @return the names of all the portfolios of a particular user.
    */
 
@@ -88,13 +91,17 @@ public interface User {
 
   /**
    * This function checks if a portfolio with the given name already exists or not.
+   *
    * @param pName the name of portfolio which you need to check.
    * @return true if the portfolio exists and false otherwise.
    */
 
   boolean checkPortfolioExists(String pName);
-  void createFlexiblePortfolio(String portfolioName,  List<Stocks> stocks);
+
+  void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException;
+
   StringBuilder getFlexiblePortfolioComposition(String pName);
+
   String loadFlexiblePortfolio(String fileName) throws IllegalArgumentException;
 
   String buyStocks(String ticker, int qty, String pName, String date);

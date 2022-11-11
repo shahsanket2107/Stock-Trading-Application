@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import model.DataStoreFromApi;
+import model.DataStoreFromApiImpl;
 import model.Stocks;
 import model.StocksImpl;
 import model.User;
@@ -265,8 +267,8 @@ public class UserControllerImpl implements UserController {
     view.getDate();
     String date = scan.nextLine();
     if (user.isValidFormat(date)) {
-        String message = user.sellStocks(ticker, qty, pName, date);
-        view.displayMessage(message);
+      String message = user.sellStocks(ticker, qty, pName, date);
+      view.displayMessage(message);
     } else {
       view.invalidDate();
     }
@@ -333,6 +335,11 @@ public class UserControllerImpl implements UserController {
           break;
         case "10":
           sellStocks(scan);
+          break;
+        case "d":
+          DataStoreFromApi d1 = new DataStoreFromApiImpl();
+          System.out.println("here");
+          d1.display();
           break;
         case "q":
           return;
