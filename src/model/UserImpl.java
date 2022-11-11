@@ -29,7 +29,8 @@ public class UserImpl implements User {
     this.flexiblePortfolio = new ArrayList<>();
   }
 
-  public UserImpl(String name, List<Portfolio> portfolio, List<FlexiblePortfolio> flexiblePortfolio) {
+  public UserImpl(String name, List<Portfolio> portfolio,
+      List<FlexiblePortfolio> flexiblePortfolio) {
     this.name = name;
     this.portfolio = portfolio;
     this.flexiblePortfolio = flexiblePortfolio;
@@ -65,7 +66,7 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName)) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
@@ -118,7 +119,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-              "Date cannot be greater or equal to current date. Try a different date");
+          "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -133,7 +134,7 @@ public class UserImpl implements User {
         Map<String, Double> m = p.getValuationAtDate(date);
         Double ans = computeValue(m);
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(ans);
+            .append(ans);
         temp.append("\n");
         temp.append("The stock valuation breakdown is: \n");
         m.forEach((k, v) -> {
@@ -177,7 +178,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -233,7 +234,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -244,9 +245,46 @@ public class UserImpl implements User {
       FileOperations read = new FileOperationsImpl();
       this.flexiblePortfolio = read.readFromJson(fileName);
     } catch (Exception e) {
-      e.printStackTrace();
-      //throw new IllegalArgumentException("Error in loading flexible portfolio!!");
+      //e.printStackTrace();
+      throw new IllegalArgumentException("Error in loading flexible portfolio!!");
     }
     return "Flexible Portfolio loaded successfully!";
+  }
+
+  @Override
+  public void buyStocks(String ticker, int qty, String pName, String date) {
+    for (int i = 0; i < this.flexiblePortfolio.size(); i++) {
+      if (pName.equals(this.flexiblePortfolio.get(i).getName())) {
+        Stocks stocks = new StocksImpl(date, ticker, qty);
+        this.flexiblePortfolio.get(i).getStocks().add(stocks);
+        break;
+      }
+
+    }
+
+  }
+
+  @Override
+  public String sellStocks(String ticker, int qty, String pName, String date) {
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      if (pName.equals(value.getName())) {
+        List<Stocks> stocks = value.getStocks();
+        for (int j = 0; j < stocks.size(); j++) {
+          if (stocks.get(j).getTicker().equals(ticker)) {
+            if (stocks.get(j).getQty() >= qty) {
+
+            } else {
+              throw new IllegalArgumentException(
+                  "Quantity entered is more than what you have in your portfolio!");
+            }
+          } else {
+            throw new IllegalArgumentException(
+                "The entered stock does not exist in your portfolio!");
+          }
+        }
+      }
+
+    }
+    return "";
   }
 }

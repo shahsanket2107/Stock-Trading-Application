@@ -8,4 +8,5 @@ import java.util.List;
 public interface FlexiblePortfolio {
   String getName();
   List<Stocks> getStocks();
+  void setStocks(List<Stocks> stocks);
 }

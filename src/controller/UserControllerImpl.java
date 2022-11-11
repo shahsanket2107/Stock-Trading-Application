@@ -95,6 +95,37 @@ public class UserControllerImpl implements UserController {
     }
   }
 
+  private String getTicker(Scanner sc) {
+    String ticker = sc.nextLine();
+    if (!user.ifStocksExist(ticker)) {
+      while (!user.ifStocksExist(ticker)) {
+        view.invalidTicker();
+        view.getTicker();
+        ticker = sc.nextLine();
+      }
+    }
+    ticker = ticker.toUpperCase();
+    return ticker;
+  }
+
+  private int getQty(Scanner sc) {
+    int qty = 0;
+    do {
+      view.getQty();
+      String s = sc.nextLine();
+      try {
+        qty = Integer.parseInt(s);
+        if (qty <= 0) {
+          view.qtyPositive();
+        }
+      } catch (NumberFormatException e) {
+        view.qtyInteger();
+      }
+    }
+    while (qty <= 0);
+    return qty;
+  }
+
   private List<Stocks> performJson(Scanner sc) {
     List<Stocks> stocks = new ArrayList<>();
     while (true) {
@@ -102,30 +133,8 @@ public class UserControllerImpl implements UserController {
       switch (sc.nextLine()) {
         case "1":
           view.getTicker();
-          String ticker = sc.nextLine();
-          if (!user.ifStocksExist(ticker)) {
-            while (!user.ifStocksExist(ticker)) {
-              view.invalidTicker();
-              view.getTicker();
-              ticker = sc.nextLine();
-            }
-          }
-          ticker = ticker.toUpperCase();
-          int qty = 0;
-
-          do {
-            view.getQty();
-            String s = sc.nextLine();
-            try {
-              qty = Integer.parseInt(s);
-              if (qty <= 0) {
-                view.qtyPositive();
-              }
-            } catch (NumberFormatException e) {
-              view.qtyInteger();
-            }
-          }
-          while (qty <= 0);
+          String ticker = getTicker(sc);
+          int qty = getQty(sc);
           view.getDate();
           String date = sc.nextLine();
           if (user.isValidFormat(date)) {
@@ -243,6 +252,47 @@ public class UserControllerImpl implements UserController {
     }
   }
 
+  private void sellStocks(Scanner scan) {
+    view.getPortfolioName();
+    String pName = scan.nextLine();
+    while (!user.checkPortfolioExists(pName)) {
+      view.portfolioNotExist();
+      pName = portfolioName(scan);
+    }
+    view.getTicker();
+    String ticker = getTicker(scan);
+    int qty = getQty(scan);
+    view.getDate();
+    String date = scan.nextLine();
+    if (user.isValidFormat(date)) {
+      String message = user.sellStocks(ticker, qty, pName, date);
+      view.getSellStockMessage();
+    } else {
+      view.invalidDate();
+    }
+  }
+
+  private void buyStocks(Scanner scan) {
+    view.getPortfolioName();
+    String pName = scan.nextLine();
+    while (!user.checkPortfolioExists(pName)) {
+      view.portfolioNotExist();
+      pName = portfolioName(scan);
+    }
+    view.getTicker();
+    String ticker = getTicker(scan);
+    int qty = getQty(scan);
+    view.getDate();
+    String date = scan.nextLine();
+    if (user.isValidFormat(date)) {
+      user.buyStocks(ticker, qty, pName, date);
+      view.getBuyStockMessage();
+    } else {
+      view.invalidDate();
+    }
+
+  }
+
   @Override
   public void runGo() {
     Scanner scan = new Scanner(this.in);
@@ -278,6 +328,12 @@ public class UserControllerImpl implements UserController {
         case "8":
           loadFlexiblePortfolio(scan);
           break;
+        case "9":
+          buyStocks(scan);
+          break;
+        case "10":
+          sellStocks(scan);
+          break;
         case "q":
           return;
         default:
@@ -285,4 +341,6 @@ public class UserControllerImpl implements UserController {
       }
     }
   }
+
+
 }

@@ -118,5 +118,8 @@ public interface View {
    * This function returns appropriate message when portfolio is successfully created.
    */
   void getPortfolioMessage();
+  void getBuyStockMessage();
+  void portfolioNotExist();
+  void getSellStockMessage();
 
 }

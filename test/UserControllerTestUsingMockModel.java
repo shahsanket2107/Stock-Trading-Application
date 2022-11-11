@@ -1,20 +1,18 @@
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
+import controller.UserController;
+import controller.UserControllerImpl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
-
-import controller.UserController;
-import controller.UserControllerImpl;
 import model.Stocks;
 import model.User;
+import org.junit.Before;
+import org.junit.Test;
 import view.ViewImpl;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This is a UserController Test class which uses mock model. The purpose of this class testing is
@@ -212,6 +210,11 @@ public class UserControllerTestUsingMockModel {
     @Override
     public String loadFlexiblePortfolio(String fileName) throws IllegalArgumentException {
       return null;
+    }
+
+    @Override
+    public void buyStocks(String ticker, int qty, String pName, String date) {
+
     }
   }
 }

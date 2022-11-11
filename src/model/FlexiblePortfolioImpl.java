@@ -27,4 +27,9 @@ public class FlexiblePortfolioImpl implements FlexiblePortfolio {
   public List<Stocks> getStocks() {
     return this.stocks;
   }
+
+  @Override
+  public void setStocks(List<Stocks> stocks){
+    this.stocks = stocks;
+  }
 }

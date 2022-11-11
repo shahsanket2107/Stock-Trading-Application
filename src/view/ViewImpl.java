@@ -32,6 +32,8 @@ public class ViewImpl implements View {
     this.out.println("Enter 6 to create flexible portfolio");
     this.out.println("Enter 7 to examine composition of flexible portfolio");
     this.out.println("Enter 8 to load a flexible portfolio");
+    this.out.println("Enter 9 to buy stocks on a specific date");
+    this.out.println("Enter 10 to sell stocks on a specific date");
     this.out.println("Enter q to exit");
   }
 
@@ -122,6 +124,18 @@ public class ViewImpl implements View {
   @Override
   public void alreadyExists() {
     this.out.println("The entered portfolio already exists. Try a different name!");
+  }
+  @Override
+  public void getBuyStockMessage(){
+    this.out.println("Stocks bought successfully and added to your portfolio!");
+  }
+  @Override
+  public void portfolioNotExist(){
+    this.out.println("The entered portfolio does not exist. Please enter a valid portfolio name");
+  }
+  @Override
+  public void getSellStockMessage(){
+    this.out.println("Stocks sold successfully!");
   }
 
 }

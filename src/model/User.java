@@ -2,7 +2,6 @@ package model;
 
 import java.util.List;
 import java.util.Map;
-import org.json.JSONArray;
 
 /**
  * This interface is the model of user. Here we implement create and load portfolios.
@@ -97,4 +96,8 @@ public interface User {
   void createFlexiblePortfolio(String portfolioName,  List<Stocks> stocks);
   StringBuilder getFlexiblePortfolioComposition(String pName);
   String loadFlexiblePortfolio(String fileName) throws IllegalArgumentException;
+
+  void buyStocks(String ticker, int qty, String pName, String date);
+
+  String sellStocks(String ticker, int qty, String pName, String date);
 }
