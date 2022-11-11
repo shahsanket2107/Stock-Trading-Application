@@ -259,14 +259,14 @@ public class UserControllerImpl implements UserController {
       view.portfolioNotExist();
       pName = portfolioName(scan);
     }
-    view.getTicker();
+    view.sellStock();
     String ticker = getTicker(scan);
     int qty = getQty(scan);
     view.getDate();
     String date = scan.nextLine();
     if (user.isValidFormat(date)) {
-      String message = user.sellStocks(ticker, qty, pName, date);
-      view.getSellStockMessage();
+        String message = user.sellStocks(ticker, qty, pName, date);
+        view.displayMessage(message);
     } else {
       view.invalidDate();
     }
@@ -285,8 +285,8 @@ public class UserControllerImpl implements UserController {
     view.getDate();
     String date = scan.nextLine();
     if (user.isValidFormat(date)) {
-      user.buyStocks(ticker, qty, pName, date);
-      view.getBuyStockMessage();
+      String message = user.buyStocks(ticker, qty, pName, date);
+      view.displayMessage(message);
     } else {
       view.invalidDate();
     }

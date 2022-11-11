@@ -90,7 +90,39 @@ public class FileOperationsImpl implements FileOperations {
       result.add(p);
       writer.writeValue(Paths.get(fileName).toFile(), result);
     } catch (Exception e) {
-      e.printStackTrace();
+      throw new IllegalArgumentException("Error in writing to json file!!");
+    }
+  }
+
+  @Override
+  public void editJson(String fileName, String portfolioName, List<Stocks> stocks)
+      throws IllegalArgumentException {
+    boolean fileExist = fileExists(fileName);
+    List<FlexiblePortfolio> temp;
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+      if (!fileExist) {
+        throw new IllegalArgumentException("File does not exist!!");
+      } else {
+        temp = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
+            FlexiblePortfolio[].class));
+      }
+      int flg = 0;
+      for (FlexiblePortfolio fp : temp) {
+        if (fp.getName().equals(portfolioName)) {
+          fp.setStocks(stocks);
+          flg = 1;
+          break;
+        }
+      }
+      List<FlexiblePortfolio> result = new ArrayList<>(temp);
+      if (flg == 0) {
+        FlexiblePortfolio p = new FlexiblePortfolioImpl(portfolioName, stocks);
+        result.add(p);
+      }
+      writer.writeValue(Paths.get(fileName).toFile(), result);
+    } catch (Exception e) {
       throw new IllegalArgumentException("Error in writing to json file!!");
     }
   }

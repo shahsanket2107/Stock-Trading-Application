@@ -97,7 +97,7 @@ public interface User {
   StringBuilder getFlexiblePortfolioComposition(String pName);
   String loadFlexiblePortfolio(String fileName) throws IllegalArgumentException;
 
-  void buyStocks(String ticker, int qty, String pName, String date);
+  String buyStocks(String ticker, int qty, String pName, String date);
 
   String sellStocks(String ticker, int qty, String pName, String date);
 }

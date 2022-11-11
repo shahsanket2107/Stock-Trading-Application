@@ -126,16 +126,12 @@ public class ViewImpl implements View {
     this.out.println("The entered portfolio already exists. Try a different name!");
   }
   @Override
-  public void getBuyStockMessage(){
-    this.out.println("Stocks bought successfully and added to your portfolio!");
-  }
-  @Override
   public void portfolioNotExist(){
     this.out.println("The entered portfolio does not exist. Please enter a valid portfolio name");
   }
-  @Override
-  public void getSellStockMessage(){
-    this.out.println("Stocks sold successfully!");
-  }
+@Override
+  public void sellStock(){
+    this.out.println("Please enter the ticker of stock you want to sell");
+}
 
 }

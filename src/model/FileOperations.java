@@ -14,4 +14,7 @@ public interface FileOperations {
   List<Portfolio> readFromFile(String pfName) throws IllegalArgumentException;
 
   List<FlexiblePortfolio> readFromJson(String pfName) throws IllegalArgumentException;
+
+  void editJson(String fileName, String portfolioName, List<Stocks> stocks)
+      throws IllegalArgumentException;
 }

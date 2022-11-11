@@ -213,8 +213,13 @@ public class UserControllerTestUsingMockModel {
     }
 
     @Override
-    public void buyStocks(String ticker, int qty, String pName, String date) {
+    public String buyStocks(String ticker, int qty, String pName, String date) {
+      return null;
+    }
 
+    @Override
+    public String sellStocks(String ticker, int qty, String pName, String date) {
+      return null;
     }
   }
 }

@@ -8,12 +8,20 @@
     "ticker" : "ZS",
     "date" : "2022-10-31",
     "qty" : 2
+  }, {
+    "ticker" : "ZS",
+    "date" : "2022-10-28",
+    "qty" : 5
+  }, {
+    "ticker" : "AMZN",
+    "date" : "2022-11-12",
+    "qty" : 50
   } ]
 }, {
   "name" : "p3",
   "stocks" : [ {
     "ticker" : "ZS",
     "date" : "2022-10-28",
-    "qty" : 2
+    "qty" : 1
   } ]
 } ]

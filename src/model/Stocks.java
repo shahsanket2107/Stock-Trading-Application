@@ -27,4 +27,5 @@ public interface Stocks {
   String getDate();
 
   int getQty();
+  void setQty(int qty);
 }

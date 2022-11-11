@@ -51,10 +51,15 @@ public class UserImpl implements User {
     StringBuilder temp = new StringBuilder();
     StringBuilder tp = new StringBuilder();
     Portfolio p;
+    FlexiblePortfolio fp;
     tp.append("The list of portfolios is:\n");
     for (Portfolio value : this.portfolio) {
       p = value;
       temp.append(p.getName() + "\n");
+    }
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      fp = value;
+      temp.append(fp.getName() + "\n");
     }
     if (temp.toString().equals("")) {
       temp.append("No portfolios exist at this time!! ");
@@ -252,39 +257,66 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void buyStocks(String ticker, int qty, String pName, String date) {
-    for (int i = 0; i < this.flexiblePortfolio.size(); i++) {
-      if (pName.equals(this.flexiblePortfolio.get(i).getName())) {
+  public String buyStocks(String ticker, int qty, String pName, String date) {
+
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      if (pName.equals(value.getName())) {
         Stocks stocks = new StocksImpl(date, ticker, qty);
-        this.flexiblePortfolio.get(i).getStocks().add(stocks);
+        value.getStocks().add(stocks);
+        String fileName = this.name + "_portfolios.json";
+        FileOperations write = new FileOperationsImpl();
+        write.editJson(fileName, pName, value.getStocks());
+        String temp_date = date.replaceAll("[\\s\\-()]", "");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
+        if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+          return "Date cannot be greater or equal to current date.";
+        }
         break;
       }
 
     }
+    return "Stocks bought successfully and added to your portfolio!";
 
   }
 
   @Override
   public String sellStocks(String ticker, int qty, String pName, String date) {
+    String message = "";
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         List<Stocks> stocks = value.getStocks();
-        for (int j = 0; j < stocks.size(); j++) {
-          if (stocks.get(j).getTicker().equals(ticker)) {
-            if (stocks.get(j).getQty() >= qty) {
-
+        for (Stocks stock : stocks) {
+          if (stock.getTicker().equals(ticker)) {
+            if (stock.getQty() >= qty) {
+              String pDate = stock.getDate();
+              String temp_date = date.replaceAll("[\\s\\-()]", "");
+              pDate = pDate.replaceAll("[\\s\\-()]", "");
+              DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+              LocalDateTime now = LocalDateTime.now();
+              String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
+              if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+                return "Date cannot be greater or equal to current date.";
+              }
+              if (Integer.parseInt(temp_date) <= Integer.parseInt(pDate)) {
+                return "Date should be more than the date when you bought the stocks.";
+              }
+              stock.setQty(stock.getQty() - qty);
+              message = "Stocks sold successfully!";
+              String fileName = this.name + "_portfolios.json";
+              FileOperations write = new FileOperationsImpl();
+              write.editJson(fileName, pName, stocks);
             } else {
-              throw new IllegalArgumentException(
-                  "Quantity entered is more than what you have in your portfolio!");
+              return "Quantity entered is more than what you have in your portfolio!";
             }
           } else {
-            throw new IllegalArgumentException(
-                "The entered stock does not exist in your portfolio!");
+            message = "The entered stock does not exist in your portfolio!";
           }
         }
       }
 
     }
-    return "";
+    return message;
   }
 }

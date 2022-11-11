@@ -78,4 +78,8 @@ public class StocksImpl implements Stocks {
     String closeValue = res[4];
     return closeValue;
   }
+  @Override
+  public void setQty(int qty){
+    this.qty = qty;
+  }
 }
