@@ -121,4 +121,6 @@ public interface View {
   void portfolioNotExist();
   void sellStock();
 
+  void dataNotFound();
+
 }

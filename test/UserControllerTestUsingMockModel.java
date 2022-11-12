@@ -231,5 +231,10 @@ public class UserControllerTestUsingMockModel {
     public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
       return null;
     }
+
+    @Override
+    public boolean validateDateAccToApi(String ticker, String date) {
+      return false;
+    }
   }
 }

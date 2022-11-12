@@ -25,29 +25,4 @@
     "date" : "2022-10-26",
     "qty" : 10
   } ]
-}, {
-  "name" : "p3",
-  "stocks" : [ {
-    "ticker" : "ZS",
-    "date" : "2022-10-28",
-    "qty" : 1
-  } ]
-}, {
-  "name" : "p5",
-  "stocks" : [ {
-    "ticker" : "MSFT",
-    "date" : "2022-10-12",
-    "qty" : 33
-  } ]
-}, {
-  "name" : "p7",
-  "stocks" : [ {
-    "ticker" : "TSLA",
-    "date" : "2022-10-30",
-    "qty" : 10
-  }, {
-    "ticker" : "AAPL",
-    "date" : "2022-11-10",
-    "qty" : 5
-  } ]
-} ]
+}]

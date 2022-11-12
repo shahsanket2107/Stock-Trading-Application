@@ -137,11 +137,13 @@ public class UserControllerImpl implements UserController {
           int qty = getQty(sc);
           view.getDate();
           String date = sc.nextLine();
-          if (user.isValidFormat(date)) {
+          if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
             Stocks s = new StocksImpl(date, ticker, qty);
             stocks.add(s);
-          } else {
+          } else if (!user.isValidFormat(date)) {
             view.invalidDate();
+          } else {
+            view.dataNotFound();
           }
           break;
         case "q":
@@ -264,11 +266,13 @@ public class UserControllerImpl implements UserController {
     int qty = getQty(scan);
     view.getDate();
     String date = scan.nextLine();
-    if (user.isValidFormat(date)) {
+    if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
       String message = user.sellStocks(ticker, qty, pName, date);
       view.displayMessage(message);
-    } else {
+    } else if (!user.isValidFormat(date)) {
       view.invalidDate();
+    } else {
+      view.dataNotFound();
     }
   }
 
@@ -284,11 +288,13 @@ public class UserControllerImpl implements UserController {
     int qty = getQty(scan);
     view.getDate();
     String date = scan.nextLine();
-    if (user.isValidFormat(date)) {
+    if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
       String message = user.buyStocks(ticker, qty, pName, date);
       view.displayMessage(message);
-    } else {
+    } else if (!user.isValidFormat(date)) {
       view.invalidDate();
+    } else {
+      view.dataNotFound();
     }
 
   }

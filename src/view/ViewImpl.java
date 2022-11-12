@@ -138,4 +138,9 @@ public class ViewImpl implements View {
     this.out.println("Please enter the ticker of stock you want to sell");
   }
 
+  @Override
+  public void dataNotFound() {
+    this.out.println("Stock market is closed at this date, so please enter a different date!!");
+  }
+
 }

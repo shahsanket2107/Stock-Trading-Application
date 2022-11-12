@@ -226,6 +226,18 @@ public class UserImpl implements User {
   }
 
   @Override
+  public boolean validateDateAccToApi(String ticker, String date) {
+    Set set = data_store.getTickers();
+    if (!set.contains(ticker)) {
+      data_store.fetchFromApi(ticker);
+    }
+    Map<String, JsonNode> m = data_store.getApi_data();
+    JsonNode tempNode = m.get(ticker);
+    JsonNode temp = tempNode.get(date);
+    return temp != null;
+  }
+
+  @Override
   public StringBuilder getFlexiblePortfolioComposition(String pName) {
     StringBuilder temp = new StringBuilder();
     FlexiblePortfolio p;
@@ -348,19 +360,31 @@ public class UserImpl implements User {
         temp.append("Portfolio_Name: ").append(p.getName());
         temp.append("\n");
         List<Stocks> stocks = p.getStocks();
+        if (!stocks.isEmpty() && !validateDateAccToApi(stocks.get(0).getTicker(), date)) {
+          StringBuilder temp2 = new StringBuilder();
+          temp2.append("Stock market is closed at the date: " + date + ". So please enter a " +
+                  "different date\n");
+          return temp2;
+        }
         Map<String, JsonNode> m = data_store.getApi_data();
         Double ans = 0.0;
-
         temp.append("The stock valuation breakdown is: \n");
         for (Stocks s : stocks) {
           JsonNode tempNode = m.get(s.getTicker());
           temp.append(s.getTicker());
           temp.append(" : $ ");
-          String tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+          String tempResult;
+          if (Integer.parseInt(formatDate(date)) <= Integer.parseInt(formatDate(s.getDate()))) {
+            tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+          } else {
+            tempResult = "0.0";
+          }
           tempResult = tempResult.replaceAll("\"", "");
-          temp.append(tempResult);
+          int qty = s.getQty();
+          double tempCompute = Double.parseDouble(tempResult) * qty;
+          temp.append(tempCompute);
           temp.append("\n");
-          ans = ans + Double.parseDouble(tempResult);
+          ans = ans + tempCompute;
         }
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
                 .append(ans);
@@ -386,5 +410,9 @@ public class UserImpl implements User {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
     }
     return new StringBuilder();
+  }
+
+  private String formatDate(String date) {
+    return date.replaceAll("[\\s\\-()]", "");
   }
 }
