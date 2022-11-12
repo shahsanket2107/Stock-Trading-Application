@@ -209,11 +209,14 @@ public class UserImpl implements User {
     if (checkPortfolioExists(portfolioName)) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
+    dataStoreHelper(stocks);
+    for (Stocks s : stocks) {
+      costBasisHelper(s);
+    }
     String fileName = this.name + "_portfolios.json";
     FileOperations write = new FileOperationsImpl();
     write.writeToJson(fileName, portfolioName, stocks);
     flexiblePortfolio.add(new FlexiblePortfolioImpl(portfolioName, stocks));
-    dataStoreHelper(stocks);
   }
 
   private void dataStoreHelper(List<Stocks> stocks) throws IllegalArgumentException {
@@ -290,11 +293,12 @@ public class UserImpl implements User {
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         Stocks stocks = new StocksImpl(date, ticker, qty);
+        costBasisHelper(stocks);
         value.getStocks().add(stocks);
+        dataStoreHelper(value.getStocks());
         String fileName = this.name + "_portfolios.json";
         FileOperations write = new FileOperationsImpl();
         write.editJson(fileName, pName, value.getStocks());
-        dataStoreHelper(value.getStocks());
         break;
       }
     }
@@ -324,6 +328,7 @@ public class UserImpl implements User {
                 return "Date should be more than the date when you bought the stocks.";
               }
               stock.setQty(stock.getQty() - qty);
+              stock.setCostBasis(stock.getCostBasis() + 3.33);
               message = "Stocks sold successfully!";
               String fileName = this.name + "_portfolios.json";
               FileOperations write = new FileOperationsImpl();
@@ -414,5 +419,21 @@ public class UserImpl implements User {
 
   private String formatDate(String date) {
     return date.replaceAll("[\\s\\-()]", "");
+  }
+
+  private Double getStockValuationAtADate(String ticker, String date) {
+    Map<String, JsonNode> m = data_store.getApi_data();
+    Double ans = 0.0;
+    JsonNode tempNode = m.get(ticker);
+    String tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+    tempResult = tempResult.replaceAll("\"", "");
+    double tempCompute = Double.parseDouble(tempResult);
+    return tempCompute;
+  }
+
+  private void costBasisHelper(Stocks stock) {
+    Double temp = getStockValuationAtADate(stock.getTicker(), stock.getDate());
+    int qty = stock.getQty();
+    stock.setCostBasis(temp * qty + 3.33);
   }
 }

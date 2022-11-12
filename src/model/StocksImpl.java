@@ -9,10 +9,13 @@ public class StocksImpl implements Stocks {
   private String date;
   private int qty;
 
+  private double cost_basis;
+
   public StocksImpl() {
     this.ticker = "";
     this.date = "";
     this.qty = 0;
+    this.cost_basis = 0.0;
   }
 
   public StocksImpl(String date, String ticker, int qty) {
@@ -48,6 +51,21 @@ public class StocksImpl implements Stocks {
     return this.qty;
   }
 
+  @Override
+  public void setQty(int qty) {
+    this.qty = qty;
+  }
+
+  @Override
+  public Double getCostBasis() {
+    return this.cost_basis;
+  }
+
+  @Override
+  public void setCostBasis(Double cost_basis) {
+    this.cost_basis = cost_basis;
+  }
+
   /**
    * This function hits the api to fetch the closing value of a ticker at a particulare date.
    *
@@ -77,9 +95,5 @@ public class StocksImpl implements Stocks {
 
     String closeValue = res[4];
     return closeValue;
-  }
-  @Override
-  public void setQty(int qty){
-    this.qty = qty;
   }
 }

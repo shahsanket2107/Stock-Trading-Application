@@ -27,5 +27,10 @@ public interface Stocks {
   String getDate();
 
   int getQty();
+
   void setQty(int qty);
+
+  Double getCostBasis();
+
+  void setCostBasis(Double cost_basis);
 }

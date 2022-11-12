@@ -1,0 +1,19 @@
+[ {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-10-25",
+    "qty" : 50,
+    "costBasis" : 11124.08
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-25",
+    "qty" : 5,
+    "costBasis" : 765.0300000000001
+  } ]
+} ]
