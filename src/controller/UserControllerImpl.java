@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import model.DataStoreFromApi;
-import model.DataStoreFromApiImpl;
 import model.Stocks;
 import model.StocksImpl;
 import model.User;
@@ -295,6 +293,23 @@ public class UserControllerImpl implements UserController {
 
   }
 
+  private void getFlexiblePortfolioValuation(Scanner scan) {
+    String pName = portfolioName(scan);
+    view.getDate();
+    String date = scan.nextLine();
+    if (user.isValidFormat(date)) {
+      StringBuilder result = new StringBuilder();
+      try {
+        result.append(user.getFlexiblePortfolioTotalValuation(date, pName));
+      } catch (IllegalArgumentException e) {
+        result.append(e.getMessage());
+      }
+      view.displayMessage(String.valueOf(result));
+    } else {
+      view.invalidDate();
+    }
+  }
+
   @Override
   public void runGo() {
     Scanner scan = new Scanner(this.in);
@@ -336,10 +351,11 @@ public class UserControllerImpl implements UserController {
         case "10":
           sellStocks(scan);
           break;
+        case "11":
+          getFlexiblePortfolioValuation(scan);
+          break;
         case "d":
-          DataStoreFromApi d1 = new DataStoreFromApiImpl();
-          System.out.println("here");
-          d1.display();
+          user.display();
           break;
         case "q":
           return;

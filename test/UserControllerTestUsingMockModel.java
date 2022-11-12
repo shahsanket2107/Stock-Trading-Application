@@ -221,5 +221,15 @@ public class UserControllerTestUsingMockModel {
     public String sellStocks(String ticker, int qty, String pName, String date) {
       return null;
     }
+
+    @Override
+    public void display() {
+
+    }
+
+    @Override
+    public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
+      return null;
+    }
   }
 }

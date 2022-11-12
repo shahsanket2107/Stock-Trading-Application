@@ -1,5 +1,6 @@
 package model;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.text.ParseException;
@@ -23,11 +24,13 @@ public class UserImpl implements User {
   private List<Portfolio> portfolio;
   private String name;
   private List<FlexiblePortfolio> flexiblePortfolio;
+  private DataStoreFromApi data_store;
 
   public UserImpl() {
     this.name = "John Doe";
     this.portfolio = new ArrayList<>();
     this.flexiblePortfolio = new ArrayList<>();
+    this.data_store = new DataStoreFromApiImpl();
   }
 
   public UserImpl(String name, List<Portfolio> portfolio,
@@ -119,16 +122,9 @@ public class UserImpl implements User {
 
   @Override
   public StringBuilder getTotalValuation(String date, String pName) {
-    String temp_date = date.replaceAll("[\\s\\-()]", "");
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDateTime now = LocalDateTime.now();
-    String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
-      return new StringBuilder(
-              "Date cannot be greater or equal to current date. Try a different date");
-    }
-    if (Integer.parseInt(temp_date) <= 20000101) {
-      return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
+    StringBuilder check = dateFormatHelper(date);
+    if (!check.isEmpty()) {
+      return check;
     }
     StringBuilder temp = new StringBuilder();
     Portfolio p;
@@ -221,12 +217,10 @@ public class UserImpl implements User {
   }
 
   private void dataStoreHelper(List<Stocks> stocks) throws IllegalArgumentException {
-    DataStoreFromApi data = new DataStoreFromApiImpl();
-    Set set = data.getTickers();
+    Set set = data_store.getTickers();
     for (Stocks s : stocks) {
-      System.out.println(s.getTicker());
       if (!set.contains(s.getTicker())) {
-        data.fetchFromApi(s.getTicker());
+        data_store.fetchFromApi(s.getTicker());
       }
     }
   }
@@ -333,5 +327,64 @@ public class UserImpl implements User {
 
     }
     return message;
+  }
+
+  @Override
+  public void display() {
+    data_store.display();
+  }
+
+  @Override
+  public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
+    StringBuilder check = dateFormatHelper(date);
+    if (!check.isEmpty()) {
+      return check;
+    }
+    StringBuilder temp = new StringBuilder();
+    FlexiblePortfolio p;
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      p = value;
+      if (p.getName().equals(pName)) {
+        temp.append("Portfolio_Name: ").append(p.getName());
+        temp.append("\n");
+        List<Stocks> stocks = p.getStocks();
+        Map<String, JsonNode> m = data_store.getApi_data();
+        Double ans = 0.0;
+
+        temp.append("The stock valuation breakdown is: \n");
+        for (Stocks s : stocks) {
+          JsonNode tempNode = m.get(s.getTicker());
+          temp.append(s.getTicker());
+          temp.append(" : $ ");
+          String tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+          tempResult = tempResult.replaceAll("\"", "");
+          temp.append(tempResult);
+          temp.append("\n");
+          ans = ans + Double.parseDouble(tempResult);
+        }
+        temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
+                .append(ans);
+        temp.append("\n");
+      }
+    }
+    if (temp.toString().equals("")) {
+      temp.append("Given portfolio doesn't exist!!");
+    }
+    return temp;
+  }
+
+  private StringBuilder dateFormatHelper(String date) {
+    String temp_date = date.replaceAll("[\\s\\-()]", "");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime now = LocalDateTime.now();
+    String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
+    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+      return new StringBuilder(
+              "Date cannot be greater or equal to current date. Try a different date");
+    }
+    if (Integer.parseInt(temp_date) <= 20000101) {
+      return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
+    }
+    return new StringBuilder();
   }
 }

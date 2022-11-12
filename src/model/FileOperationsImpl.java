@@ -33,7 +33,7 @@ public class FileOperationsImpl implements FileOperations {
 
   @Override
   public void writeToFile(String fileName, String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
     try {
@@ -72,7 +72,7 @@ public class FileOperationsImpl implements FileOperations {
 
   @Override
   public void writeToJson(String fileName, String portfolioName, List<Stocks> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     List<FlexiblePortfolio> result;
     List<FlexiblePortfolio> temp;
@@ -83,7 +83,7 @@ public class FileOperationsImpl implements FileOperations {
         temp = new ArrayList<>();
       } else {
         temp = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
-            FlexiblePortfolio[].class));
+                FlexiblePortfolio[].class));
       }
       result = new ArrayList<>(temp);
       FlexiblePortfolio p = new FlexiblePortfolioImpl(portfolioName, stocks);
@@ -96,7 +96,7 @@ public class FileOperationsImpl implements FileOperations {
 
   @Override
   public void editJson(String fileName, String portfolioName, List<Stocks> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     List<FlexiblePortfolio> temp;
     try {
@@ -106,7 +106,7 @@ public class FileOperationsImpl implements FileOperations {
         throw new IllegalArgumentException("File does not exist!!");
       } else {
         temp = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
-            FlexiblePortfolio[].class));
+                FlexiblePortfolio[].class));
       }
       int flg = 0;
       for (FlexiblePortfolio fp : temp) {
@@ -123,6 +123,7 @@ public class FileOperationsImpl implements FileOperations {
       }
       writer.writeValue(Paths.get(fileName).toFile(), result);
     } catch (Exception e) {
+      e.printStackTrace();
       throw new IllegalArgumentException("Error in writing to json file!!");
     }
   }
@@ -141,8 +142,9 @@ public class FileOperationsImpl implements FileOperations {
       }
       ObjectMapper mapper = new ObjectMapper();
       portfolios_list = Arrays.asList(mapper.readValue(Paths.get(pfName).toFile(),
-          FlexiblePortfolio[].class));
-      return portfolios_list;
+              FlexiblePortfolio[].class));
+      List<FlexiblePortfolio> result = new ArrayList<>(portfolios_list);
+      return result;
     } catch (Exception e) {
       throw new IllegalArgumentException("Error in reading from json file!!!");
     }
@@ -178,7 +180,7 @@ public class FileOperationsImpl implements FileOperations {
       }
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new IllegalArgumentException(
-          "Unable to read xml file!!\n Please check proper xml format and try again!!");
+              "Unable to read xml file!!\n Please check proper xml format and try again!!");
     }
     return portfolios_list;
   }
@@ -192,7 +194,7 @@ public class FileOperationsImpl implements FileOperations {
    * @param portfolio XML parsing node passed to helper method to write portfolio to xml file.
    */
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-      Map<String, Integer> m, Node portfolio, List<Portfolio> portfolios_list) {
+                                   Map<String, Integer> m, Node portfolio, List<Portfolio> portfolios_list) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -228,7 +230,7 @@ public class FileOperationsImpl implements FileOperations {
    */
 
   private void writeXMLHelper(Document doc, String fileName) throws
-      TransformerConfigurationException {
+          TransformerConfigurationException {
     try {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();
