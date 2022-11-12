@@ -49,5 +49,9 @@
     "ticker" : "AAPL",
     "date" : "2022-11-10",
     "qty" : 5
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-31",
+    "qty" : 10
   } ]
 } ]

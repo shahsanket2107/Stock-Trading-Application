@@ -1,0 +1,16 @@
+[ {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2012-10-21",
+    "qty" : 10
+  }, {
+    "ticker" : "ZS",
+    "date" : "2022-10-30",
+    "qty" : 0
+  } ]
+} ]

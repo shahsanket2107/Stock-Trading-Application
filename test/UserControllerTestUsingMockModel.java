@@ -192,9 +192,9 @@ public class UserControllerTestUsingMockModel {
     }
 
     @Override
-    public boolean checkPortfolioExists(String pName) {
+    public int checkPortfolioExists(String pName) {
       out.println("checkPortfolioExists called with pName as: " + pName);
-      return false;
+      return 0;
     }
 
     @Override
@@ -231,5 +231,7 @@ public class UserControllerTestUsingMockModel {
     public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
       return null;
     }
+
+
   }
 }

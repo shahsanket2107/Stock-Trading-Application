@@ -25,6 +25,7 @@ public class UserImpl implements User {
   private String name;
   private List<FlexiblePortfolio> flexiblePortfolio;
   private DataStoreFromApi data_store;
+  private int commissionFee = 0;
 
   public UserImpl() {
     this.name = "John Doe";
@@ -34,7 +35,7 @@ public class UserImpl implements User {
   }
 
   public UserImpl(String name, List<Portfolio> portfolio,
-                  List<FlexiblePortfolio> flexiblePortfolio) {
+      List<FlexiblePortfolio> flexiblePortfolio) {
     this.name = name;
     this.portfolio = portfolio;
     this.flexiblePortfolio = flexiblePortfolio;
@@ -75,8 +76,8 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-          throws IllegalArgumentException {
-    if (checkPortfolioExists(portfolioName)) {
+      throws IllegalArgumentException {
+    if (checkPortfolioExists(portfolioName) == 1 || checkPortfolioExists(portfolioName) == 2) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     String fileName = this.name + "_portfolios.xml";
@@ -136,7 +137,7 @@ public class UserImpl implements User {
         Map<String, Double> m = p.getValuationAtDate(date);
         Double ans = computeValue(m);
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(ans);
+            .append(ans);
         temp.append("\n");
         temp.append("The stock valuation breakdown is: \n");
         m.forEach((k, v) -> {
@@ -180,15 +181,14 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
 
   @Override
-  public boolean checkPortfolioExists(String pName) {
+  public int checkPortfolioExists(String pName) {
     int flg = 0;
-    int flg2 = 0;
     for (Portfolio value : this.portfolio) {
       if (value.getName().equals(pName)) {
         flg = 1;
@@ -197,16 +197,17 @@ public class UserImpl implements User {
     }
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (value.getName().equals(pName)) {
-        flg2 = 1;
+        flg = 2;
         break;
       }
     }
-    return flg == 1 || flg2 == 1;
+    return flg;
   }
 
   @Override
-  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException {
-    if (checkPortfolioExists(portfolioName)) {
+  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks)
+      throws IllegalArgumentException {
+    if (checkPortfolioExists(portfolioName) == 2 || checkPortfolioExists(portfolioName) == 1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     String fileName = this.name + "_portfolios.json";
@@ -246,7 +247,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -363,7 +364,7 @@ public class UserImpl implements User {
           ans = ans + Double.parseDouble(tempResult);
         }
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(ans);
+            .append(ans);
         temp.append("\n");
       }
     }
@@ -373,6 +374,7 @@ public class UserImpl implements User {
     return temp;
   }
 
+
   private StringBuilder dateFormatHelper(String date) {
     String temp_date = date.replaceAll("[\\s\\-()]", "");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -380,7 +382,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-              "Date cannot be greater or equal to current date. Try a different date");
+          "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");

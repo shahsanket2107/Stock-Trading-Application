@@ -96,7 +96,7 @@ public interface User {
    * @return true if the portfolio exists and false otherwise.
    */
 
-  boolean checkPortfolioExists(String pName);
+  int checkPortfolioExists(String pName);
 
   void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException;
 
@@ -110,4 +110,5 @@ public interface User {
 
   void display();
   StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName);
+
 }

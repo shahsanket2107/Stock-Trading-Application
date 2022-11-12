@@ -23,6 +23,7 @@ public class UserControllerImpl implements UserController {
   private final InputStream in;
   private final User user;
   private final ViewImpl view;
+  private static int cf = 0;
 
   /**
    * This is the constructor for UserControllerImpl which initializes user model and view along with
@@ -140,6 +141,7 @@ public class UserControllerImpl implements UserController {
           if (user.isValidFormat(date)) {
             Stocks s = new StocksImpl(date, ticker, qty);
             stocks.add(s);
+            cf += 1;
           } else {
             view.invalidDate();
           }
@@ -172,7 +174,8 @@ public class UserControllerImpl implements UserController {
 
   private void createPortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    while (user.checkPortfolioExists(portfolioName)) {
+    while (user.checkPortfolioExists(portfolioName) == 1
+        || user.checkPortfolioExists(portfolioName) == 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -187,7 +190,8 @@ public class UserControllerImpl implements UserController {
 
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    while (user.checkPortfolioExists(portfolioName)) {
+    while (user.checkPortfolioExists(portfolioName) == 1
+        || user.checkPortfolioExists(portfolioName) == 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -255,40 +259,42 @@ public class UserControllerImpl implements UserController {
   private void sellStocks(Scanner scan) {
     view.getPortfolioName();
     String pName = scan.nextLine();
-    while (!user.checkPortfolioExists(pName)) {
+    if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-      pName = portfolioName(scan);
-    }
-    view.sellStock();
-    String ticker = getTicker(scan);
-    int qty = getQty(scan);
-    view.getDate();
-    String date = scan.nextLine();
-    if (user.isValidFormat(date)) {
-      String message = user.sellStocks(ticker, qty, pName, date);
-      view.displayMessage(message);
     } else {
-      view.invalidDate();
+      view.sellStock();
+      String ticker = getTicker(scan);
+      int qty = getQty(scan);
+      view.getDate();
+      String date = scan.nextLine();
+      if (user.isValidFormat(date)) {
+        String message = user.sellStocks(ticker, qty, pName, date);
+        view.displayMessage(message);
+        cf += 1;
+      } else {
+        view.invalidDate();
+      }
     }
   }
 
   private void buyStocks(Scanner scan) {
     view.getPortfolioName();
     String pName = scan.nextLine();
-    while (!user.checkPortfolioExists(pName)) {
+    if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-      pName = portfolioName(scan);
-    }
-    view.getTicker();
-    String ticker = getTicker(scan);
-    int qty = getQty(scan);
-    view.getDate();
-    String date = scan.nextLine();
-    if (user.isValidFormat(date)) {
-      String message = user.buyStocks(ticker, qty, pName, date);
-      view.displayMessage(message);
     } else {
-      view.invalidDate();
+      view.getTicker();
+      String ticker = getTicker(scan);
+      int qty = getQty(scan);
+      view.getDate();
+      String date = scan.nextLine();
+      if (user.isValidFormat(date)) {
+        String message = user.buyStocks(ticker, qty, pName, date);
+        view.displayMessage(message);
+        cf += 1;
+      } else {
+        view.invalidDate();
+      }
     }
 
   }
