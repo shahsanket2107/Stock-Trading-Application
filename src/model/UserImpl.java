@@ -410,7 +410,7 @@ public class UserImpl implements User {
           temp.append(s.getTicker());
           temp.append(" : $ ");
           String tempResult;
-          if (Integer.parseInt(formatDate(date)) <= Integer.parseInt(formatDate(s.getDate()))) {
+          if (Integer.parseInt(formatDate(date)) >= Integer.parseInt(formatDate(s.getDate()))) {
             tempResult = String.valueOf(tempNode.get(date).get("4. close"));
           } else {
             tempResult = "0.0";
