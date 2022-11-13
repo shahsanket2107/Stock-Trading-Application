@@ -36,6 +36,7 @@ public class ViewImpl implements View {
     this.out.println("Enter 10 to sell stocks on a specific date");
     this.out.println("Enter 11 to determine the total value of flexible portfolio on a certain " +
             "date");
+    this.out.println("Enter 12 to find cost basis of a flexible portfolio on a certain date");
     this.out.println("Enter q to exit");
   }
 

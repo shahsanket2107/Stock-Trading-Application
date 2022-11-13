@@ -174,7 +174,8 @@ public class UserControllerImpl implements UserController {
 
   private void createPortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    while (user.checkPortfolioExists(portfolioName)) {
+    while (user.checkPortfolioExists(portfolioName) == 1
+        || user.checkPortfolioExists(portfolioName) == 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -189,7 +190,8 @@ public class UserControllerImpl implements UserController {
 
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    while (user.checkPortfolioExists(portfolioName)) {
+    while (user.checkPortfolioExists(portfolioName) == 2
+        || user.checkPortfolioExists(portfolioName) == 1) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -255,64 +257,85 @@ public class UserControllerImpl implements UserController {
   }
 
   private void sellStocks(Scanner scan) {
-    view.getPortfolioName();
-    String pName = scan.nextLine();
-    while (!user.checkPortfolioExists(pName)) {
+    String pName = portfolioName(scan);
+    if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-      pName = portfolioName(scan);
     }
-    view.sellStock();
-    String ticker = getTicker(scan);
-    int qty = getQty(scan);
-    view.getDate();
-    String date = scan.nextLine();
-    if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
-      String message = user.sellStocks(ticker, qty, pName, date);
-      view.displayMessage(message);
-    } else if (!user.isValidFormat(date)) {
-      view.invalidDate();
-    } else {
-      view.dataNotFound();
+    else {
+      view.sellStock();
+      String ticker = getTicker(scan);
+      int qty = getQty(scan);
+      view.getDate();
+      String date = scan.nextLine();
+      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
+        String message = user.sellStocks(ticker, qty, pName, date);
+        view.displayMessage(message);
+      } else if (!user.isValidFormat(date)) {
+        view.invalidDate();
+      } else {
+        view.dataNotFound();
+      }
     }
   }
 
   private void buyStocks(Scanner scan) {
-    view.getPortfolioName();
-    String pName = scan.nextLine();
-    while (!user.checkPortfolioExists(pName)) {
+    String pName = portfolioName(scan);
+    if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-      pName = portfolioName(scan);
     }
-    view.getTicker();
-    String ticker = getTicker(scan);
-    int qty = getQty(scan);
-    view.getDate();
-    String date = scan.nextLine();
-    if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
-      String message = user.buyStocks(ticker, qty, pName, date);
-      view.displayMessage(message);
-    } else if (!user.isValidFormat(date)) {
-      view.invalidDate();
-    } else {
-      view.dataNotFound();
+    else {
+      view.getTicker();
+      String ticker = getTicker(scan);
+      int qty = getQty(scan);
+      view.getDate();
+      String date = scan.nextLine();
+      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
+        String message = user.buyStocks(ticker, qty, pName, date);
+        view.displayMessage(message);
+      } else if (!user.isValidFormat(date)) {
+        view.invalidDate();
+      } else {
+        view.dataNotFound();
+      }
     }
-
   }
 
   private void getFlexiblePortfolioValuation(Scanner scan) {
     String pName = portfolioName(scan);
-    view.getDate();
-    String date = scan.nextLine();
-    if (user.isValidFormat(date)) {
-      StringBuilder result = new StringBuilder();
-      try {
-        result.append(user.getFlexiblePortfolioTotalValuation(date, pName));
-      } catch (IllegalArgumentException e) {
-        result.append(e.getMessage());
+    if (user.checkPortfolioExists(pName) != 2) {
+      view.portfolioNotExist();
+    }
+    else {
+      view.getDate();
+      String date = scan.nextLine();
+      if (user.isValidFormat(date)) {
+        StringBuilder result = new StringBuilder();
+        try {
+          result.append(user.getFlexiblePortfolioTotalValuation(date, pName));
+        } catch (IllegalArgumentException e) {
+          result.append(e.getMessage());
+        }
+        view.displayMessage(String.valueOf(result));
+      } else {
+        view.invalidDate();
       }
-      view.displayMessage(String.valueOf(result));
-    } else {
-      view.invalidDate();
+    }
+  }
+  private void getCostBasis(Scanner scan){
+    String pName = portfolioName(scan);
+    if (user.checkPortfolioExists(pName) != 2) {
+      view.portfolioNotExist();
+    }
+    else {
+      view.getDate();
+      String date = scan.nextLine();
+      if (user.isValidFormat(date)) {
+        StringBuilder result;
+        result = user.getCostBasis(date, pName);
+        view.displayMessage(String.valueOf(result));
+      } else {
+        view.invalidDate();
+      }
     }
   }
 
@@ -359,6 +382,9 @@ public class UserControllerImpl implements UserController {
           break;
         case "11":
           getFlexiblePortfolioValuation(scan);
+          break;
+        case "12":
+          getCostBasis(scan);
           break;
         case "d":
           user.display();

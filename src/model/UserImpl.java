@@ -76,7 +76,7 @@ public class UserImpl implements User {
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
           throws IllegalArgumentException {
-    if (checkPortfolioExists(portfolioName)) {
+    if (checkPortfolioExists(portfolioName)==2||checkPortfolioExists(portfolioName)==1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     String fileName = this.name + "_portfolios.xml";
@@ -186,9 +186,8 @@ public class UserImpl implements User {
   }
 
   @Override
-  public boolean checkPortfolioExists(String pName) {
+  public int checkPortfolioExists(String pName) {
     int flg = 0;
-    int flg2 = 0;
     for (Portfolio value : this.portfolio) {
       if (value.getName().equals(pName)) {
         flg = 1;
@@ -197,16 +196,16 @@ public class UserImpl implements User {
     }
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (value.getName().equals(pName)) {
-        flg2 = 1;
+        flg = 2;
         break;
       }
     }
-    return flg == 1 || flg2 == 1;
+    return flg;
   }
 
   @Override
   public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException {
-    if (checkPortfolioExists(portfolioName)) {
+    if (checkPortfolioExists(portfolioName)==2||checkPortfolioExists(portfolioName)==1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     dataStoreHelper(stocks);
@@ -238,6 +237,38 @@ public class UserImpl implements User {
     JsonNode tempNode = m.get(ticker);
     JsonNode temp = tempNode.get(date);
     return temp != null;
+  }
+
+  @Override
+  public StringBuilder getCostBasis(String date, String pName) {
+    StringBuilder check = dateFormatHelper(date);
+    if (!check.isEmpty()) {
+      return check;
+    }
+    StringBuilder temp = new StringBuilder();
+    FlexiblePortfolio p;
+    for (FlexiblePortfolio value : this.flexiblePortfolio) {
+      p = value;
+      if (p.getName().equals(pName)) {
+        temp.append("Portfolio_Name: ").append(p.getName());
+        temp.append("\n");
+        List<Stocks> stocks = p.getStocks();
+        Double tempResult = 0.0;
+        for (Stocks s : stocks) {
+          if (Integer.parseInt(formatDate(date)) >= Integer.parseInt(formatDate(s.getDate()))) {
+            tempResult += s.getCostBasis();
+          }
+
+        }
+        temp.append("Cost basis of your portfolio at ").append(date).append(" is : $ ")
+            .append(tempResult);
+        temp.append("\n");
+      }
+    }
+    if (temp.toString().equals("")) {
+      temp.append("Given portfolio doesn't exist!!");
+    }
+    return temp;
   }
 
   @Override
@@ -423,7 +454,6 @@ public class UserImpl implements User {
 
   private Double getStockValuationAtADate(String ticker, String date) {
     Map<String, JsonNode> m = data_store.getApi_data();
-    Double ans = 0.0;
     JsonNode tempNode = m.get(ticker);
     String tempResult = String.valueOf(tempNode.get(date).get("4. close"));
     tempResult = tempResult.replaceAll("\"", "");
