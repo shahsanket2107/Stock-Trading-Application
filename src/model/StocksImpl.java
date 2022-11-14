@@ -8,7 +8,6 @@ public class StocksImpl implements Stocks {
   private String ticker;
   private String date;
   private int qty;
-
   private double cost_basis;
 
   public StocksImpl() {

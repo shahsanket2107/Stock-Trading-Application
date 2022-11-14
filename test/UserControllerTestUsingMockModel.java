@@ -203,7 +203,7 @@ public class UserControllerTestUsingMockModel {
     }
 
     @Override
-    public StringBuilder getFlexiblePortfolioComposition(String pName) {
+    public StringBuilder getFlexiblePortfolioComposition(String pName,String date) {
       return null;
     }
 

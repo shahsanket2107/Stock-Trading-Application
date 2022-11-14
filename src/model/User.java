@@ -100,7 +100,7 @@ public interface User {
 
   void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException;
 
-  StringBuilder getFlexiblePortfolioComposition(String pName);
+  StringBuilder getFlexiblePortfolioComposition(String pName, String date);
 
   String loadFlexiblePortfolio(String fileName) throws IllegalArgumentException;
 

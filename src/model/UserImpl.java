@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +27,7 @@ public class UserImpl implements User {
   private String name;
   private List<FlexiblePortfolio> flexiblePortfolio;
   private DataStoreFromApi data_store;
+
 
   public UserImpl() {
     this.name = "John Doe";
@@ -76,7 +79,7 @@ public class UserImpl implements User {
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
           throws IllegalArgumentException {
-    if (checkPortfolioExists(portfolioName)==2||checkPortfolioExists(portfolioName)==1) {
+    if (checkPortfolioExists(portfolioName) == 2 || checkPortfolioExists(portfolioName) == 1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     String fileName = this.name + "_portfolios.xml";
@@ -84,7 +87,6 @@ public class UserImpl implements User {
     write.writeToFile(fileName, portfolioName, stocks);
     portfolio.add(new PortfolioImpl(portfolioName, stocks));
   }
-
 
   @Override
   public String loadPortfolio(String pfName) throws IllegalArgumentException {
@@ -205,7 +207,7 @@ public class UserImpl implements User {
 
   @Override
   public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException {
-    if (checkPortfolioExists(portfolioName)==2||checkPortfolioExists(portfolioName)==1) {
+    if (checkPortfolioExists(portfolioName) == 2 || checkPortfolioExists(portfolioName) == 1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
     dataStoreHelper(stocks);
@@ -261,7 +263,7 @@ public class UserImpl implements User {
 
         }
         temp.append("Cost basis of your portfolio at ").append(date).append(" is : $ ")
-            .append(tempResult);
+                .append(tempResult);
         temp.append("\n");
       }
     }
@@ -271,28 +273,69 @@ public class UserImpl implements User {
     return temp;
   }
 
-  @Override
-  public StringBuilder getFlexiblePortfolioComposition(String pName) {
-    StringBuilder temp = new StringBuilder();
-    FlexiblePortfolio p;
+  private Map<String, Integer> getPortfolioCompositionOnADateHelper(String pName, String date) throws IllegalArgumentException {
+    Map<String, Integer> m = new HashMap<>();
+    int tempQty;
     int flg = 0;
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
-      p = value;
-      if (p.getName().equals(pName)) {
+      if (pName.equals(value.getName())) {
         flg = 1;
-        try {
-          ObjectMapper mapper = new ObjectMapper();
-          String temp2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(p.getStocks());
-          temp.append(temp2);
-        } catch (Exception e) {
-          temp.append("Error in reading the portfolio!!");
+        List<Stocks> stocks = value.getStocks();
+        List<String> non_unique_stocks = new ArrayList<>();
+
+        for (Stocks stock : stocks) {
+          non_unique_stocks.add(stock.getTicker());
         }
-        break;
+        Set<String> unique_stocks = new HashSet<>(non_unique_stocks);
+
+        for (String ticker : unique_stocks) {
+          tempQty = 0;
+          for (Stocks s : stocks) {
+            if (s.getTicker().equals(ticker)) {
+              if (dateCompare(date, s.getDate())) {
+                tempQty += s.getQty();
+              }
+            }
+          }
+          m.put(ticker, tempQty);
+        }
       }
     }
     if (flg == 0) {
+      throw new IllegalArgumentException();
+    }
+    return m;
+  }
+
+  @Override
+  public StringBuilder getFlexiblePortfolioComposition(String pName, String date) {
+    StringBuilder temp = new StringBuilder();
+    StringBuilder check = dateFormatHelper(date);
+    if (!check.isEmpty()) {
+      return check;
+    }
+    Map<String, Integer> m;
+    Map<String, Integer> result = new HashMap<>();
+    try {
+      m = getPortfolioCompositionOnADateHelper(pName, date);
+    } catch (IllegalArgumentException e) {
       temp.append(
               "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+      return temp;
+    }
+    for (String s : m.keySet()) {
+      int value = m.get(s);
+      if (value > 0) {
+        result.put(s, value);
+      }
+    }
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      String temp2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+      temp.append("The portfolio composition of portfolio " + pName + " on " + date + " is:-\n");
+      temp.append(temp2);
+    } catch (Exception e) {
+      temp.append("Error in reading the portfolio!!");
     }
     return temp;
   }
@@ -314,12 +357,9 @@ public class UserImpl implements User {
   @Override
   public String buyStocks(String ticker, int qty, String pName, String date) {
 
-    String temp_date = date.replaceAll("[\\s\\-()]", "");
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDateTime now = LocalDateTime.now();
-    String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
-      return "Date cannot be greater or equal to current date.";
+    StringBuilder check = dateFormatHelper(date);
+    if (!check.isEmpty()) {
+      return check.toString();
     }
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
@@ -339,42 +379,43 @@ public class UserImpl implements User {
 
   @Override
   public String sellStocks(String ticker, int qty, String pName, String date) {
-    String message = "";
+
+    int tempQty = 0;
+    int flg = 0;
+
+    StringBuilder check = dateFormatHelper(date);
+    if (!check.isEmpty()) {
+      return check.toString();
+    }
+
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         List<Stocks> stocks = value.getStocks();
         for (Stocks stock : stocks) {
           if (stock.getTicker().equals(ticker)) {
-            if (stock.getQty() >= qty) {
-              String pDate = stock.getDate();
-              String temp_date = date.replaceAll("[\\s\\-()]", "");
-              pDate = pDate.replaceAll("[\\s\\-()]", "");
-              DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-              LocalDateTime now = LocalDateTime.now();
-              String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-              if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
-                return "Date cannot be greater or equal to current date.";
-              }
-              if (Integer.parseInt(temp_date) <= Integer.parseInt(pDate)) {
-                return "Date should be more than the date when you bought the stocks.";
-              }
-              stock.setQty(stock.getQty() - qty);
-              stock.setCostBasis(stock.getCostBasis() + 3.33);
-              message = "Stocks sold successfully!";
-              String fileName = this.name + "_portfolios.json";
-              FileOperations write = new FileOperationsImpl();
-              write.editJson(fileName, pName, stocks);
-            } else {
-              return "Quantity entered is more than what you have in your portfolio!";
+            flg = 1;
+            String sDate = stock.getDate();
+            if (dateCompare(date, sDate)) {
+              tempQty += stock.getQty();
             }
-          } else {
-            message = "The entered stock does not exist in your portfolio!";
           }
         }
+        if (flg == 0) {
+          return "The entered stock does not exist in your portfolio!";
+        }
+        if (tempQty >= qty) {
+          Stocks s = new StocksImpl(date, ticker, qty * -1);
+          s.setCostBasis(3.33);
+          value.getStocks().add(s);
+          String fileName = this.name + "_portfolios.json";
+          FileOperations write = new FileOperationsImpl();
+          write.editJson(fileName, pName, value.getStocks());
+        } else {
+          return "Quantity entered is more than what you have in your portfolio!";
+        }
       }
-
     }
-    return message;
+    return "Stocks sold successfully!";
   }
 
   @Override
@@ -403,33 +444,48 @@ public class UserImpl implements User {
           return temp2;
         }
         Map<String, JsonNode> m = data_store.getApi_data();
-        Double ans = 0.0;
-        temp.append("The stock valuation breakdown is: \n");
-        for (Stocks s : stocks) {
-          JsonNode tempNode = m.get(s.getTicker());
-          temp.append(s.getTicker());
-          temp.append(" : $ ");
-          String tempResult;
-          if (Integer.parseInt(formatDate(date)) >= Integer.parseInt(formatDate(s.getDate()))) {
-            tempResult = String.valueOf(tempNode.get(date).get("4. close"));
-          } else {
-            tempResult = "0.0";
-          }
-          tempResult = tempResult.replaceAll("\"", "");
-          int qty = s.getQty();
-          double tempCompute = Double.parseDouble(tempResult) * qty;
-          temp.append(tempCompute);
-          temp.append("\n");
-          ans = ans + tempCompute;
+        Map<String, Integer> m1;
+        try {
+          m1 = getPortfolioCompositionOnADateHelper(pName, date);
+        } catch (IllegalArgumentException e) {
+          temp.append("Given portfolio doesn't exist!!");
+          return temp;
         }
-        temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(ans);
-        temp.append("\n");
+        temp = getFlexibleTotalValuationHelper(temp, m, m1, date);
       }
     }
-    if (temp.toString().equals("")) {
-      temp.append("Given portfolio doesn't exist!!");
+    return temp;
+  }
+
+  private StringBuilder getFlexibleTotalValuationHelper(StringBuilder temp, Map<String, JsonNode> m,
+                                                        Map<String, Integer> m1, String date) {
+    Double ans = 0.0;
+    int flg = 0;
+    temp.append("The stock valuation breakdown is: \n");
+    for (String s : m1.keySet()) {
+      String ticker = s;
+      int qty = m1.get(ticker);
+      if (qty <= 0) {
+        continue;
+      }
+      JsonNode tempNode = m.get(ticker);
+      temp.append(ticker);
+      temp.append(" : $ ");
+      String tempResult;
+      tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+      tempResult = tempResult.replaceAll("\"", "");
+      double tempCompute = Double.parseDouble(tempResult) * qty;
+      temp.append(tempCompute);
+      temp.append("\n");
+      flg = 1;
+      ans = ans + tempCompute;
     }
+    if (flg == 0) {
+      temp = new StringBuilder();
+    }
+    temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
+            .append(ans);
+    temp.append("\n");
     return temp;
   }
 
@@ -446,6 +502,17 @@ public class UserImpl implements User {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
     }
     return new StringBuilder();
+  }
+
+  private boolean dateCompare(String date1, String date2) {
+    String temp_date1 = date1.replaceAll("[\\s\\-()]", "");
+    String temp_date2 = date2.replaceAll("[\\s\\-()]", "");
+
+    if (Integer.parseInt(temp_date1) >= Integer.parseInt(temp_date2)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private String formatDate(String date) {

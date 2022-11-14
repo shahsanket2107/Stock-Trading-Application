@@ -175,7 +175,7 @@ public class UserControllerImpl implements UserController {
   private void createPortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
     while (user.checkPortfolioExists(portfolioName) == 1
-        || user.checkPortfolioExists(portfolioName) == 2) {
+            || user.checkPortfolioExists(portfolioName) == 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -191,7 +191,7 @@ public class UserControllerImpl implements UserController {
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
     while (user.checkPortfolioExists(portfolioName) == 2
-        || user.checkPortfolioExists(portfolioName) == 1) {
+            || user.checkPortfolioExists(portfolioName) == 1) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -230,8 +230,14 @@ public class UserControllerImpl implements UserController {
 
   private void getFlexiblePortfolioComposition(Scanner scan) {
     String p_name = portfolioName(scan);
-    StringBuilder composition = user.getFlexiblePortfolioComposition(p_name);
-    view.displayMessage(String.valueOf(composition));
+    view.getDate();
+    String date = scan.nextLine();
+    if (user.isValidFormat(date)) {
+      StringBuilder composition = user.getFlexiblePortfolioComposition(p_name, date);
+      view.displayMessage(String.valueOf(composition));
+    } else {
+      view.invalidDate();
+    }
   }
 
   private void loadPortfolio(Scanner scan) {
@@ -260,8 +266,7 @@ public class UserControllerImpl implements UserController {
     String pName = portfolioName(scan);
     if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-    }
-    else {
+    } else {
       view.sellStock();
       String ticker = getTicker(scan);
       int qty = getQty(scan);
@@ -282,8 +287,7 @@ public class UserControllerImpl implements UserController {
     String pName = portfolioName(scan);
     if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-    }
-    else {
+    } else {
       view.getTicker();
       String ticker = getTicker(scan);
       int qty = getQty(scan);
@@ -304,8 +308,7 @@ public class UserControllerImpl implements UserController {
     String pName = portfolioName(scan);
     if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-    }
-    else {
+    } else {
       view.getDate();
       String date = scan.nextLine();
       if (user.isValidFormat(date)) {
@@ -321,12 +324,12 @@ public class UserControllerImpl implements UserController {
       }
     }
   }
-  private void getCostBasis(Scanner scan){
+
+  private void getCostBasis(Scanner scan) {
     String pName = portfolioName(scan);
     if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-    }
-    else {
+    } else {
       view.getDate();
       String date = scan.nextLine();
       if (user.isValidFormat(date)) {
