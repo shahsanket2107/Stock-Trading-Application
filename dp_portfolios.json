@@ -1,97 +1,24 @@
-[ {
+[{
   "name" : "p1",
   "stocks" : [ {
     "ticker" : "AAPL",
-    "date" : "2022-10-21",
-    "qty" : 10
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
   }, {
     "ticker" : "TSLA",
-    "date" : "2022-10-23",
-    "qty" : 50
-  } ]
-}, {
-  "name" : "p2",
-  "stocks" : [ {
-    "ticker" : "ZS",
-    "date" : "2022-10-27",
-    "qty" : 50
-  } ]
-}, {
-  "name" : "p1",
-  "stocks" : [ {
-    "ticker" : "AAPL",
-    "date" : "2022-10-21",
-    "qty" : 10
-  }, {
-    "ticker" : "TSLA",
-    "date" : "2022-10-23",
-    "qty" : 50
-  }, {
-    "ticker" : "ZS",
-    "date" : "2022-10-27",
-    "qty" : 50
-  } ]
-}, {
-  "name" : "p1",
-  "stocks" : [ {
-    "ticker" : "AAPL",
-    "date" : "2022-10-21",
-    "qty" : 10
-  }, {
-    "ticker" : "TSLA",
-    "date" : "2022-10-23",
-    "qty" : 50
-  }, {
-    "ticker" : "ZS",
-    "date" : "2022-10-27",
-    "qty" : 40
-  } ]
-}, {
-  "name" : "p3",
-  "stocks" : [ {
-    "ticker" : "AAPL",
-    "date" : "2022-10-20",
-    "qty" : 10
-  }, {
-    "ticker" : "AAPL",
-    "date" : "2022-10-30",
-    "qty" : 50
-  } ]
-}, {
-  "name" : "p3",
-  "stocks" : [ {
-    "ticker" : "AAPL",
-    "date" : "2022-10-21",
-    "qty" : 10
-  }, {
-    "ticker" : "AAPL",
-    "date" : "2022-10-30",
-    "qty" : 30
-  } ]
-}, {
-  "name" : "p1",
-  "stocks" : [ {
-    "ticker" : "AAPL",
-    "date" : "2022-10-28",
-    "qty" : 10
-  }, {
-    "ticker" : "ZS",
-    "date" : "2022-10-31",
-    "qty" : 2
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
   }, {
     "ticker" : "MSFT",
-    "date" : "2022-10-30",
-    "qty" : 50
-  } ]
-}, {
-  "name" : "p3",
-  "stocks" : [ {
-    "ticker" : "ZS",
-    "date" : "2022-10-28",
-    "qty" : 2
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
   }, {
-    "ticker" : "AAPL",
-    "date" : "2022-10-28",
-    "qty" : 10
+    "ticker" : "ZS",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1508.1299999999999
   } ]
 } ]

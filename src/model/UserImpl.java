@@ -1,25 +1,25 @@
 package model;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * This class has all the functions of user model. As the user has a portfolio, this class has a
@@ -545,7 +545,7 @@ public class UserImpl implements User {
   @Override
   public StringBuilder displayChart(String startDate, String endDate, String pName)
       throws IllegalArgumentException {
-    if(dateCompare(startDate,endDate)){
+    if (dateCompare(startDate, endDate)) {
       return new StringBuilder("Start date cannot be more than end date!");
     }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -578,25 +578,37 @@ public class UserImpl implements User {
         }
       }
     }
-    ArrayList<String> dates = getDatesForChart(year, month, week, timeLine, c);
+    ArrayList<String> dates = getDatesForChart(year, month, week, timeLine, c, e);
 
     Map<String, Double> m = insertValueInMapForChart(pName, dates, c);
 
     StringBuilder result = printChart(m, year, month, c, startDate, endDate, pName);
     return result;
   }
-  private ArrayList<String> getDatesForChart(int year,int month,int week,long timeLine,Calendar c){
+
+  private ArrayList<String> getDatesForChart(int year, int month, int week, long timeLine,
+      Calendar c, Date e) {
     ArrayList<String> dates = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     if (year == 1) {
       for (int i = 0; i < timeLine; i++) {
-        dates.add(sdf.format(c.getTime()));
-        c.add(Calendar.YEAR, 1);
+        c.set(Calendar.DAY_OF_YEAR, c.getActualMaximum(Calendar.DAY_OF_YEAR));
+        if ((c.getTime()).compareTo(e) > 0) {
+          dates.add(sdf.format(e));
+        } else {
+          dates.add(sdf.format(c.getTime()));
+          c.add(Calendar.YEAR, 1);
+        }
       }
     } else if (month == 1) {
       for (int i = 0; i < timeLine; i++) {
-        dates.add(sdf.format(c.getTime()));
-        c.add(Calendar.MONTH, 1);
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        if ((c.getTime()).compareTo(e) > 0) {
+          dates.add(sdf.format(e));
+        } else {
+          dates.add(sdf.format(c.getTime()));
+          c.add(Calendar.MONTH, 1);
+        }
       }
     } else if (week == 1) {
       for (int i = 0; i < timeLine; i++) {
@@ -632,12 +644,14 @@ public class UserImpl implements User {
           c.setTime(sdf.parse(entry.getKey()));
           star.append(c.get(Calendar.YEAR));
         } else if (month == 1) {
-          c.setTime(sdf.parse(entry.getKey()));
-          star.append(c.get(Calendar.MONTH));
+          Format f = new SimpleDateFormat("MMM");
+          Format yf = new SimpleDateFormat("yyyy");
+          star.append(f.format(sdf.parse(entry.getKey()))).append(" ")
+              .append(yf.format(sdf.parse(entry.getKey())));
         } else {
           star.append(entry.getKey());
         }
-      }catch (ParseException ex) {
+      } catch (ParseException ex) {
         throw new IllegalArgumentException("Error in parsing date!");
       }
       star.append(": ");
@@ -647,7 +661,7 @@ public class UserImpl implements User {
       }
       star.append("\n");
     }
-    star.append("Scale: * = $" + scale);
+    star.append("Scale: * = $").append(scale);
     return star;
   }
 
