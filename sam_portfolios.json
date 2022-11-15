@@ -8,12 +8,17 @@
   }, {
     "ticker" : "TSLA",
     "date" : "2022-10-25",
-    "qty" : 50,
-    "costBasis" : 11124.08
+    "qty" : 20,
+    "costBasis" : 4451.63
   }, {
-    "ticker" : "AAPL",
+    "ticker" : "ZS",
+    "date" : "2022-10-20",
+    "qty" : 13,
+    "costBasis" : 1956.3199999999997
+  }, {
+    "ticker" : "ZS",
     "date" : "2022-10-25",
-    "qty" : 5,
-    "costBasis" : 765.0300000000001
+    "qty" : -12,
+    "costBasis" : 3.33
   } ]
 } ]

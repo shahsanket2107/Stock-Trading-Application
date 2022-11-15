@@ -1,17 +1,22 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
+import model.User;
+import model.UserImpl;
 
 public class graph {
 
   public static void main(String[] args) throws ParseException {
-    String startDate = "2022-10-21";
-    String endDate = "2023-10-31";
+    String startDate = "2022-10-15";
+    String endDate = "2022-10-29";
+    User user = new UserImpl();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date s = sdf.parse(startDate);
     Date e = sdf.parse(endDate);
@@ -22,55 +27,90 @@ public class graph {
     int week = 0;
     int month = 0;
     int year = 0;
-    String wd = "";
-    String mm = "";
-    String yyyy = "";
+
     Calendar c = Calendar.getInstance();
-    c.setTime(e);
+    c.setTime(s);
+    ArrayList<String> dates = new ArrayList<>();
     if (diff > 30) {
       timeLine = diff / 7;
       week = 1;
-      wd =  returnWeekDay(c.get(Calendar.WEEK_OF_MONTH));
       if (timeLine > 20) {
         timeLine = timeLine / 4;
         month = 1;
-        mm = String.valueOf(c.get(Calendar.MONTH));
-        if (timeLine > 12) {
+        if (timeLine > 15) {
           timeLine = timeLine / 12;
           year = 1;
-          yyyy = String.valueOf(c.get(Calendar.YEAR));
         }
       }
     }
-//    System.out.println(wd);
-//    System.out.println(mm);
-//    System.out.println(yyyy);
-    Map<String,Double> m = new HashMap<>();
-    m.put("Mon",100.2);
-    m.put("Tue",900.7);
-    m.put("Wed",200.89);
-    m.put("Thu",789.7);
-    m.put("Fri",399.12);
+    if (year == 1) {
+      for (int i = 0; i <= timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.YEAR, 1);
+      }
+    } else if (month == 1) {
+      for (int i = 0; i <= timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.MONTH, 1);
+      }
+    } else if (week == 1) {
+      for (int i = 0; i <= timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.WEEK_OF_YEAR, 1);
+      }
+    } else {
+      for (int i = 0; i <= timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.DATE, 1);
+      }
+    }
+    String temp_date;
+    Map<String, Double> m = new TreeMap<>();
+    for (int i = 0; i < dates.size(); i++) {
+      temp_date = (dates.get(i));
+      //System.out.println(temp_date);
+      user.loadFlexiblePortfolio("sam_portfolios.json");
+      String value;
+      Double d;
+      value = String.valueOf(user.getFlexiblePortfolioTotalValuation(temp_date, "p1"));
+      if (value.charAt(0) == 'S') {
+        d = 0.0;
+      } else {
+        try {
+          d = Double.parseDouble(value.substring(value.lastIndexOf(" ") + 1));
+        } catch (Exception exception) {
+          d = 0.0;
+        }
+      }
+      m.put(dates.get(i), d);
+    }
+
     Double maxValueInMap = (Collections.max(m.values()));
     Double minValueInMap = (Collections.min(m.values()));
-    System.out.println(maxValueInMap);
-    System.out.println(minValueInMap);
-
-  }
-   public static String returnWeekDay(int wd){
-    if(wd==1)
-      return "Mon";
-    if(wd==2)
-      return "Tue";
-    if(wd==3)
-      return "Wed";
-    if(wd==4)
-      return "Thu";
-    if(wd==5)
-      return "Fri";
-    if(wd == 6)
-      return "Sat";
-    return "Sun";
+//    System.out.println(maxValueInMap);
+//    System.out.println(minValueInMap);
+    double print;
+    int scale = (int) ((maxValueInMap - minValueInMap) / 10);
+    StringBuilder star= new StringBuilder();
+    for (Entry<String, Double> entry : m.entrySet()) {
+      print = entry.getValue() / scale;
+      int p = (int) Math.round(print);
+      System.out.print(entry.getKey());
+      System.out.print(": ");
+      StringBuilder temp_star=new StringBuilder();
+      if(p==0){
+        System.out.print(star);
+      }
+      else {
+        for (int i = 1; i <= p; i++) {
+          System.out.print("*");
+          temp_star.append("*");
+        }
+        star = temp_star;
+      }
+      System.out.println();
+    }
+    System.out.println("Scale: * = $" + scale);
   }
 
 }
