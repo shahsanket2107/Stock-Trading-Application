@@ -1,5 +1,10 @@
 package model;
 
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -37,7 +42,7 @@ public class UserImpl implements User {
   }
 
   public UserImpl(String name, List<Portfolio> portfolio,
-                  List<FlexiblePortfolio> flexiblePortfolio) {
+      List<FlexiblePortfolio> flexiblePortfolio) {
     this.name = name;
     this.portfolio = portfolio;
     this.flexiblePortfolio = flexiblePortfolio;
@@ -78,7 +83,7 @@ public class UserImpl implements User {
 
   @Override
   public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName) == 2 || checkPortfolioExists(portfolioName) == 1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
@@ -138,7 +143,7 @@ public class UserImpl implements User {
         Map<String, Double> m = p.getValuationAtDate(date);
         Double ans = computeValue(m);
         temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-                .append(ans);
+            .append(ans);
         temp.append("\n");
         temp.append("The stock valuation breakdown is: \n");
         m.forEach((k, v) -> {
@@ -182,7 +187,7 @@ public class UserImpl implements User {
     }
     if (flg == 0) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
     }
     return temp;
   }
@@ -206,7 +211,8 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws IllegalArgumentException {
+  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks)
+      throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName) == 2 || checkPortfolioExists(portfolioName) == 1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
     }
@@ -263,7 +269,7 @@ public class UserImpl implements User {
 
         }
         temp.append("Cost basis of your portfolio at ").append(date).append(" is : $ ")
-                .append(tempResult);
+            .append(tempResult);
         temp.append("\n");
       }
     }
@@ -273,7 +279,9 @@ public class UserImpl implements User {
     return temp;
   }
 
-  private Map<String, Integer> getPortfolioCompositionOnADateHelper(String pName, String date) throws IllegalArgumentException {
+
+  private Map<String, Integer> getPortfolioCompositionOnADateHelper(String pName, String date)
+      throws IllegalArgumentException {
     Map<String, Integer> m = new HashMap<>();
     int tempQty;
     int flg = 0;
@@ -320,7 +328,7 @@ public class UserImpl implements User {
       m = getPortfolioCompositionOnADateHelper(pName, date);
     } catch (IllegalArgumentException e) {
       temp.append(
-              "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
+          "The given portfolio name does not exist!!\nPlease enter a valid portfolio name!!");
       return temp;
     }
     for (String s : m.keySet()) {
@@ -440,7 +448,7 @@ public class UserImpl implements User {
         if (!stocks.isEmpty() && !validateDateAccToApi(stocks.get(0).getTicker(), date)) {
           StringBuilder temp2 = new StringBuilder();
           temp2.append("Stock market is closed at the date: " + date + ". So please enter a " +
-                  "different date\n");
+              "different date\n");
           return temp2;
         }
         Map<String, JsonNode> m = data_store.getApi_data();
@@ -458,7 +466,7 @@ public class UserImpl implements User {
   }
 
   private StringBuilder getFlexibleTotalValuationHelper(StringBuilder temp, Map<String, JsonNode> m,
-                                                        Map<String, Integer> m1, String date) {
+      Map<String, Integer> m1, String date) {
     Double ans = 0.0;
     int flg = 0;
     temp.append("The stock valuation breakdown is: \n");
@@ -484,7 +492,7 @@ public class UserImpl implements User {
       temp = new StringBuilder();
     }
     temp.append("Portfolio_Valuation at ").append(date).append(" is : $ ")
-            .append(ans);
+        .append(ans);
     temp.append("\n");
     return temp;
   }
@@ -496,7 +504,7 @@ public class UserImpl implements User {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       return new StringBuilder(
-              "Date cannot be greater or equal to current date. Try a different date");
+          "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
@@ -533,4 +541,148 @@ public class UserImpl implements User {
     int qty = stock.getQty();
     stock.setCostBasis(temp * qty + 3.33);
   }
+
+  @Override
+  public StringBuilder displayChart(String startDate, String endDate, String pName)
+      throws IllegalArgumentException {
+    if(dateCompare(startDate,endDate)){
+      return new StringBuilder("Start date cannot be more than end date!");
+    }
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date e;
+    Date s;
+    try {
+      s = sdf.parse(startDate);
+      e = sdf.parse(endDate);
+    } catch (ParseException ex) {
+      throw new IllegalArgumentException("Error in parsing date!");
+    }
+    long diff = TimeUnit.DAYS.convert(Math.abs(e.getTime() - s.getTime()),
+        TimeUnit.MILLISECONDS);
+
+    long timeLine = diff;
+    int week = 0;
+    int month = 0;
+    int year = 0;
+    Calendar c = Calendar.getInstance();
+    c.setTime(s);
+    if (diff > 30) {
+      timeLine = diff / 7;
+      week = 1;
+      if (timeLine > 20) {
+        timeLine = timeLine / 4;
+        month = 1;
+        if (timeLine > 24) {
+          timeLine = timeLine / 12;
+          year = 1;
+        }
+      }
+    }
+    ArrayList<String> dates = getDatesForChart(year, month, week, timeLine, c);
+
+    Map<String, Double> m = insertValueInMapForChart(pName, dates, c);
+
+    StringBuilder result = printChart(m, year, month, c, startDate, endDate, pName);
+    return result;
+  }
+  private ArrayList<String> getDatesForChart(int year,int month,int week,long timeLine,Calendar c){
+    ArrayList<String> dates = new ArrayList<>();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    if (year == 1) {
+      for (int i = 0; i < timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.YEAR, 1);
+      }
+    } else if (month == 1) {
+      for (int i = 0; i < timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.MONTH, 1);
+      }
+    } else if (week == 1) {
+      for (int i = 0; i < timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.WEEK_OF_YEAR, 1);
+      }
+    } else {
+      for (int i = 0; i <= timeLine; i++) {
+        dates.add(sdf.format(c.getTime()));
+        c.add(Calendar.DATE, 1);
+      }
+    }
+    return dates;
+  }
+
+  private StringBuilder printChart(Map<String, Double> m, int year, int month, Calendar c,
+      String startDate, String endDate, String pName)
+      throws IllegalArgumentException {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Double maxValueInMap = (Collections.max(m.values()));
+    Double minValueInMap = (Collections.min(m.values()));
+
+    double print;
+    int scale = (int) ((maxValueInMap - minValueInMap) / 10);
+    StringBuilder star = new StringBuilder();
+    star.append("Performance of portfolio " + pName + " from " + startDate + " to " + endDate);
+    star.append("\n");
+    for (Entry<String, Double> entry : m.entrySet()) {
+      print = entry.getValue() / scale;
+      int p = (int) Math.round(print);
+      try {
+        if (year == 1) {
+          c.setTime(sdf.parse(entry.getKey()));
+          star.append(c.get(Calendar.YEAR));
+        } else if (month == 1) {
+          c.setTime(sdf.parse(entry.getKey()));
+          star.append(c.get(Calendar.MONTH));
+        } else {
+          star.append(entry.getKey());
+        }
+      }catch (ParseException ex) {
+        throw new IllegalArgumentException("Error in parsing date!");
+      }
+      star.append(": ");
+
+      for (int i = 1; i <= p; i++) {
+        star.append("*");
+      }
+      star.append("\n");
+    }
+    star.append("Scale: * = $" + scale);
+    return star;
+  }
+
+  private Map<String, Double> insertValueInMapForChart(String pName, ArrayList<String> dates,
+      Calendar c) {
+    String temp_date;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Map<String, Double> m = new TreeMap<>();
+    for (int i = 0; i < dates.size(); i++) {
+      temp_date = (dates.get(i));
+      String value;
+      Double d;
+      value = String.valueOf(getFlexiblePortfolioTotalValuation(temp_date, pName));
+      if (value.charAt(0) == 'S') {
+        while (value.charAt(0) == 'S') {
+          try {
+            value = String.valueOf(getFlexiblePortfolioTotalValuation(temp_date, pName));
+            c.setTime(sdf.parse(temp_date));
+            c.add(Calendar.DATE, 1);
+            temp_date = sdf.format(c.getTime());
+          } catch (Exception ex) {
+            throw new RuntimeException(ex);
+          }
+        }
+        d = Double.parseDouble(value.substring(value.lastIndexOf(" ") + 1));
+      } else {
+        try {
+          d = Double.parseDouble(value.substring(value.lastIndexOf(" ") + 1));
+        } catch (Exception exception) {
+          d = 0.0;
+        }
+      }
+      m.put(dates.get(i), d);
+    }
+    return m;
+  }
 }
+

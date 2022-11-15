@@ -123,4 +123,7 @@ public interface View {
 
   void dataNotFound();
 
+  void getStartDate();
+
+  void getEndDate();
 }

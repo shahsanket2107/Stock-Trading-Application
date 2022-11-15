@@ -2,6 +2,7 @@ package controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -341,6 +342,29 @@ public class UserControllerImpl implements UserController {
       }
     }
   }
+  private void displayChart(Scanner scan){
+    String pName = portfolioName(scan);
+    if (user.checkPortfolioExists(pName) != 2) {
+      view.portfolioNotExist();
+    }
+    else {
+      view.getStartDate();
+      String sDate = scan.nextLine();
+      view.getEndDate();
+      String eDate = scan.nextLine();
+      if (user.isValidFormat(sDate)&&user.isValidFormat(eDate)) {
+        try {
+          StringBuilder result = user.displayChart(sDate, eDate, pName);
+          view.displayMessage(String.valueOf(result));
+        }
+        catch (ParseException ex) {
+          view.displayMessage(ex.getMessage());
+        }
+      } else {
+        view.invalidDate();
+      }
+    }
+  }
 
   @Override
   public void runGo() {
@@ -389,6 +413,9 @@ public class UserControllerImpl implements UserController {
         case "12":
           getCostBasis(scan);
           break;
+        case "13":
+          displayChart(scan);
+          break;
         case "d":
           user.display();
           break;
@@ -399,6 +426,8 @@ public class UserControllerImpl implements UserController {
       }
     }
   }
+
+
 
 
 }

@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import model.Stocks;
@@ -239,6 +240,12 @@ public class UserControllerTestUsingMockModel {
 
     @Override
     public StringBuilder getCostBasis(String date, String pName) {
+      return null;
+    }
+
+    @Override
+    public StringBuilder displayChart(String sDate, String eDate, String pName)
+        throws ParseException {
       return null;
     }
   }

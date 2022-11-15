@@ -35,8 +35,10 @@ public class ViewImpl implements View {
     this.out.println("Enter 9 to buy stocks on a specific date");
     this.out.println("Enter 10 to sell stocks on a specific date");
     this.out.println("Enter 11 to determine the total value of flexible portfolio on a certain " +
-            "date");
+        "date");
     this.out.println("Enter 12 to find cost basis of a flexible portfolio on a certain date");
+    this.out.println(
+        "Enter 13 to view how the portfolio has performed over a period of time using chart");
     this.out.println("Enter q to exit");
   }
 
@@ -142,6 +144,16 @@ public class ViewImpl implements View {
   @Override
   public void dataNotFound() {
     this.out.println("Stock market is closed at this date, so please enter a different date!!");
+  }
+
+  @Override
+  public void getStartDate() {
+    this.out.println("Enter the start date (in format yyyy-MM-dd): ");
+  }
+
+  @Override
+  public void getEndDate() {
+    this.out.println("Enter the end date (in format yyyy-MM-dd): ");
   }
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -115,4 +116,6 @@ public interface User {
   boolean validateDateAccToApi(String ticker, String date);
 
   StringBuilder getCostBasis(String date, String pName);
+
+  StringBuilder displayChart(String sDate, String eDate, String pName) throws ParseException;
 }
