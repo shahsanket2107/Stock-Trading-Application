@@ -5,7 +5,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ApiImpl implements Api{
+/**
+ * This class does the call to AlphaVantage API. All the api calls in the future would be called in
+ * this class.
+ */
+public class ApiImpl implements Api {
 
   @Override
   public StringBuilder getApiOutputFromTicker(String ticker) {
@@ -32,8 +36,7 @@ public class ApiImpl implements Api{
         output.append((char) b);
       }
       return output;
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw new IllegalArgumentException("Unable to fetch URL right now!!");
     }
   }

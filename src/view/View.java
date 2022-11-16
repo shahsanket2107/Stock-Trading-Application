@@ -118,12 +118,31 @@ public interface View {
    * This function returns appropriate message when portfolio is successfully created.
    */
   void getPortfolioMessage();
+
+  /**
+   * This function returns message that portfolio does not exist.
+   */
   void portfolioNotExist();
+
+  /**
+   * This function returns message asking user the ticker of stock he wants to sell.
+   */
   void sellStock();
 
+  /**
+   * This function displays the message when data is not found when the API is hit.
+   */
   void dataNotFound();
 
+  /**
+   * This function is used to get start date from user for chart visualization.
+   */
+
   void getStartDate();
+
+  /**
+   * This function is used to get end date from user for chart visualization.
+   */
 
   void getEndDate();
 }
