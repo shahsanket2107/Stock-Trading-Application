@@ -2,13 +2,11 @@ package controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 import model.Stocks;
 import model.StocksImpl;
 import model.User;
@@ -356,7 +354,7 @@ public class UserControllerImpl implements UserController {
         try {
           StringBuilder result = user.displayChart(sDate, eDate, pName);
           view.displayMessage(String.valueOf(result));
-        } catch (ParseException ex) {
+        } catch (IllegalArgumentException ex) {
           view.displayMessage(ex.getMessage());
         }
       } else {
