@@ -224,11 +224,6 @@ public class UserControllerTestUsingMockModel {
     }
 
     @Override
-    public void display() {
-
-    }
-
-    @Override
     public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
       return null;
     }
@@ -245,7 +240,7 @@ public class UserControllerTestUsingMockModel {
 
     @Override
     public StringBuilder displayChart(String sDate, String eDate, String pName)
-        throws ParseException {
+        throws IllegalArgumentException {
       return null;
     }
   }

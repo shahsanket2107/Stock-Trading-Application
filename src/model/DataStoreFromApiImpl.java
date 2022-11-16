@@ -10,9 +10,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class implements the DataStoreFromApi interface. This class is made for the purpose to
+ * reduce the number of API calls to the minimum number possible. So each time a new stock ticker
+ * is encountered the data is fetched for that ticker from the API and stored in a Map which maps
+ * ticker to the JSON output of the API.
+ */
 public class DataStoreFromApiImpl implements DataStoreFromApi {
   private Map<String, JsonNode> api_data;
 
+  /**
+   * This is the default constructor which initializes the api_data map with a new Hashmap.
+   */
   public DataStoreFromApiImpl() {
     this.api_data = new HashMap<>();
   }
@@ -36,7 +45,7 @@ public class DataStoreFromApiImpl implements DataStoreFromApi {
       throw new IllegalArgumentException("Malformed URL Exception!!");
     }
 
-    InputStream in = null;
+    InputStream in;
 
     try {
       assert url != null;
@@ -55,12 +64,4 @@ public class DataStoreFromApiImpl implements DataStoreFromApi {
     return api_data.keySet();
   }
 
-  @Override
-  public void display() {
-    System.out.println(api_data.keySet());
-//    api_data.forEach((k, v) -> {
-//      System.out.println("Key:" + k);
-//      System.out.println("Value:" + v);
-//    });
-  }
 }
