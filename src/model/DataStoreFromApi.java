@@ -9,5 +9,4 @@ public interface DataStoreFromApi {
   Map<String, JsonNode> getApi_data();
   void fetchFromApi(String ticker) throws IllegalArgumentException;
   Set<String> getTickers();
-  void display();
 }

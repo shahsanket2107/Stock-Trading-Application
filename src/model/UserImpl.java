@@ -427,11 +427,6 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void display() {
-    data_store.display();
-  }
-
-  @Override
   public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
     StringBuilder check = dateFormatHelper(date);
     if (!check.isEmpty()) {

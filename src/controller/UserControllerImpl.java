@@ -342,28 +342,32 @@ public class UserControllerImpl implements UserController {
       }
     }
   }
-  private void displayChart(Scanner scan){
+
+  private void displayChart(Scanner scan) {
     String pName = portfolioName(scan);
     if (user.checkPortfolioExists(pName) != 2) {
       view.portfolioNotExist();
-    }
-    else {
+    } else {
       view.getStartDate();
       String sDate = scan.nextLine();
       view.getEndDate();
       String eDate = scan.nextLine();
-      if (user.isValidFormat(sDate)&&user.isValidFormat(eDate)) {
+      if (user.isValidFormat(sDate) && user.isValidFormat(eDate)) {
         try {
           StringBuilder result = user.displayChart(sDate, eDate, pName);
           view.displayMessage(String.valueOf(result));
-        }
-        catch (ParseException ex) {
+        } catch (ParseException ex) {
           view.displayMessage(ex.getMessage());
         }
       } else {
         view.invalidDate();
       }
     }
+  }
+
+  private void getPortfoliosNames() {
+    StringBuilder result = user.getPortfoliosName();
+    view.displayMessage(String.valueOf(result));
   }
 
   @Override
@@ -386,8 +390,7 @@ public class UserControllerImpl implements UserController {
           getPortfolioValuation(scan);
           break;
         case "4":
-          StringBuilder result = user.getPortfoliosName();
-          view.displayMessage(String.valueOf(result));
+          getPortfoliosNames();
           break;
         case "5":
           loadPortfolio(scan);
@@ -416,9 +419,6 @@ public class UserControllerImpl implements UserController {
         case "13":
           displayChart(scan);
           break;
-        case "d":
-          user.display();
-          break;
         case "q":
           return;
         default:
@@ -426,8 +426,6 @@ public class UserControllerImpl implements UserController {
       }
     }
   }
-
-
 
 
 }

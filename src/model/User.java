@@ -109,8 +109,6 @@ public interface User {
 
   String sellStocks(String ticker, int qty, String pName, String date);
 
-  void display();
-
   StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName);
 
   boolean validateDateAccToApi(String ticker, String date);
