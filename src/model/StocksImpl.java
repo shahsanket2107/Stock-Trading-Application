@@ -1,15 +1,21 @@
 package model;
 
 /**
- * This class has all the functions of Stock model. The alpha vantage API is also called in this
- * class to fetch the stock values.
+ * This class has all the functions of Stock model. The stock model consists of a ticker symbol,
+ * date, quantity and a cost basis. This class also has an API object which calls the alphavantage
+ * api.
  */
 public class StocksImpl implements Stocks {
+
   private String ticker;
   private String date;
   private int qty;
   private double cost_basis;
 
+  /**
+   * This is a constructor which initializes the ticker,date,quantity and cost basis to default
+   * value.
+   */
   public StocksImpl() {
     this.ticker = "";
     this.date = "";
@@ -17,12 +23,22 @@ public class StocksImpl implements Stocks {
     this.cost_basis = 0.0;
   }
 
+  /**
+   * This is a constructor which is used to set the date, quantity and ticker.
+   * @param date the date when the stocks were bought or sold.
+   * @param ticker the ticker symbol of the stock.
+   * @param qty the quantity of stocks.
+   */
   public StocksImpl(String date, String ticker, int qty) {
     this.ticker = ticker;
     this.qty = qty;
     this.date = date;
   }
 
+  /**
+   * This constructor is used to initialize the ticker.
+   * @param ticker the ticker symbol of the stock to be initialized.
+   */
   public StocksImpl(String ticker) {
     this.ticker = ticker;
   }
