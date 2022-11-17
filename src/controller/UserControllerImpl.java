@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
 import model.Stocks;
 import model.StocksImpl;
 import model.User;
@@ -182,10 +183,11 @@ public class UserControllerImpl implements UserController {
 
   private void createPortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    int check=user.checkPortfolioExists(portfolioName);
-    while (check == 1|| check== 2) {
+    int check = user.checkPortfolioExists(portfolioName);
+    while (check == 1 || check == 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
+      check = user.checkPortfolioExists(portfolioName);
     }
     try {
       Map<String, Integer> m = perform(scan);
@@ -199,9 +201,10 @@ public class UserControllerImpl implements UserController {
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
     int check = user.checkPortfolioExists(portfolioName);
-    while (check == 2|| check == 1) {
+    while (check == 2 || check == 1) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
+      check = user.checkPortfolioExists(portfolioName);
     }
     try {
       List<Stocks> jsonArray = performJson(scan);
@@ -220,11 +223,11 @@ public class UserControllerImpl implements UserController {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       throw new IllegalArgumentException(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       throw new IllegalArgumentException(
-          "Date should be more than 1st January 2000. Try a different date");
+              "Date should be more than 1st January 2000. Try a different date");
     }
     return true;
   }
