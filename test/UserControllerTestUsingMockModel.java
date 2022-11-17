@@ -1,18 +1,20 @@
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
-import controller.UserController;
-import controller.UserControllerImpl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
+
+import controller.UserController;
+import controller.UserControllerImpl;
 import model.Stocks;
 import model.User;
-import org.junit.Before;
-import org.junit.Test;
 import view.ViewImpl;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * This is a UserController Test class which uses mock model. The purpose of this class testing is
@@ -33,7 +35,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testCreatePortfolio() {
     InputStream input = new ByteArrayInputStream("sanket\n1\nport1\n1\naapl\n100\nq\nq\n"
-        .getBytes());
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -53,7 +55,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testGetPortfolioComposition() {
     InputStream input = new ByteArrayInputStream("sanket\n1\nport1\n1\naapl\n100\nq\n2\nport1\nq\n"
-        .getBytes());
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ByteArrayOutputStream mock = new ByteArrayOutputStream();
@@ -73,7 +75,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testLoadPortfolio() {
     InputStream input = new ByteArrayInputStream("sanket\n5\nportfolio.xml\nq\n"
-        .getBytes());
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ByteArrayOutputStream mock = new ByteArrayOutputStream();
@@ -106,7 +108,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testGetTotalValuation() {
     InputStream input = new ByteArrayInputStream(("sanket\n3\ntest_portfolio\n2022-10-28"
-        + "\nq\n").getBytes());
+            + "\nq\n").getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ByteArrayOutputStream mock = new ByteArrayOutputStream();
@@ -124,8 +126,8 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testCreateFlexiblePortfolio() {
     InputStream input = new ByteArrayInputStream(
-        "samved\n6\np1\n1\naapl\n100\n2022-10-21\nq\nq\n"
-            .getBytes());
+            "samved\n6\np1\n1\naapl\n100\n2022-10-21\nq\nq\n"
+                    .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -141,7 +143,7 @@ public class UserControllerTestUsingMockModel {
     out.println("isValidFormat called with value as: 2022-10-21");
     out.println("validateDateAccToApi called with ticker as: AAPL and date as 2022-10-21");
     out.println(
-        "createFlexiblePortfolio called with portfolio name as: p1 and list of stocks as:");
+            "createFlexiblePortfolio called with portfolio name as: p1 and list of stocks as:");
     out.println("AAPL");
     assertEquals(b.toString(), mock.toString());
   }
@@ -149,8 +151,8 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testCompositionOfFlexiblePortfolio() {
     InputStream input = new ByteArrayInputStream(
-        "samved\n7\np1\n2022-10-22\nq\n"
-            .getBytes());
+            "samved\n7\np1\n2022-10-22\nq\n"
+                    .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -163,15 +165,15 @@ public class UserControllerTestUsingMockModel {
     out.println("getName called");
     out.println("isValidFormat called with value as: 2022-10-22");
     out.println(
-        "getFlexiblePortfolioComposition called with portfolio name as: p1 and date as 2022-10-22");
+            "getFlexiblePortfolioComposition called with portfolio name as: p1 and date as 2022-10-22");
     assertEquals(b.toString(), mock.toString());
   }
 
   @Test
   public void testBuyStocks() {
     InputStream input = new ByteArrayInputStream(
-        "samved\n9\nport_1\naapl\n30\n2022-10-21\nq\n"
-            .getBytes());
+            "samved\n9\nport_1\naapl\n30\n2022-10-21\nq\n"
+                    .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -188,7 +190,120 @@ public class UserControllerTestUsingMockModel {
     out.println("validateDateAccToApi called with ticker as: AAPL and date as 2022-10-21");
 
     out.println(
-        "buyStocks called with ticker name as: AAPL,date as 2022-10-21,quantity as 30 and portfolio name asport_1");
+            "buyStocks called with ticker name as: AAPL,date as 2022-10-21,quantity as 30 and " +
+                    "portfolio name as port_1");
+    assertEquals(b.toString(), mock.toString());
+  }
+
+  @Test
+  public void testSellStocks() {
+    InputStream input = new ByteArrayInputStream(
+            "samved\n10\nport_1\naapl\n20\n2022-10-25\nq\n"
+                    .getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ByteArrayOutputStream mock = new ByteArrayOutputStream();
+    PrintStream mock_output = new PrintStream(mock);
+    User mockUser = new MockUser(mock_output);
+    UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
+    controller.runGo();
+    out.println("setName called with name as: samved");
+    out.println("getName called");
+    out.println("checkPortfolioExists called with pName as: port_1");
+    out.println("ifStocksExist called with ticker as: aapl");
+    out.println("isValidFormat called with value as: 2022-10-25");
+    out.println("validateDateAccToApi called with ticker as: AAPL and date as 2022-10-25");
+
+    out.println(
+            "sellStocks called with ticker name as: AAPL,date as 2022-10-25,quantity as 20 and " +
+                    "portfolio name as port_1");
+    assertEquals(b.toString(), mock.toString());
+  }
+
+  @Test
+  public void testLoadFlexPortfolio() {
+    InputStream input = new ByteArrayInputStream(
+            "samved\n8\nsamved_portfolios.json\nq\n"
+                    .getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ByteArrayOutputStream mock = new ByteArrayOutputStream();
+    PrintStream mock_output = new PrintStream(mock);
+    User mockUser = new MockUser(mock_output);
+    UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
+    controller.runGo();
+    out.println("setName called with name as: samved");
+    out.println("getName called");
+    out.println("loadFlexiblePortfolio called with file name as: samved_portfolios.json");
+    assertEquals(b.toString(), mock.toString());
+  }
+
+  @Test
+  public void testDetermineValueOfAFlexiblePortfolio() {
+    InputStream input = new ByteArrayInputStream(
+            "samved\n11\nport_1\n2022-10-21\nq\n"
+                    .getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ByteArrayOutputStream mock = new ByteArrayOutputStream();
+    PrintStream mock_output = new PrintStream(mock);
+    User mockUser = new MockUser(mock_output);
+    UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
+    controller.runGo();
+    out.println("setName called with name as: samved");
+    out.println("getName called");
+    out.println("checkPortfolioExists called with pName as: port_1");
+    out.println("isValidFormat called with value as: 2022-10-21");
+    out.println("getFlexiblePortfolioTotalValuation called with portfolio name as: port_1 and " +
+            "date as 2022-10-21");
+    assertEquals(b.toString(), mock.toString());
+  }
+
+  @Test
+  public void testCostBasisOfFlexiblePortfolio() {
+    InputStream input = new ByteArrayInputStream(
+            "samved\n12\nport_1\n2022-10-21\nq\n"
+                    .getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ByteArrayOutputStream mock = new ByteArrayOutputStream();
+    PrintStream mock_output = new PrintStream(mock);
+    User mockUser = new MockUser(mock_output);
+    UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
+    controller.runGo();
+    out.println("setName called with name as: samved");
+    out.println("getName called");
+    out.println("checkPortfolioExists called with pName as: port_1");
+    out.println("isValidFormat called with value as: 2022-10-21");
+    out.println("getCostBasis called with portfolio name as: port_1 and " +
+            "date as 2022-10-21");
+    assertEquals(b.toString(), mock.toString());
+  }
+
+  @Test
+  public void testDisplayGraph() {
+    InputStream input = new ByteArrayInputStream(
+            "samved\n13\nport_1\n2022-10-05\n2022-10-21\nq\n"
+                    .getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ByteArrayOutputStream mock = new ByteArrayOutputStream();
+    PrintStream mock_output = new PrintStream(mock);
+    User mockUser = new MockUser(mock_output);
+    UserController controller = new UserControllerImpl(input, output, mockUser, new ViewImpl());
+    controller.runGo();
+    out.println("setName called with name as: samved");
+    out.println("getName called");
+    out.println("checkPortfolioExists called with pName as: port_1");
+    out.println("isValidFormat called with value as: 2022-10-05");
+    out.println("isValidFormat called with value as: 2022-10-21");
+    out.println("displayChart called with portfolio name as: port_1, start date as 2022-10-05 and" +
+            " end date as 2022-10-21");
     assertEquals(b.toString(), mock.toString());
   }
 
@@ -207,9 +322,9 @@ public class UserControllerTestUsingMockModel {
 
     @Override
     public void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-        throws IllegalArgumentException {
+            throws IllegalArgumentException {
       out.println("Create Portfolio called with portfolioName: " + portfolioName
-          + " and stocks map " + "as: " + stocks);
+              + " and stocks map " + "as: " + stocks);
     }
 
     @Override
@@ -275,7 +390,7 @@ public class UserControllerTestUsingMockModel {
     public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) {
       Stocks s;
       out.println("createFlexiblePortfolio called with portfolio name as: " + portfolioName
-          + " and list of stocks as:");
+              + " and list of stocks as:");
       for (int i = 0; i < stocks.size(); i++) {
         out.println(stocks.get(i).getTicker());
       }
@@ -284,7 +399,7 @@ public class UserControllerTestUsingMockModel {
     @Override
     public StringBuilder getFlexiblePortfolioComposition(String pName, String date) {
       out.println("getFlexiblePortfolioComposition called with portfolio name as: " + pName
-          + " and date as " + date);
+              + " and date as " + date);
       return new StringBuilder("testing");
     }
 
@@ -297,43 +412,43 @@ public class UserControllerTestUsingMockModel {
     @Override
     public String buyStocks(String ticker, int qty, String pName, String date) {
       out.println("buyStocks called with ticker name as: " + ticker
-          + ",date as " + date + ",quantity as " + qty + " and portfolio name as" + pName);
+              + ",date as " + date + ",quantity as " + qty + " and portfolio name as " + pName);
       return "testing";
     }
 
     @Override
     public String sellStocks(String ticker, int qty, String pName, String date) {
       out.println("sellStocks called with ticker name as: " + ticker
-          + ",date as " + date + ",quantity as " + qty + " and portfolio name as" + pName);
+              + ",date as " + date + ",quantity as " + qty + " and portfolio name as " + pName);
       return "testing";
     }
 
     @Override
     public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
       out.println("getFlexiblePortfolioTotalValuation called with portfolio name as: " + pName
-          + "and date as " + date);
+              + " and date as " + date);
       return new StringBuilder("testing");
     }
 
     @Override
     public boolean validateDateAccToApi(String ticker, String date) {
       out.println("validateDateAccToApi called with ticker as: " + ticker
-          + " and date as " + date);
+              + " and date as " + date);
       return true;
     }
 
     @Override
     public StringBuilder getCostBasis(String date, String pName) {
       out.println("getCostBasis called with portfolio name as: " + pName
-          + "and date as " + date);
+              + " and date as " + date);
       return new StringBuilder("testing");
     }
 
     @Override
     public StringBuilder displayChart(String sDate, String eDate, String pName)
-        throws IllegalArgumentException {
+            throws IllegalArgumentException {
       out.println("displayChart called with portfolio name as: " + pName
-          + ", start date as " + sDate + "and end date as " + eDate);
+              + ", start date as " + sDate + " and end date as " + eDate);
       return new StringBuilder("testing");
     }
   }
