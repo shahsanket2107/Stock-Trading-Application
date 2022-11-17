@@ -257,7 +257,7 @@ public class UserImpl implements User {
     if (!set.contains(ticker)) {
       data_store.fetchFromApi(ticker);
     }
-    Map<String, JsonNode> m = data_store.getApi_data();
+    Map<String, JsonNode> m = data_store.getApiData();
     JsonNode tempNode = m.get(ticker);
     JsonNode temp = tempNode.get(date);
     return temp != null;
@@ -462,7 +462,7 @@ public class UserImpl implements User {
               "different date\n");
           return temp2;
         }
-        Map<String, JsonNode> m = data_store.getApi_data();
+        Map<String, JsonNode> m = data_store.getApiData();
         Map<String, Integer> m1;
         try {
           m1 = getPortfolioCompositionOnADateHelper(pName, date);
@@ -527,11 +527,7 @@ public class UserImpl implements User {
     String temp_date1 = date1.replaceAll("[\\s\\-()]", "");
     String temp_date2 = date2.replaceAll("[\\s\\-()]", "");
 
-    if (Integer.parseInt(temp_date1) >= Integer.parseInt(temp_date2)) {
-      return true;
-    } else {
-      return false;
-    }
+    return Integer.parseInt(temp_date1) >= Integer.parseInt(temp_date2);
   }
 
   private String formatDate(String date) {
@@ -539,7 +535,7 @@ public class UserImpl implements User {
   }
 
   private Double getStockValuationAtADate(String ticker, String date) {
-    Map<String, JsonNode> m = data_store.getApi_data();
+    Map<String, JsonNode> m = data_store.getApiData();
     JsonNode tempNode = m.get(ticker);
     String tempResult = String.valueOf(tempNode.get(date).get("4. close"));
     tempResult = tempResult.replaceAll("\"", "");

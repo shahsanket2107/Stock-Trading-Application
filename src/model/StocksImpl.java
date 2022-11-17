@@ -77,8 +77,8 @@ public class StocksImpl implements Stocks {
   }
 
   @Override
-  public void setCostBasis(Double cost_basis) {
-    this.cost_basis = cost_basis;
+  public void setCostBasis(Double costBasis) {
+    this.cost_basis = costBasis;
   }
 
   /**

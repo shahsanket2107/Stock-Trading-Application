@@ -9,7 +9,6 @@ import java.util.List;
  * stocks which has a ticker, a quantity ,a date and cost basis. Since the inflexible portfolios did
  * not need dates and cost basis as there was no buying and selling of stocks but we needed it here,
  * so we made a new model.
- * <p>
  * JSON Deserialize annotation is used to deserialize the FlexiblePortfolio object which is actually
  * an object of FlexiblePortfolio Interface and not the FlexiblePortfolioImpl class. So this
  * annotation tells Jackson that while deserializing the FlexiblePortfolio object read it as a

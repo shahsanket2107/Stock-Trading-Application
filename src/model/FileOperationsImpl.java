@@ -198,7 +198,7 @@ public class FileOperationsImpl implements FileOperations {
    * @param portfolio XML parsing node passed to helper method to write portfolio to xml file.
    */
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-      Map<String, Integer> m, Node portfolio, List<Portfolio> portfolios_list) {
+      Map<String, Integer> m, Node portfolio, List<Portfolio> portfoliosList) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -222,7 +222,7 @@ public class FileOperationsImpl implements FileOperations {
         m.put(ticker.get(k), Integer.valueOf(qty.get(k)));
       }
       Portfolio p = new PortfolioImpl(name, m);
-      portfolios_list.add(p);
+      portfoliosList.add(p);
     }
   }
 

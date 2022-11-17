@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This interface is the model of user. Here we implement create and load portfolios.
- * As user has a portfolio, it calls an object of portfolio and is able to access its methods.
- * In part - 2 of the assignments all the additional features that are possible for a flexible
- * portfolio like buying, selling of stocks, getting valuation,cost basis etc. are also added.
+ * This interface is the model of user. Here we implement create and load portfolios. As user has a
+ * portfolio, it calls an object of portfolio and is able to access its methods. In part - 2 of the
+ * assignments all the additional features that are possible for a flexible portfolio like buying,
+ * selling of stocks, getting valuation,cost basis etc. are also added.
  */
 public interface User {
 
@@ -19,7 +19,7 @@ public interface User {
    * @throws IllegalArgumentException if there is some error in writing to a xml file.
    */
   void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-          throws IllegalArgumentException;
+      throws IllegalArgumentException;
 
   /**
    * This function gives the composition of portfolio in terms of portfolio name, stock ticker and
@@ -95,8 +95,8 @@ public interface User {
    * This function checks if a portfolio with the given name already exists or not.
    *
    * @param pName the name of portfolio which you need to check.
-   * @return 1 if the portfolio is present as an inflexible portfolio and return 2 is the
-   * portfolio is present as a flexible portfolio.
+   * @return 1 if the portfolio is present as an inflexible portfolio and return 2 is the portfolio
+   *         is present as a flexible portfolio.
    */
 
   int checkPortfolioExists(String pName);
@@ -112,13 +112,13 @@ public interface User {
    *                                  error encountered while writing to the file.
    */
   void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws
-          IllegalArgumentException;
+      IllegalArgumentException;
 
   /**
    * This method is used to get the composition of a flexible portfolio.
    *
-   * @param pName is the portfolio name of the flexible portfolio whose composition user wishes
-   *              to see.
+   * @param pName is the portfolio name of the flexible portfolio whose composition user wishes to
+   *              see.
    * @param date  defines the date at the point of which the user can view the net composition of
    *              his portfolio till that date.
    * @return the String Builder with the portfolio composition till that date.
@@ -194,5 +194,5 @@ public interface User {
    * @throws IllegalArgumentException if there is any error in parsing date.
    */
   StringBuilder displayChart(String sDate, String eDate, String pName) throws
-          IllegalArgumentException;
+      IllegalArgumentException;
 }

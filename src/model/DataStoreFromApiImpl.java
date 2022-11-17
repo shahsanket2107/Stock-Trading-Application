@@ -12,11 +12,12 @@ import java.util.Set;
 
 /**
  * This class implements the DataStoreFromApi interface. This class is made for the purpose to
- * reduce the number of API calls to the minimum number possible. So each time a new stock ticker
- * is encountered the data is fetched for that ticker from the API and stored in a Map which maps
+ * reduce the number of API calls to the minimum number possible. So each time a new stock ticker is
+ * encountered the data is fetched for that ticker from the API and stored in a Map which maps
  * ticker to the JSON output of the API.
  */
 public class DataStoreFromApiImpl implements DataStoreFromApi {
+
   private Map<String, JsonNode> api_data;
 
   /**
@@ -27,7 +28,7 @@ public class DataStoreFromApiImpl implements DataStoreFromApi {
   }
 
   @Override
-  public Map<String, JsonNode> getApi_data() {
+  public Map<String, JsonNode> getApiData() {
     return this.api_data;
   }
 
@@ -37,10 +38,10 @@ public class DataStoreFromApiImpl implements DataStoreFromApi {
     URL url = null;
     try {
       url = new URL("https://www.alphavantage"
-              + ".co/query?function=TIME_SERIES_DAILY"
-              + "&outputsize=full"
-              + "&symbol"
-              + "=" + ticker + "&apikey=" + apiKey + "&datatype=json");
+          + ".co/query?function=TIME_SERIES_DAILY"
+          + "&outputsize=full"
+          + "&symbol"
+          + "=" + ticker + "&apikey=" + apiKey + "&datatype=json");
     } catch (MalformedURLException e) {
       throw new IllegalArgumentException("Malformed URL Exception!!");
     }

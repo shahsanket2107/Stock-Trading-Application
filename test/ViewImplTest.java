@@ -172,32 +172,37 @@ public class ViewImplTest {
     out1.println("Portfolio created successfully!!");
     assertEquals(b1.toString(), b.toString());
   }
+
   @Test
-  public void testPortfolioNotExist(){
+  public void testPortfolioNotExist() {
     v.portfolioNotExist();
     out1.println("The entered portfolio does not exist. Please enter a valid portfolio name");
     assertEquals(b1.toString(), b.toString());
   }
+
   @Test
-  public void sellStock(){
+  public void sellStock() {
     v.sellStock();
     out1.println("Please enter the ticker of stock you want to sell");
     assertEquals(b1.toString(), b.toString());
   }
+
   @Test
-  public void dataNotFound(){
+  public void dataNotFound() {
     v.dataNotFound();
     out1.println("Stock market is closed at this date, so please enter a different date!!");
     assertEquals(b1.toString(), b.toString());
   }
+
   @Test
-  public void getStartDate(){
+  public void getStartDate() {
     v.getStartDate();
     out1.println("Enter the start date (in format yyyy-MM-dd): ");
     assertEquals(b1.toString(), b.toString());
   }
+
   @Test
-  public void getEndDate(){
+  public void getEndDate() {
     v.getEndDate();
     out1.println("Enter the end date (in format yyyy-MM-dd): ");
     assertEquals(b1.toString(), b.toString());

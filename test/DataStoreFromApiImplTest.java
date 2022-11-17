@@ -1,12 +1,10 @@
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import model.DataStoreFromApi;
 import model.DataStoreFromApiImpl;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * This class represents the test class for testing the model DataStoreApiImpl. It tests that the
@@ -18,14 +16,14 @@ public class DataStoreFromApiImplTest {
   public void testFetchFromApi() {
     DataStoreFromApi data = new DataStoreFromApiImpl();
     data.fetchFromApi("aapl");
-    assertEquals(true, data.getApi_data().containsKey("aapl"));
+    assertEquals(true, data.getApiData().containsKey("aapl"));
   }
 
   @Test
   public void testInvalidTickerFetchFromApi() {
     DataStoreFromApi data = new DataStoreFromApiImpl();
     data.fetchFromApi("test");
-    assertEquals(null, data.getApi_data().get("test"));
+    assertEquals(null, data.getApiData().get("test"));
   }
 
   @Test

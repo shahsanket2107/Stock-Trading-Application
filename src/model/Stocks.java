@@ -5,10 +5,8 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
 /**
  * This interface is the model of stock. Here the value of stocks of an inflexible portfolio on a
  * particular date is found. The class has an object of API class which hits the api and fetches
- * value.
- * The stock model previously had ticker and quantity but now date is added to incorporate
+ * value. The stock model previously had ticker and quantity but now date is added to incorporate
  * the flexible portfolios. Also, cost basis is added to this model.
- * <p>
  * JSON Deserialize annotation is used to deserialize the Stocks object which is actually an object
  * of Stocks Interface and not the StocksImpl class. So this annotation tells Jackson that while
  * deserializing the Stocks object read it as a StocksImpl class.
@@ -24,7 +22,7 @@ public interface Stocks {
    * @param quantity the quantity of stocks in the portfolio
    * @param date     the date at which you need to find value.
    * @return the value of that particular ticker at the inputted date multiplied by its quantity, so
-   * we get the final value of that stock in the portfolio.
+   *         we get the final value of that stock in the portfolio.
    * @throws IllegalArgumentException when the data for entered date does not exist, or if the api
    *                                  is unable to fetch data
    */
@@ -68,7 +66,7 @@ public interface Stocks {
   /**
    * This is a setter function used to set the cost basis according to the input.
    *
-   * @param cost_basis the value which needs to be set
+   * @param costBasis the value which needs to be set
    */
-  void setCostBasis(Double cost_basis);
+  void setCostBasis(Double costBasis);
 }
