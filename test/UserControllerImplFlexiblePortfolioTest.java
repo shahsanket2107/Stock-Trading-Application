@@ -11,6 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import view.ViewImpl;
 
+/**
+ * This class consists of all the tests for the UserController class for flexible portfolios.
+ */
 public class UserControllerImplFlexiblePortfolioTest extends UserControllerImplTest {
 
   private PrintStream out;
@@ -357,7 +360,7 @@ public void testSellStocksWithInvalidPortfolioName(){
     this.out.println("The entered portfolio does not exist. Please enter a valid portfolio name");
     this.outputMenu();
     assertEquals(b.toString(), bytes.toString());
-  
+
 
 }
   @Test

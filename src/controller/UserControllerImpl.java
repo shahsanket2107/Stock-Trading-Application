@@ -182,8 +182,8 @@ public class UserControllerImpl implements UserController {
 
   private void createPortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    while (user.checkPortfolioExists(portfolioName) == 1
-        || user.checkPortfolioExists(portfolioName) == 2) {
+    int check=user.checkPortfolioExists(portfolioName);
+    while (check == 1|| check== 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -198,8 +198,8 @@ public class UserControllerImpl implements UserController {
 
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
-    while (user.checkPortfolioExists(portfolioName) == 2
-        || user.checkPortfolioExists(portfolioName) == 1) {
+    int check = user.checkPortfolioExists(portfolioName);
+    while (check == 2|| check == 1) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
