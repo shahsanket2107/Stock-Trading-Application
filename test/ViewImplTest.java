@@ -1,13 +1,11 @@
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
+import org.junit.Before;
+import org.junit.Test;
 import view.View;
 import view.ViewImpl;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This class tests the ViewImpl class. So this basically has an OutputStream where we write data
@@ -33,13 +31,23 @@ public class ViewImplTest {
   @Test
   public void testGetMenu() {
     v.getMenu();
-    out1.println();
-    out1.println("Enter 1 for making portfolio");
-    out1.println("Enter 2 to examine the composition of a particular portfolio");
-    out1.println("Enter 3 to determine the total value of portfolio on a certain date");
-    out1.println("Enter 4 to view all portfolio names");
-    out1.println("Enter 5 to load your portfolio");
-    out1.println("Enter q to exit");
+    this.out1.println();
+    this.out1.println("Enter 1 for making portfolio");
+    this.out1.println("Enter 2 to examine the composition of a particular portfolio");
+    this.out1.println("Enter 3 to determine the total value of portfolio on a certain date");
+    this.out1.println("Enter 4 to view all portfolio names");
+    this.out1.println("Enter 5 to load your portfolio");
+    this.out1.println("Enter 6 to create flexible portfolio");
+    this.out1.println("Enter 7 to examine composition of flexible portfolio");
+    this.out1.println("Enter 8 to load a flexible portfolio");
+    this.out1.println("Enter 9 to buy stocks on a specific date");
+    this.out1.println("Enter 10 to sell stocks on a specific date");
+    this.out1.println(
+        "Enter 11 to determine the total value of flexible portfolio on a certain " + "date");
+    this.out1.println("Enter 12 to find cost basis of a flexible portfolio on a certain date");
+    this.out1.println(
+        "Enter 13 to view how the portfolio has performed over a period of time using chart");
+    this.out1.println("Enter q to exit");
     assertEquals(b1.toString(), b.toString());
   }
 
@@ -162,6 +170,36 @@ public class ViewImplTest {
   public void testGetPortfolioMessage() {
     v.getPortfolioMessage();
     out1.println("Portfolio created successfully!!");
+    assertEquals(b1.toString(), b.toString());
+  }
+  @Test
+  public void testPortfolioNotExist(){
+    v.portfolioNotExist();
+    out1.println("The entered portfolio does not exist. Please enter a valid portfolio name");
+    assertEquals(b1.toString(), b.toString());
+  }
+  @Test
+  public void sellStock(){
+    v.sellStock();
+    out1.println("Please enter the ticker of stock you want to sell");
+    assertEquals(b1.toString(), b.toString());
+  }
+  @Test
+  public void dataNotFound(){
+    v.dataNotFound();
+    out1.println("Stock market is closed at this date, so please enter a different date!!");
+    assertEquals(b1.toString(), b.toString());
+  }
+  @Test
+  public void getStartDate(){
+    v.getStartDate();
+    out1.println("Enter the start date (in format yyyy-MM-dd): ");
+    assertEquals(b1.toString(), b.toString());
+  }
+  @Test
+  public void getEndDate(){
+    v.getEndDate();
+    out1.println("Enter the end date (in format yyyy-MM-dd): ");
     assertEquals(b1.toString(), b.toString());
   }
 }

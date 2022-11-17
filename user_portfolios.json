@@ -237,4 +237,22 @@
     "qty" : 33,
     "costBasis" : 2049.66
   } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2020-02-20",
+    "qty" : 12,
+    "costBasis" : 785.4900000000001
+  }, {
+    "ticker" : "msft",
+    "date" : "2000-08-17",
+    "qty" : 850,
+    "costBasis" : 60829.33
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
 } ]

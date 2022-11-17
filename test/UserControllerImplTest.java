@@ -15,8 +15,8 @@ import view.ViewImpl;
 /**
  * This is a test for UserControllerImpl. This class uses ByteArrayOutput Stream to test functions
  * as all the inputs were user-specified, and it is compared with Inputstream. This class computes
- * and asserts on actual value of model by passing in Inputstream object as if user were
- * entering values by running Main function.
+ * and asserts on actual value of model by passing in Inputstream object as if user were entering
+ * values by running Main function.
  */
 public class UserControllerImplTest {
 
@@ -30,12 +30,22 @@ public class UserControllerImplTest {
   }
 
   private void outputMenu() {
-    this.out.println("");
+    this.out.println();
     this.out.println("Enter 1 for making portfolio");
     this.out.println("Enter 2 to examine the composition of a particular portfolio");
     this.out.println("Enter 3 to determine the total value of portfolio on a certain date");
     this.out.println("Enter 4 to view all portfolio names");
     this.out.println("Enter 5 to load your portfolio");
+    this.out.println("Enter 6 to create flexible portfolio");
+    this.out.println("Enter 7 to examine composition of flexible portfolio");
+    this.out.println("Enter 8 to load a flexible portfolio");
+    this.out.println("Enter 9 to buy stocks on a specific date");
+    this.out.println("Enter 10 to sell stocks on a specific date");
+    this.out.println(
+        "Enter 11 to determine the total value of flexible portfolio on a certain " + "date");
+    this.out.println("Enter 12 to find cost basis of a flexible portfolio on a certain date");
+    this.out.println(
+        "Enter 13 to view how the portfolio has performed over a period of time using chart");
     this.out.println("Enter q to exit");
   }
 
@@ -54,6 +64,8 @@ public class UserControllerImplTest {
         + "Enter quantity of stocks: ");
     this.addStockToPortfolio();
   }
+
+
 
   @Test
   public void testMenu() {
@@ -179,14 +191,13 @@ public class UserControllerImplTest {
     this.out.println();
     this.out.println();
     this.outputMenu();
-    assertEquals(b.toString().replace("\r", ""),
-        bytes.toString().replace("\r", ""));
+    assertEquals(b.toString().replace("\r", ""), bytes.toString()
+        .replace("\r", ""));
   }
 
   @Test
   public void testCompositionOfPortfolioWhoDoesNotExist() {
-    InputStream input = new ByteArrayInputStream(
-        "samved\n2\np1\nq\n".getBytes());
+    InputStream input = new ByteArrayInputStream("samved\n2\np1\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
@@ -199,8 +210,8 @@ public class UserControllerImplTest {
     this.out.println("The given portfolio name does not exist!!");
     this.out.println("Please enter a valid portfolio name!!");
     this.outputMenu();
-    assertEquals(b.toString().replace("\r", ""),
-        bytes.toString().replace("\r", ""));
+    assertEquals(b.toString().replace("\r", ""), bytes.toString()
+        .replace("\r", ""));
   }
 
   @Test
@@ -217,14 +228,13 @@ public class UserControllerImplTest {
     this.outputMenu();
     this.out.println("Enter your portfolio name: ");
     this.out.println("Enter the date (in format yyyy-MM-dd): ");
-    this.out.println("Portfolio_Name: p1\n"
-        + "Portfolio_Valuation at 2022-10-20 is : $ 14338.999999999998\n"
-        + "The stock valuation breakdown is: \n"
-        + "AAPL : $14338.999999999998");
+    this.out.println(
+        "Portfolio_Name: p1\n" + "Portfolio_Valuation at 2022-10-20 is : $ 14338.999999999998\n"
+            + "The stock valuation breakdown is: \n" + "AAPL : $14338.999999999998");
     this.out.println();
     this.outputMenu();
-    assertEquals(b.toString().replace("\r", ""),
-        bytes.toString().replace("\r", ""));
+    assertEquals(b.toString().replace("\r", ""), bytes.toString()
+        .replace("\r", ""));
   }
 
   @Test
@@ -247,8 +257,8 @@ public class UserControllerImplTest {
     this.out.println("Enter the date (in format yyyy-MM-dd): ");
     this.out.println("Data for given parameter does not exist!!");
     this.outputMenu();
-    assertEquals(b.toString().replace("\r", ""),
-        bytes.toString().replace("\r", ""));
+    assertEquals(b.toString().replace("\r", ""), bytes.toString()
+        .replace("\r", ""));
   }
 
   @Test
@@ -270,12 +280,10 @@ public class UserControllerImplTest {
     this.addStockToPortfolio();
     this.out.println("Portfolio created successfully!!");
     this.outputMenu();
-    this.out.println("The list of portfolios is:\n"
-        + "p1\n"
-        + "p2\n");
+    this.out.println("The list of portfolios is:\n" + "p1\n" + "p2\n");
     this.outputMenu();
-    assertEquals(b.toString().replace("\r", ""),
-        bytes.toString().replace("\r", ""));
+    assertEquals(b.toString().replace("\r", ""), bytes.toString()
+        .replace("\r", ""));
   }
 
   @Test
@@ -314,8 +322,7 @@ public class UserControllerImplTest {
 
   @Test
   public void testLoadPortfolioWIthInvalidPath() {
-    InputStream input = new ByteArrayInputStream(
-        "samved\n5\nhahaha.txt\nq\n".getBytes());
+    InputStream input = new ByteArrayInputStream("samved\n5\nhahaha.txt\nq\n".getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
@@ -359,8 +366,10 @@ public class UserControllerImplTest {
     this.out.println();
     this.out.println();
     this.outputMenu();
-    assertEquals(b.toString().replace("\r", ""),
-        bytes.toString().replace("\r", ""));
+    assertEquals(b.toString().replace("\r", ""), bytes.toString()
+        .replace("\r", ""));
   }
+
+
 
 }
