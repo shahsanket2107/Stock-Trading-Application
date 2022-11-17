@@ -65,7 +65,7 @@ public class UserImplTest {
     m.put("zs", 13);
     m.put("amzn", 3);
     u1.createPortfolio("testNewPortfolio", m);
-    assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
+    assertEquals(1, u1.checkPortfolioExists("testNewPortfolio"));
     assertEquals("Portfolio_Name: testNewPortfolio\n" +
         "{\n" +
         "\tStock_Ticker: tsla\n" +
@@ -89,7 +89,7 @@ public class UserImplTest {
     m.put("zs", 13);
     m.put("amzn", 3);
     u.createPortfolio("testNewPortfolio", m);
-    assertEquals(true, u.checkPortfolioExists("testNewPortfolio"));
+    assertEquals(1, u.checkPortfolioExists("testNewPortfolio"));
     assertEquals("Portfolio_Name: testNewPortfolio\n" +
         "{\n" +
         "\tStock_Ticker: tsla\n" +
@@ -116,7 +116,7 @@ public class UserImplTest {
     u1.createPortfolio("testNewPortfolio", m);
     assertEquals("Portfolio loaded successfully!",
         u1.loadPortfolio("Sanket_portfolios.xml"));
-    assertEquals(true, u1.checkPortfolioExists("testNewPortfolio"));
+    assertEquals(1, u1.checkPortfolioExists("testNewPortfolio"));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -240,9 +240,9 @@ public class UserImplTest {
 
   @Test
   public void testCheckPortfolioExists() {
-    assertEquals(true, u.checkPortfolioExists("test_portfolio_single_stock"));
-    assertEquals(true, u.checkPortfolioExists("test_portfolio_two_stock"));
-    assertEquals(true, u.checkPortfolioExists("test_portfolio_three_stock"));
-    assertEquals(false, u.checkPortfolioExists("Not_existing_portfolio"));
+    assertEquals(1, u.checkPortfolioExists("test_portfolio_single_stock"));
+    assertEquals(1, u.checkPortfolioExists("test_portfolio_two_stock"));
+    assertEquals(1, u.checkPortfolioExists("test_portfolio_three_stock"));
+    assertEquals(0, u.checkPortfolioExists("Not_existing_portfolio"));
   }
 }

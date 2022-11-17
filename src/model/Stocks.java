@@ -8,7 +8,7 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
  * value.
  * The stock model previously had ticker and quantity but now date is added to incorporate
  * the flexible portfolios. Also, cost basis is added to this model.
- *
+ * <p>
  * JSON Deserialize annotation is used to deserialize the Stocks object which is actually an object
  * of Stocks Interface and not the StocksImpl class. So this annotation tells Jackson that while
  * deserializing the Stocks object read it as a StocksImpl class.
@@ -32,36 +32,42 @@ public interface Stocks {
 
   /**
    * This is a getter function used to fetch the ticker of stock.
+   *
    * @return the ticker of stock
    */
   String getTicker();
 
   /**
    * This is a getter function used to fetch date.
+   *
    * @return the date when the stocks were bought or sold.
    */
   String getDate();
 
   /**
    * This is a getter function used to fetch quantity.
+   *
    * @return the quantity of stocks
    */
   int getQty();
 
   /**
    * This is a setter function used to set the updated quantity after stocks are bought/sold.
+   *
    * @param qty the updated quantity
    */
   void setQty(int qty);
 
   /**
    * This function is a getter function used to get the cost basis.
+   *
    * @return the cost basis
    */
   Double getCostBasis();
 
   /**
    * This is a setter function used to set the cost basis according to the input.
+   *
    * @param cost_basis the value which needs to be set
    */
   void setCostBasis(Double cost_basis);
