@@ -2,6 +2,8 @@ package controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,12 +138,19 @@ public class UserControllerImpl implements UserController {
           int qty = getQty(sc);
           view.getDate();
           String date = sc.nextLine();
-          if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
+          boolean check;
+          try {
+            check = dateFormatHelper(date);
+          } catch (IllegalArgumentException e) {
+            check = false;
+            view.displayMessage(e.getMessage());
+          }
+          if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
             Stocks s = new StocksImpl(date, ticker, qty);
             stocks.add(s);
-          } else if (!user.isValidFormat(date)) {
+          } else if (!user.isValidFormat(date) && check) {
             view.invalidDate();
-          } else {
+          } else if (check && !user.validateDateAccToApi(ticker, date)) {
             view.dataNotFound();
           }
           break;
@@ -174,7 +183,7 @@ public class UserControllerImpl implements UserController {
   private void createPortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
     while (user.checkPortfolioExists(portfolioName) == 1
-            || user.checkPortfolioExists(portfolioName) == 2) {
+        || user.checkPortfolioExists(portfolioName) == 2) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -190,7 +199,7 @@ public class UserControllerImpl implements UserController {
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
     while (user.checkPortfolioExists(portfolioName) == 2
-            || user.checkPortfolioExists(portfolioName) == 1) {
+        || user.checkPortfolioExists(portfolioName) == 1) {
       view.alreadyExists();
       portfolioName = portfolioName(scan);
     }
@@ -202,6 +211,22 @@ public class UserControllerImpl implements UserController {
     } catch (IllegalArgumentException e) {
       view.displayMessage(e.getMessage());
     }
+  }
+
+  private boolean dateFormatHelper(String date) throws IllegalArgumentException {
+    String temp_date = date.replaceAll("[\\s\\-()]", "");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime now = LocalDateTime.now();
+    String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
+    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+      throw new IllegalArgumentException(
+          "Date cannot be greater or equal to current date. Try a different date");
+    }
+    if (Integer.parseInt(temp_date) <= 20000101) {
+      throw new IllegalArgumentException(
+          "Date should be more than 1st January 2000. Try a different date");
+    }
+    return true;
   }
 
   private void getPortfolioValuation(Scanner scan) {
