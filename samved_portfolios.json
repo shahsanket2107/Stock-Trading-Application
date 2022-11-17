@@ -606,4 +606,829 @@
     "qty" : 10,
     "costBasis" : 1476.03
   } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2012-01-12",
+    "qty" : 10,
+    "costBasis" : 4217.23
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2017-04-13",
+    "qty" : 10,
+    "costBasis" : 3043.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2019-07-25",
+    "qty" : 10,
+    "costBasis" : 1405.23
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2021-10-25",
+    "qty" : 10,
+    "costBasis" : 1489.7299999999998
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 3,
+    "costBasis" : 445.14000000000004
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 11,
+    "costBasis" : 1623.3
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2012-01-12",
+    "qty" : 10,
+    "costBasis" : 4217.23
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2017-04-13",
+    "qty" : 10,
+    "costBasis" : 3043.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2019-07-25",
+    "qty" : 10,
+    "costBasis" : 1405.23
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2021-10-25",
+    "qty" : 10,
+    "costBasis" : 1489.7299999999998
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-11-01",
+    "qty" : 50,
+    "costBasis" : 11394.33
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p2",
+  "stocks" : [ {
+    "ticker" : "TSLA",
+    "date" : "2022-10-25",
+    "qty" : 100,
+    "costBasis" : 22244.83
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2012-01-12",
+    "qty" : 10,
+    "costBasis" : 4217.23
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2017-04-13",
+    "qty" : 10,
+    "costBasis" : 3043.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2019-07-25",
+    "qty" : 10,
+    "costBasis" : 1405.23
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2021-10-25",
+    "qty" : 10,
+    "costBasis" : 1489.7299999999998
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 3,
+    "costBasis" : 445.14000000000004
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 11,
+    "costBasis" : 1623.3
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2012-01-12",
+    "qty" : 10,
+    "costBasis" : 4217.23
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2017-04-13",
+    "qty" : 10,
+    "costBasis" : 3043.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2019-07-25",
+    "qty" : 10,
+    "costBasis" : 1405.23
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2021-10-25",
+    "qty" : 10,
+    "costBasis" : 1489.7299999999998
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-11-01",
+    "qty" : 50,
+    "costBasis" : 11394.33
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p2",
+  "stocks" : [ {
+    "ticker" : "TSLA",
+    "date" : "2022-10-25",
+    "qty" : 100,
+    "costBasis" : 22244.83
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2012-01-12",
+    "qty" : 10,
+    "costBasis" : 4217.23
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2017-04-13",
+    "qty" : 10,
+    "costBasis" : 3043.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2019-07-25",
+    "qty" : 10,
+    "costBasis" : 1405.23
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2021-10-25",
+    "qty" : 10,
+    "costBasis" : 1489.7299999999998
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 3,
+    "costBasis" : 445.14000000000004
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 11,
+    "costBasis" : 1623.3
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2012-01-12",
+    "qty" : 10,
+    "costBasis" : 4217.23
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2017-04-13",
+    "qty" : 10,
+    "costBasis" : 3043.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2019-07-25",
+    "qty" : 10,
+    "costBasis" : 1405.23
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2021-10-25",
+    "qty" : 10,
+    "costBasis" : 1489.7299999999998
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 100,
+    "costBasis" : 14730.330000000002
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-11-01",
+    "qty" : 50,
+    "costBasis" : 11394.33
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+}, {
+  "name" : "p2",
+  "stocks" : [ {
+    "ticker" : "TSLA",
+    "date" : "2022-10-25",
+    "qty" : 100,
+    "costBasis" : 22244.83
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-01-12",
+    "qty" : 10,
+    "costBasis" : 1758.6299999999999
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-04-13",
+    "qty" : 10,
+    "costBasis" : 10227.03
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-07-21",
+    "qty" : 10,
+    "costBasis" : 2651.7299999999996
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
 } ]

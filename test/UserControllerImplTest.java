@@ -36,11 +36,14 @@ public class UserControllerImplTest {
     this.out.println("Enter 3 to determine the total value of portfolio on a certain date");
     this.out.println("Enter 4 to view all portfolio names");
     this.out.println("Enter 5 to load your portfolio");
-    this.out.println("Enter 6 to create flexible portfolio");
+    this.out.println("Enter 6 to create flexible portfolio "
+        + "(You would be charged a commission fee of $3.33 per transaction)");
     this.out.println("Enter 7 to examine composition of flexible portfolio");
     this.out.println("Enter 8 to load a flexible portfolio");
-    this.out.println("Enter 9 to buy stocks on a specific date");
-    this.out.println("Enter 10 to sell stocks on a specific date");
+    this.out.println("Enter 9 to buy stocks on a specific date "
+        + "(You would be charged a commission fee of $3.33 per transaction)");
+    this.out.println("Enter 10 to sell stocks on a specific date "
+        + "(You would be charged a commission fee of $3.33 per transaction)");
     this.out.println(
         "Enter 11 to determine the total value of flexible portfolio on a certain " + "date");
     this.out.println("Enter 12 to find cost basis of a flexible portfolio on a certain date");
