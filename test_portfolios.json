@@ -11,4 +11,12 @@
     "qty" : 20,
     "costBasis" : 2990.33
   } ]
+}, {
+  "name" : "p3",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-28",
+    "qty" : 12,
+    "costBasis" : 1872.21
+  } ]
 } ]
