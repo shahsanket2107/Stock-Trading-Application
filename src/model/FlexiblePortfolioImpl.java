@@ -22,8 +22,9 @@ public class FlexiblePortfolioImpl implements FlexiblePortfolio {
 
   /**
    * This constructor is used to initialize the name and list of stocks.
-   * @param name the name of portfolio
-   * @param stocks the list of stocks consisting ticker, quantity and date
+   *
+   * @param name   the name of portfolio.
+   * @param stocks the list of stocks consisting ticker, quantity and date.
    */
   public FlexiblePortfolioImpl(String name, List<Stocks> stocks) {
     this.name = name;

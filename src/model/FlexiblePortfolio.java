@@ -10,9 +10,10 @@ import java.util.List;
  * not need dates and cost basis as there was no buying and selling of stocks but we needed it here,
  * so we made a new model.
  * <p>
- * JSON Deserialize annotation is used to deserialize the Stocks object which is actually an object
- * of Stocks Interface and not the StocksImpl class. So this annotation tells Jackson that while
- * deserializing the Stocks object read it as a StocksImpl class.
+ * JSON Deserialize annotation is used to deserialize the FlexiblePortfolio object which is actually
+ * an object of FlexiblePortfolio Interface and not the FlexiblePortfolioImpl class. So this
+ * annotation tells Jackson that while deserializing the FlexiblePortfolio object read it as a
+ * FlexiblePortfolioImpl class.
  */
 @JsonDeserialize(as = FlexiblePortfolioImpl.class)
 public interface FlexiblePortfolio {

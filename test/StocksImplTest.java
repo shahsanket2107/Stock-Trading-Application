@@ -9,13 +9,17 @@ import static org.junit.Assert.assertEquals;
 /**
  * In this test class we test the StocksImpl model. getValuationFromDate method is tested by
  * passing in static values of quantity, ticker and date for valid as well as invalid inputs.
+ * In part two of assignment we test getters and setters for various stock parameters like date,
+ * quantity and ticker.
  */
 public class StocksImplTest {
   private Stocks s;
+  private Stocks stocks;
 
   @Before
   public void setup() {
     s = new StocksImpl("AAPL");
+    stocks = new StocksImpl("2022-10-29", "tsla", 23);
   }
 
   /**
@@ -41,6 +45,40 @@ public class StocksImplTest {
     double price = 227.54;
     double ans = price * qty;
     assertEquals(ans, s1.getValuationFromDate(25, "2022-10-31"), 0.00);
-
   }
+
+  @Test
+  public void testGetQty() {
+    assertEquals(23, stocks.getQty());
+  }
+
+  @Test
+  public void testSetQty() {
+    stocks.setQty(45);
+    assertEquals(45, stocks.getQty());
+  }
+
+  @Test
+  public void testGetDate() {
+    assertEquals("2022-10-29", stocks.getDate());
+  }
+
+  @Test
+  public void testGetTicker() {
+    assertEquals("AAPL", s.getTicker());
+    assertEquals("tsla", stocks.getTicker());
+  }
+
+  @Test
+  public void testGetCostBasis() {
+    assertEquals(0.0, stocks.getCostBasis(), 0.0f);
+  }
+
+  @Test
+  public void testSetCostBasis() {
+    stocks.setCostBasis(23.5);
+    assertEquals(23.5, stocks.getCostBasis(), 0.0f);
+  }
+
+
 }

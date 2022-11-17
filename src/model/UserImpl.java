@@ -59,6 +59,7 @@ public class UserImpl implements User {
     this.name = name;
     this.portfolio = portfolio;
     this.flexiblePortfolio = flexiblePortfolio;
+    this.data_store = new DataStoreFromApiImpl();
   }
 
   @Override
@@ -385,9 +386,9 @@ public class UserImpl implements User {
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         Stocks stocks = new StocksImpl(date, ticker, qty);
-        costBasisHelper(stocks);
         value.getStocks().add(stocks);
         dataStoreHelper(value.getStocks());
+        costBasisHelper(stocks);
         String fileName = this.name + "_portfolios.json";
         FileOperations write = new FileOperationsImpl();
         write.editJson(fileName, pName, value.getStocks());

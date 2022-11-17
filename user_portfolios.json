@@ -1,0 +1,240 @@
+[ {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2020-02-20",
+    "qty" : 12,
+    "costBasis" : 785.4900000000001
+  }, {
+    "ticker" : "msft",
+    "date" : "2000-08-17",
+    "qty" : 850,
+    "costBasis" : 60829.33
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  }, {
+    "ticker" : "zs",
+    "date" : "2022-11-02",
+    "qty" : -10,
+    "costBasis" : 3.33
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-10-20",
+    "qty" : 12,
+    "costBasis" : 1806.0899999999997
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-10-25",
+    "qty" : 8,
+    "costBasis" : 2008.61
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-10-20",
+    "qty" : 12,
+    "costBasis" : 1806.0899999999997
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-10-25",
+    "qty" : 8,
+    "costBasis" : 2008.61
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-10-20",
+    "qty" : 12,
+    "costBasis" : 1806.0899999999997
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-10-25",
+    "qty" : 8,
+    "costBasis" : 2008.61
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-07-20",
+    "qty" : 12,
+    "costBasis" : 1958.7299999999998
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-08-17",
+    "qty" : 8,
+    "costBasis" : 2333.89
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-07-20",
+    "qty" : 12,
+    "costBasis" : 1958.7299999999998
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-08-17",
+    "qty" : 8,
+    "costBasis" : 2333.89
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-07-20",
+    "qty" : 12,
+    "costBasis" : 1958.7299999999998
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-08-17",
+    "qty" : 8,
+    "costBasis" : 2333.89
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-07-20",
+    "qty" : 12,
+    "costBasis" : 1958.7299999999998
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-08-17",
+    "qty" : 8,
+    "costBasis" : 2333.89
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2021-01-20",
+    "qty" : 12,
+    "costBasis" : 2580.45
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-08-17",
+    "qty" : 8,
+    "costBasis" : 2333.89
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2021-01-20",
+    "qty" : 12,
+    "costBasis" : 2580.45
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-08-17",
+    "qty" : 8,
+    "costBasis" : 2333.89
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2020-02-20",
+    "qty" : 12,
+    "costBasis" : 785.4900000000001
+  }, {
+    "ticker" : "msft",
+    "date" : "2000-08-17",
+    "qty" : 8,
+    "costBasis" : 575.8100000000001
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2020-02-20",
+    "qty" : 12,
+    "costBasis" : 785.4900000000001
+  }, {
+    "ticker" : "msft",
+    "date" : "2000-08-17",
+    "qty" : 850,
+    "costBasis" : 60829.33
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+}, {
+  "name" : "chart_p",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2020-02-20",
+    "qty" : 12,
+    "costBasis" : 785.4900000000001
+  }, {
+    "ticker" : "msft",
+    "date" : "2000-08-17",
+    "qty" : 850,
+    "costBasis" : 60829.33
+  }, {
+    "ticker" : "amd",
+    "date" : "2022-10-28",
+    "qty" : 33,
+    "costBasis" : 2049.66
+  } ]
+} ]
