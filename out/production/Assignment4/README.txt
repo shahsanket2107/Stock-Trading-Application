@@ -1,4 +1,7 @@
 Features incorporated :-
+
+For previous inflexible portfolios :-
+
 1.	User can create multiple portfolios with multiple stocks and quantities.
 2.	Quantities cannot be 0, negative or fractional. If a user enters any such quantity then he would be prompted to enter the quantity again.
 3.	All the portfolios that the user creates on successful creation are written to an xml file that is named {name_of_user}_portfolios.xml.
@@ -18,6 +21,9 @@ Features incorporated :-
 17.	If a user passes incorrect portfolio name for getting valuation he would be prompted that no such portfolio exists.
 18.	If a user enters date in incorrect format, invalid date or a future date (or any weekend date for which data does not exists) then he would be prompted that no data found for that date.
 19.	If everything is correct i.e. correct portfolio name as well as date then user will be displayed the correct portfolio valuation at that date along with the individual stocks valuation at that date.
+
+For this assignment flexible portfolios :-
+
 20.	User can create flexible portfolios which can be edited.
 21. 	User can buy and sell stocks on particular dates. If on that day, the market is closed, appropriate message is displayed.
 22.	All the edge cases like buying stocks of invalid ticker, buying invalid quantities, adding stock to a portfolio which does not exists, selling more stocks than what are in the portfolio, selling stocks on date before he bought the stocks are handled and appropriate message would be displayed if the user attempts to do any of these.
