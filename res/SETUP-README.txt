@@ -370,73 +370,7 @@ type in java - jar Assignment5.jar
 Now please follow the input/ output given below :-
 
 C:\Users\Sanket\Documents\PDP\Assignments\Assignment-4\Assignment4\res>java -jar Assignment5.jar
-Please Enter your name:
-sanket
-Welcome sanket !! Please select an option from the menu!!
 
-Enter 1 for making portfolio
-Enter 2 to examine the composition of a particular portfolio
-Enter 3 to determine the total value of portfolio on a certain date
-Enter 4 to view all portfolio names
-Enter 5 to load your portfolio
-Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
-Enter 7 to examine composition of flexible portfolio
-Enter 8 to load a flexible portfolio
-Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
-Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
-Enter 11 to determine the total value of flexible portfolio on a certain date
-Enter 12 to find cost basis of a flexible portfolio on a certain date
-Enter 13 to view how the portfolio has performed over a period of time using chart
-Enter q to exit
-6
-Enter your portfolio name:
-test_portfolio_1
-Enter 1 to add stocks to your portfolio
-Enter q to exit
-1
-Enter ticker of stock you want to add to the portfolio:
-aapl
-Enter quantity of stocks:
-12
-Enter the date (in format yyyy-MM-dd):
-2022-10-03
-Enter 1 to add stocks to your portfolio
-Enter q to exit
-1
-Enter ticker of stock you want to add to the portfolio:
-tsla
-Enter quantity of stocks:
-24
-Enter the date (in format yyyy-MM-dd):
-2022-10-14
-Enter 1 to add stocks to your portfolio
-Enter q to exit
-1
-Enter ticker of stock you want to add to the portfolio:
-msft
-Enter quantity of stocks:
-8
-Enter the date (in format yyyy-MM-dd):
-2022-10-28
-Enter 1 to add stocks to your portfolio
-Enter q to exit
-q
-Portfolio created successfully!!
-
-Enter 1 for making portfolio
-Enter 2 to examine the composition of a particular portfolio
-Enter 3 to determine the total value of portfolio on a certain date
-Enter 4 to view all portfolio names
-Enter 5 to load your portfolio
-Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
-Enter 7 to examine composition of flexible portfolio
-Enter 8 to load a flexible portfolio
-Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
-Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
-Enter 11 to determine the total value of flexible portfolio on a certain date
-Enter 12 to find cost basis of a flexible portfolio on a certain date
-Enter 13 to view how the portfolio has performed over a period of time using chart
-Enter q to exit
 Please Enter your name:
 > sanket
 Welcome sanket !! Please select an option from the menu!!

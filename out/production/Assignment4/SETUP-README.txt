@@ -30,11 +30,11 @@ Enter 2 to examine the composition of a particular portfolio
 Enter 3 to determine the total value of portfolio on a certain date
 Enter 4 to view all portfolio names
 Enter 5 to load your portfolio
-Enter 6 to create flexible portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
 Enter 7 to examine composition of flexible portfolio
 Enter 8 to load a flexible portfolio
-Enter 9 to buy stocks on a specific date
-Enter 10 to sell stocks on a specific date
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
 Enter 11 to determine the total value of flexible portfolio on a certain date
 Enter 12 to find cost basis of a flexible portfolio on a certain date
 Enter 13 to view how the portfolio has performed over a period of time using chart
@@ -141,7 +141,7 @@ Instructions on how to run program using dummy data –
 
 
 I have mentioned in bullets what needs to be typed and along with it is the entire flow of output. 	
->	Type java -jar Assignment4.jar in cmd
+>	Type java -jar Assignment5.jar in cmd
 Please Enter your name:
 >	Tony Stark
 Welcome Tony Stark !! Please select an option from the menu!!
@@ -151,11 +151,11 @@ Enter 2 to examine the composition of a particular portfolio
 Enter 3 to determine the total value of portfolio on a certain date
 Enter 4 to view all portfolio names
 Enter 5 to load your portfolio
-Enter 6 to create flexible portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
 Enter 7 to examine composition of flexible portfolio
 Enter 8 to load a flexible portfolio
-Enter 9 to buy stocks on a specific date
-Enter 10 to sell stocks on a specific date
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
 Enter 11 to determine the total value of flexible portfolio on a certain date
 Enter 12 to find cost basis of a flexible portfolio on a certain date
 Enter 13 to view how the portfolio has performed over a period of time using chart
@@ -195,11 +195,11 @@ Enter 2 to examine the composition of a particular portfolio
 Enter 3 to determine the total value of portfolio on a certain date
 Enter 4 to view all portfolio names
 Enter 5 to load your portfolio
-Enter 6 to create flexible portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
 Enter 7 to examine composition of flexible portfolio
 Enter 8 to load a flexible portfolio
-Enter 9 to buy stocks on a specific date
-Enter 10 to sell stocks on a specific date
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
 Enter 11 to determine the total value of flexible portfolio on a certain date
 Enter 12 to find cost basis of a flexible portfolio on a certain date
 Enter 13 to view how the portfolio has performed over a period of time using chart
@@ -232,11 +232,11 @@ Enter 2 to examine the composition of a particular portfolio
 Enter 3 to determine the total value of portfolio on a certain date
 Enter 4 to view all portfolio names
 Enter 5 to load your portfolio
-Enter 6 to create flexible portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
 Enter 7 to examine composition of flexible portfolio
 Enter 8 to load a flexible portfolio
-Enter 9 to buy stocks on a specific date
-Enter 10 to sell stocks on a specific date
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
 Enter 11 to determine the total value of flexible portfolio on a certain date
 Enter 12 to find cost basis of a flexible portfolio on a certain date
 Enter 13 to view how the portfolio has performed over a period of time using chart
@@ -318,8 +318,6 @@ The inflexible portfolios are already created and they exists and now we create 
 User cannot create portfolio, buy stocks or sell stocks on weekend dates as Stock Market is closed on those days.
 User can choose any of NASDAQ-100 stocks to buy/sell. Apart from those he can't buy/sell any new stocks.
 
---- Create Flexible Portfolio ---
-
 -> Enter 6 to create a new Flexible Portfolio. You would prompted for portfolio name
 repeatedly till you enter a name (empty name is not valid ). Then you can enter 1 to 
 add stocks to the portfolio or q to quit. You can add as many stocks you like by entering
@@ -371,4 +369,221 @@ type in java - jar Assignment5.jar
 
 Now please follow the input/ output given below :-
 
+C:\Users\Sanket\Documents\PDP\Assignments\Assignment-4\Assignment4\res>java -jar Assignment5.jar
+
+Please Enter your name:
+> sanket
+Welcome sanket !! Please select an option from the menu!!
+
+Enter 1 for making portfolio
+Enter 2 to examine the composition of a particular portfolio
+Enter 3 to determine the total value of portfolio on a certain date
+Enter 4 to view all portfolio names
+Enter 5 to load your portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
+Enter 7 to examine composition of flexible portfolio
+Enter 8 to load a flexible portfolio
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 11 to determine the total value of flexible portfolio on a certain date
+Enter 12 to find cost basis of a flexible portfolio on a certain date
+Enter 13 to view how the portfolio has performed over a period of time using chart
+Enter q to exit
+> 6
+Enter your portfolio name:
+test_portfolio_1
+Enter 1 to add stocks to your portfolio
+Enter q to exit
+> 1
+Enter ticker of stock you want to add to the portfolio:
+> aapl
+Enter quantity of stocks:
+> 12
+Enter the date (in format yyyy-MM-dd):
+> 2022-10-03
+Enter 1 to add stocks to your portfolio
+Enter q to exit
+> 1
+Enter ticker of stock you want to add to the portfolio:
+> tsla
+Enter quantity of stocks:
+> 24
+Enter the date (in format yyyy-MM-dd):
+> 2022-10-14
+Enter 1 to add stocks to your portfolio
+Enter q to exit
+> 1
+Enter ticker of stock you want to add to the portfolio:
+> msft
+Enter quantity of stocks:
+> 8
+Enter the date (in format yyyy-MM-dd):
+> 2022-10-28
+Enter 1 to add stocks to your portfolio
+Enter q to exit
+> q
+Portfolio created successfully!!
+
+This created the portfolio with 3 stocks on different dates.
+
+The file content after this is as follows :-
+
+[ {
+  "name" : "test_portfolio_1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-03",
+    "qty" : 12,
+    "costBasis" : 1712.7299999999998
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-10-14",
+    "qty" : 24,
+    "costBasis" : 4923.09
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-10-28",
+    "qty" : 8,
+    "costBasis" : 1890.29
+  } ]
+} ]
+
+Now we can either buy/sell stocks in this portfolio and it would be written in this format in the file.
+
+Say for example I sell 5 shares of TSLA on 2022-10-25.
+Then the file content would be like :-
+
+[ {
+  "name" : "test_portfolio_1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-03",
+    "qty" : 12,
+    "costBasis" : 1712.7299999999998
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-10-14",
+    "qty" : 24,
+    "costBasis" : 4923.09
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-10-28",
+    "qty" : 8,
+    "costBasis" : 1890.29
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-10-25",
+    "qty" : -5,
+    "costBasis" : 3.33
+  } ]
+} ]
+
+In selling costBasis is the commission fee for each transaction.
+So wither while creating portfolio or at any later stage user can buy portfolio
+He can sell it anytime too and every transaction is stored.
+
+Query the value of portfolio on 2 different dates (2022-10-24 & 2022-11-02) :-
+
+Enter 1 for making portfolio
+Enter 2 to examine the composition of a particular portfolio
+Enter 3 to determine the total value of portfolio on a certain date
+Enter 4 to view all portfolio names
+Enter 5 to load your portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
+Enter 7 to examine composition of flexible portfolio
+Enter 8 to load a flexible portfolio
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 11 to determine the total value of flexible portfolio on a certain date
+Enter 12 to find cost basis of a flexible portfolio on a certain date
+Enter 13 to view how the portfolio has performed over a period of time using chart
+Enter q to exit
+> 11
+Enter your portfolio name:
+> test_portfolio_1
+Enter the date (in format yyyy-MM-dd):
+> 2022-10-24
+Portfolio_Name: test_portfolio_1
+The stock valuation breakdown is:
+AAPL : $ 1793.3999999999999
+TSLA : $ 5070.0
+Portfolio_Valuation at 2022-10-24 is : $ 6863.4
+
+----------------------------------------------------------------------------------------------
+
+Enter 1 for making portfolio
+Enter 2 to examine the composition of a particular portfolio
+Enter 3 to determine the total value of portfolio on a certain date
+Enter 4 to view all portfolio names
+Enter 5 to load your portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
+Enter 7 to examine composition of flexible portfolio
+Enter 8 to load a flexible portfolio
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 11 to determine the total value of flexible portfolio on a certain date
+Enter 12 to find cost basis of a flexible portfolio on a certain date
+Enter 13 to view how the portfolio has performed over a period of time using chart
+Enter q to exit
+> 11
+Enter your portfolio name:
+> test_portfolio_1
+Enter the date (in format yyyy-MM-dd):
+> 2022-11-02
+Portfolio_Name: test_portfolio_1
+The stock valuation breakdown is:
+MSFT : $ 1760.8
+AAPL : $ 1740.3600000000001
+TSLA : $ 4084.62
+Portfolio_Valuation at 2022-11-02 is : $ 7585.78
+
+--------------------------------------------------------------------------------
+
+Now we compute the cost basis on those two exact dates :-
+
+Enter 1 for making portfolio
+Enter 2 to examine the composition of a particular portfolio
+Enter 3 to determine the total value of portfolio on a certain date
+Enter 4 to view all portfolio names
+Enter 5 to load your portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
+Enter 7 to examine composition of flexible portfolio
+Enter 8 to load a flexible portfolio
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 11 to determine the total value of flexible portfolio on a certain date
+Enter 12 to find cost basis of a flexible portfolio on a certain date
+Enter 13 to view how the portfolio has performed over a period of time using chart
+Enter q to exit
+> 12
+Enter your portfolio name:
+> test_portfolio_1
+Enter the date (in format yyyy-MM-dd):
+> 2022-10-24
+Portfolio_Name: test_portfolio_1
+Cost basis of your portfolio at 2022-10-24 is : $ 6635.82
+
+--------------------------------------------------------------------------------------------
+
+Enter 1 for making portfolio
+Enter 2 to examine the composition of a particular portfolio
+Enter 3 to determine the total value of portfolio on a certain date
+Enter 4 to view all portfolio names
+Enter 5 to load your portfolio
+Enter 6 to create flexible portfolio (You would be charged a commission fee of $3.33 per transaction)
+Enter 7 to examine composition of flexible portfolio
+Enter 8 to load a flexible portfolio
+Enter 9 to buy stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 10 to sell stocks on a specific date (You would be charged a commission fee of $3.33 per transaction)
+Enter 11 to determine the total value of flexible portfolio on a certain date
+Enter 12 to find cost basis of a flexible portfolio on a certain date
+Enter 13 to view how the portfolio has performed over a period of time using chart
+Enter q to exit
+> 12
+Enter your portfolio name:
+> test_portfolio_1
+Enter the date (in format yyyy-MM-dd):
+> 2022-11-02
+Portfolio_Name: test_portfolio_1
+Cost basis of your portfolio at 2022-11-02 is : $ 8529.44
 
