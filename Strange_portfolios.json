@@ -1,0 +1,9 @@
+[ {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
+} ]
