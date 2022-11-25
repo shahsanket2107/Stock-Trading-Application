@@ -1,10 +1,13 @@
 package controller;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Stocks;
 import model.StocksImpl;
 import model.User;
@@ -40,12 +43,8 @@ public class Controller implements Features {
     return true;
   }
 
-  private boolean checker(String pName, String ticker, int qty) {
-    int chk = user.checkPortfolioExists(pName);
-    if (chk == 2) {
-      view.showOutput("Portfolio with given name already exists");
-      return false;
-    } else if (!user.ifStocksExist(ticker)) {
+  private boolean checker(String ticker, int qty) {
+    if (!user.ifStocksExist(ticker)) {
       view.showOutput("Ticker is invalid!");
       return false;
     } else if (qty < 0) {
@@ -70,7 +69,11 @@ public class Controller implements Features {
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null, e.toString());
     }
-    if(checker(pName, ticker, qty)) {
+    int chk = user.checkPortfolioExists(pName);
+    if (chk == 2) {
+      view.showOutput("Portfolio with given name already exists");
+    }
+    else if(checker(ticker, qty)) {
       ticker = ticker.toUpperCase();
       if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
         Stocks s = new StocksImpl(date, ticker, qty);
@@ -106,7 +109,11 @@ public class Controller implements Features {
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null, e.toString());
     }
-    if(checker(pName, ticker, qty))  {
+    int chk = user.checkPortfolioExists(pName);
+    if (chk != 2) {
+      view.showOutput("Portfolio with given name does not exist");
+    }
+    else if(checker(ticker, qty))  {
       ticker = ticker.toUpperCase();
       if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
         String message = user.buyStocks(ticker, qty, pName, date);
@@ -118,6 +125,132 @@ public class Controller implements Features {
             "Stock market is closed at this date, so please enter a different date!!");
       }
 
+    }
+  }
+
+  @Override
+  public void loadPortfolio() {
+    final JFileChooser fchooser = new JFileChooser(".");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "JSON files only", "json");
+    fchooser.setFileFilter(filter);
+    int retvalue = fchooser.showOpenDialog(null);
+    if (retvalue == JFileChooser.APPROVE_OPTION) {
+      File f = fchooser.getSelectedFile();
+      try {
+        String output = user.loadFlexiblePortfolio(String.valueOf(f));
+        view.showOutput(output);
+      } catch (IllegalArgumentException e) {
+        view.showOutput(e.getMessage());
+      }
+    }
+  }
+
+  @Override
+  public void sellStocks() {
+    user.setName("Strange");
+    ArrayList<String> output = view.createPortfolioInput();
+    String pName = output.get(0);
+    String ticker = output.get(1);
+    int qty = Integer.parseInt(output.get(2));
+    String date = output.get(3);
+    boolean check = true;
+    try {
+      check = dateFormatHelper(date);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null, e.toString());
+    }
+    int chk = user.checkPortfolioExists(pName);
+    if (chk != 2) {
+      view.showOutput("Portfolio with given name does not exist");
+    }
+    else if(checker(ticker, qty))  {
+      ticker = ticker.toUpperCase();
+      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
+        String message = user.sellStocks(ticker, qty, pName, date);
+        view.showOutput(message);
+      } else if (!user.isValidFormat(date)) {
+        view.showOutput("Date is not in proper format!!");
+      } else if (!user.validateDateAccToApi(ticker, date)) {
+        view.showOutput(
+            "Stock market is closed at this date, so please enter a different date!!");
+      }
+
+    }
+  }
+
+  @Override
+  public void getValuation() {
+    user.setName("Strange");
+    ArrayList<String> output = view.getInput();
+    String pName = output.get(0);
+    String date = output.get(1);
+    int chk = user.checkPortfolioExists(pName);
+    if (chk != 2) {
+      view.showOutput("Portfolio with given name does not exist");
+    }
+    else{
+      if (user.isValidFormat(date)) {
+        StringBuilder result = new StringBuilder();
+        try {
+          result.append(user.getFlexiblePortfolioTotalValuation(date, pName));
+        } catch (IllegalArgumentException e) {
+          result.append(e.getMessage());
+        }
+        view.showOutput(String.valueOf(result));
+      } else {
+        view.showOutput("Date is not in proper format!!");
+      }
+    }
+  }
+
+  @Override
+  public void getCostBasis() {
+    user.setName("Strange");
+    ArrayList<String> output = view.getInput();
+    String pName = output.get(0);
+    String date = output.get(1);
+    int chk = user.checkPortfolioExists(pName);
+    if (chk != 2) {
+      view.showOutput("Portfolio with given name does not exist");
+    }
+    else{
+      if (user.isValidFormat(date)) {
+        StringBuilder result = new StringBuilder();
+        try {
+          result = user.getCostBasis(date, pName);
+        } catch (IllegalArgumentException e) {
+          result.append(e.getMessage());
+        }
+        view.showOutput(String.valueOf(result));
+      } else {
+        view.showOutput("Date is not in proper format!!");
+      }
+    }
+  }
+
+  @Override
+  public void getComposition() {
+    user.setName("Strange");
+    ArrayList<String> output = view.getInput();
+    String pName = output.get(0);
+    String date = output.get(1);
+    int chk = user.checkPortfolioExists(pName);
+    if (chk != 2) {
+      view.showOutput("Portfolio with given name does not exist");
+    }
+    else{
+      if (user.isValidFormat(date)) {
+        StringBuilder result = new StringBuilder();
+        try {
+          result =  user.getFlexiblePortfolioComposition(pName, date);
+        } catch (IllegalArgumentException e) {
+          result.append(e.getMessage());
+        }
+        view.showOutput(String.valueOf(result));
+      } else {
+        view.showOutput("Date is not in proper format!!");
+      }
     }
   }
 }

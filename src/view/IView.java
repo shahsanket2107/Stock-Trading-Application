@@ -7,4 +7,5 @@ public interface IView {
   void addFeatures(Features features);
   void showOutput(String message);
   ArrayList<String> createPortfolioInput();
+  ArrayList<String> getInput();
 }

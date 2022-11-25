@@ -10,5 +10,20 @@
     "date" : "2022-10-21",
     "qty" : 33,
     "costBasis" : 3340.62
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-11-23",
+    "qty" : 37,
+    "costBasis" : 6781.73
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-11-23",
+    "qty" : -9,
+    "costBasis" : 3.33
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-11-07",
+    "qty" : 10,
+    "costBasis" : 2282.0299999999997
   } ]
 } ]
