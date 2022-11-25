@@ -154,4 +154,28 @@
     "qty" : 8,
     "costBasis" : 2008.61
   } ]
+}, {
+  "name" : "p3",
+  "stocks" : [ {
+    "ticker" : "TSLA",
+    "date" : "2022-10-25",
+    "qty" : 30,
+    "costBasis" : 6675.78
+  } ]
+}, {
+  "name" : "p2",
+  "stocks" : [ {
+    "ticker" : "ZS",
+    "date" : "2022-10-21",
+    "qty" : 12,
+    "costBasis" : 1809.0899999999997
+  } ]
+}, {
+  "name" : "p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-21",
+    "qty" : 10,
+    "costBasis" : 1476.03
+  } ]
 } ]

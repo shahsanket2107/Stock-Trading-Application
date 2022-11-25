@@ -1,6 +1,7 @@
-import controller.UserControllerImpl;
+import controller.Controller;
 import model.UserImpl;
-import view.ViewImpl;
+import view.IView;
+import view.JFrameView;
 
 /**
  * This is the main class which will run the program. Here we are calling the go method of the
@@ -9,6 +10,9 @@ import view.ViewImpl;
 public class Main {
 
   public static void main(String[] args) {
-    new UserControllerImpl(System.in, System.out, new UserImpl(), new ViewImpl()).runGo();
+    //new UserControllerImpl(System.in, System.out, new UserImpl(), new ViewImpl()).runGo();
+    Controller controller = new Controller(new UserImpl());
+    IView view = new JFrameView();
+    controller.setView(view);
   }
 }
