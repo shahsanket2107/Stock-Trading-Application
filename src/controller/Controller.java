@@ -40,6 +40,21 @@ public class Controller implements Features {
     return true;
   }
 
+  private boolean checker(String pName, String ticker, int qty) {
+    int chk = user.checkPortfolioExists(pName);
+    if (chk == 2) {
+      view.showOutput("Portfolio with given name already exists");
+      return false;
+    } else if (!user.ifStocksExist(ticker)) {
+      view.showOutput("Ticker is invalid!");
+      return false;
+    } else if (qty < 0) {
+      view.showOutput("Quantity must be positive!");
+      return false;
+    }
+    return true;
+  }
+
   @Override
   public void createPortfolio() {
     user.setName("Strange");
@@ -55,14 +70,7 @@ public class Controller implements Features {
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null, e.toString());
     }
-    int chk = user.checkPortfolioExists(pName);
-    if (chk == 2) {
-      view.showOutput("Portfolio with given name already exists");
-    } else if (!user.ifStocksExist(ticker)) {
-      view.showOutput("Ticker is invalid!");
-    } else if (qty < 0) {
-      view.showOutput("Quantity must be positive!");
-    } else {
+    if(checker(pName, ticker, qty)) {
       ticker = ticker.toUpperCase();
       if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
         Stocks s = new StocksImpl(date, ticker, qty);
@@ -82,5 +90,34 @@ public class Controller implements Features {
     }
 
 
+  }
+
+  @Override
+  public void buyStocks() {
+    user.setName("Strange");
+    ArrayList<String> output = view.createPortfolioInput();
+    String pName = output.get(0);
+    String ticker = output.get(1);
+    int qty = Integer.parseInt(output.get(2));
+    String date = output.get(3);
+    boolean check = true;
+    try {
+      check = dateFormatHelper(date);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null, e.toString());
+    }
+    if(checker(pName, ticker, qty))  {
+      ticker = ticker.toUpperCase();
+      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
+        String message = user.buyStocks(ticker, qty, pName, date);
+        view.showOutput(message);
+      } else if (!user.isValidFormat(date)) {
+        view.showOutput("Date is not in proper format!!");
+      } else if (!user.validateDateAccToApi(ticker, date)) {
+        view.showOutput(
+            "Stock market is closed at this date, so please enter a different date!!");
+      }
+
+    }
   }
 }

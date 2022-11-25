@@ -87,6 +87,7 @@ public class JFrameView  extends JFrame implements IView{
   @Override
   public void addFeatures(Features features) {
     cpBtn.addActionListener(evt -> features.createPortfolio());
+    bsBtn.addActionListener(evt -> features.buyStocks());
   }
 
   @Override

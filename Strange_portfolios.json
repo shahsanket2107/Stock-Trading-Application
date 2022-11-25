@@ -5,13 +5,10 @@
     "date" : "2022-10-21",
     "qty" : 10,
     "costBasis" : 1476.03
-  } ]
-}, {
-  "name" : "p2",
-  "stocks" : [ {
+  }, {
     "ticker" : "GOOGL",
-    "date" : "2022-10-25",
-    "qty" : 25,
-    "costBasis" : 2615.33
+    "date" : "2022-10-21",
+    "qty" : 33,
+    "costBasis" : 3340.62
   } ]
 } ]
