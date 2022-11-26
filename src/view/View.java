@@ -146,4 +146,13 @@ public interface View {
 
   void getEndDate();
 
+  /**
+   * This function is used to get the commission fee.
+   */
+  void getCommissionFee();
+
+  /**
+   * This function is used to view the invalid commission fee message.
+   */
+  void invalidCommissionFee();
 }

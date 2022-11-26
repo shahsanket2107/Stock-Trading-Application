@@ -19,7 +19,7 @@ public interface User {
    * @throws IllegalArgumentException if there is some error in writing to a xml file.
    */
   void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * This function gives the composition of portfolio in terms of portfolio name, stock ticker and
@@ -96,7 +96,7 @@ public interface User {
    *
    * @param pName the name of portfolio which you need to check.
    * @return 1 if the portfolio is present as an inflexible portfolio and return 2 is the portfolio
-   *         is present as a flexible portfolio.
+   * is present as a flexible portfolio.
    */
 
   int checkPortfolioExists(String pName);
@@ -108,11 +108,12 @@ public interface User {
    * @param portfolioName the name of the portfolio.
    * @param stocks        the list of stocks with all the data needed to create a flexible
    *                      portfolio.
+   * @param commissionFee is the commission fee for each transaction.
    * @throws IllegalArgumentException when the portfolio name already exists or if there is some
    *                                  error encountered while writing to the file.
    */
-  void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks) throws
-      IllegalArgumentException;
+  void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks, double commissionFee)
+          throws IllegalArgumentException;
 
   /**
    * This method is used to get the composition of a flexible portfolio.
@@ -138,24 +139,26 @@ public interface User {
   /**
    * This method is used to buy stocks in a particular flexible portfolio.
    *
-   * @param ticker is the stock ticker which is to be bought.
-   * @param qty    is the quantity of stocks to be bought.
-   * @param pName  is the name of the portfolio in which the user wants to buy the stocks.
-   * @param date   is the date at which he wishes to buy the stocks.
+   * @param ticker        is the stock ticker which is to be bought.
+   * @param qty           is the quantity of stocks to be bought.
+   * @param pName         is the name of the portfolio in which the user wants to buy the stocks.
+   * @param date          is the date at which he wishes to buy the stocks.
+   * @param commissionFee is the commission fee for each transaction.
    * @return the appropriate message of successful/unsuccessful buying of stocks.
    */
-  String buyStocks(String ticker, int qty, String pName, String date);
+  String buyStocks(String ticker, int qty, String pName, String date, double commissionFee);
 
   /**
    * This method is used to sell stocks in a particular flexible portfolio.
    *
-   * @param ticker is the stock ticker which is to be sold.
-   * @param qty    is the quantity of stocks to be sold.
-   * @param pName  is the name of the portfolio in which the user wants to sell the stocks.
-   * @param date   is the date at which he wishes to sell the stocks.
+   * @param ticker        is the stock ticker which is to be sold.
+   * @param qty           is the quantity of stocks to be sold.
+   * @param pName         is the name of the portfolio in which the user wants to sell the stocks.
+   * @param date          is the date at which he wishes to sell the stocks.
+   * @param commissionFee is the commission fee for each transaction.
    * @return the appropriate message of successful/unsuccessful selling of stocks.
    */
-  String sellStocks(String ticker, int qty, String pName, String date);
+  String sellStocks(String ticker, int qty, String pName, String date, double commissionFee);
 
   /**
    * This method is used to get total valuation of Flexible Portfolio on a particular date.
@@ -194,5 +197,19 @@ public interface User {
    * @throws IllegalArgumentException if there is any error in parsing date.
    */
   StringBuilder displayChart(String sDate, String eDate, String pName) throws
-      IllegalArgumentException;
+          IllegalArgumentException;
+
+  /**
+   * This method is a getter for flexible portfolios list.
+   *
+   * @return the list of flexible portfolios created by the user.
+   */
+  List<FlexiblePortfolio> getFlexiblePortfolioList();
+
+  /**
+   * This method is used to get the data stored from API for a user.
+   *
+   * @return the data store object that stored that data.
+   */
+  DataStoreFromApi getDataStore();
 }

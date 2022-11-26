@@ -1,5 +1,7 @@
 import controller.UserControllerImpl;
 import model.UserImpl;
+import model.UserModelExtension;
+import model.UserModelExtensionImpl;
 import view.ViewImpl;
 
 /**
@@ -9,6 +11,7 @@ import view.ViewImpl;
 public class Main {
 
   public static void main(String[] args) {
-    new UserControllerImpl(System.in, System.out, new UserImpl(), new ViewImpl()).runGo();
+    UserModelExtension user = new UserModelExtensionImpl();
+    new UserControllerImpl(System.in, System.out, user, new ViewImpl()).runGo();
   }
 }

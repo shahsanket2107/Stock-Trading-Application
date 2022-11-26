@@ -226,7 +226,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks)
+  public void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks, double commissionFee)
           throws IllegalArgumentException {
     if (checkPortfolioExists(portfolioName) == 2 || checkPortfolioExists(portfolioName) == 1) {
       throw new IllegalArgumentException("Portfolio with the given name already exists!!");
@@ -234,7 +234,7 @@ public class UserImpl implements User {
 
     dataStoreHelper(stocks);
     for (Stocks s : stocks) {
-      costBasisHelper(s);
+      costBasisHelper(s, commissionFee);
     }
     String fileName = this.name + "_portfolios.json";
     FileOperations write = new FileOperationsImpl();
@@ -296,10 +296,10 @@ public class UserImpl implements User {
   }
 
 
-  private Map<String, Integer> getPortfolioCompositionOnADateHelper(String pName, String date)
+  protected Map<String, Double> getPortfolioCompositionOnADateHelper(String pName, String date)
           throws IllegalArgumentException {
-    Map<String, Integer> m = new HashMap<>();
-    int tempQty;
+    Map<String, Double> m = new HashMap<>();
+    double tempQty;
     int flg = 0;
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
@@ -338,8 +338,8 @@ public class UserImpl implements User {
     if (!check.isEmpty()) {
       return check;
     }
-    Map<String, Integer> m;
-    Map<String, Integer> result = new HashMap<>();
+    Map<String, Double> m;
+    Map<String, Double> result = new HashMap<>();
     try {
       m = getPortfolioCompositionOnADateHelper(pName, date);
     } catch (IllegalArgumentException e) {
@@ -348,7 +348,7 @@ public class UserImpl implements User {
       return temp;
     }
     for (String s : m.keySet()) {
-      int value = m.get(s);
+      double value = m.get(s);
       if (value > 0) {
         result.put(s, value);
       }
@@ -379,7 +379,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String buyStocks(String ticker, int qty, String pName, String date) {
+  public String buyStocks(String ticker, int qty, String pName, String date, double commissionFee) {
 
     StringBuilder check = dateFormatHelper(date);
     if (!check.isEmpty()) {
@@ -390,7 +390,7 @@ public class UserImpl implements User {
         Stocks stocks = new StocksImpl(date, ticker, qty);
         value.getStocks().add(stocks);
         dataStoreHelper(value.getStocks());
-        costBasisHelper(stocks);
+        costBasisHelper(stocks, commissionFee);
         String fileName = this.name + "_portfolios.json";
         FileOperations write = new FileOperationsImpl();
         write.editJson(fileName, pName, value.getStocks());
@@ -402,7 +402,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String sellStocks(String ticker, int qty, String pName, String date) {
+  public String sellStocks(String ticker, int qty, String pName, String date, double commissionFee) {
 
     int tempQty = 0;
     int flg = 0;
@@ -429,7 +429,7 @@ public class UserImpl implements User {
         }
         if (tempQty >= qty) {
           Stocks s = new StocksImpl(date, ticker, qty * -1);
-          s.setCostBasis(3.33);
+          s.setCostBasis(commissionFee);
           value.getStocks().add(s);
           String fileName = this.name + "_portfolios.json";
           FileOperations write = new FileOperationsImpl();
@@ -463,7 +463,7 @@ public class UserImpl implements User {
           return temp2;
         }
         Map<String, JsonNode> m = data_store.getApiData();
-        Map<String, Integer> m1;
+        Map<String, Double> m1;
         try {
           m1 = getPortfolioCompositionOnADateHelper(pName, date);
         } catch (IllegalArgumentException e) {
@@ -477,13 +477,13 @@ public class UserImpl implements User {
   }
 
   private StringBuilder getFlexibleTotalValuationHelper(StringBuilder temp, Map<String, JsonNode> m,
-                                                        Map<String, Integer> m1, String date) {
+                                                        Map<String, Double> m1, String date) {
     Double ans = 0.0;
     int flg = 0;
     temp.append("The stock valuation breakdown is: \n");
     for (String s : m1.keySet()) {
       String ticker = s;
-      int qty = m1.get(ticker);
+      double qty = m1.get(ticker);
       if (qty <= 0) {
         continue;
       }
@@ -523,7 +523,7 @@ public class UserImpl implements User {
     return new StringBuilder();
   }
 
-  private boolean dateCompare(String date1, String date2) {
+  protected boolean dateCompare(String date1, String date2) {
     String temp_date1 = date1.replaceAll("[\\s\\-()]", "");
     String temp_date2 = date2.replaceAll("[\\s\\-()]", "");
 
@@ -534,19 +534,24 @@ public class UserImpl implements User {
     return date.replaceAll("[\\s\\-()]", "");
   }
 
-  private Double getStockValuationAtADate(String ticker, String date) {
+  protected Double getStockValuationAtADate(String ticker, String date) {
     Map<String, JsonNode> m = data_store.getApiData();
     JsonNode tempNode = m.get(ticker);
-    String tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+    String tempResult;
+    try {
+      tempResult = String.valueOf(tempNode.get(date).get("4. close"));
+    } catch (NullPointerException e) {
+      return -1.0;
+    }
     tempResult = tempResult.replaceAll("\"", "");
     double tempCompute = Double.parseDouble(tempResult);
     return tempCompute;
   }
 
-  private void costBasisHelper(Stocks stock) {
+  private void costBasisHelper(Stocks stock, double commissionFee) {
     Double temp = getStockValuationAtADate(stock.getTicker(), stock.getDate());
-    int qty = stock.getQty();
-    stock.setCostBasis(temp * qty + 3.33);
+    double qty = stock.getQty();
+    stock.setCostBasis(temp * qty + commissionFee);
   }
 
   @Override
@@ -591,6 +596,16 @@ public class UserImpl implements User {
 
     StringBuilder result = printChart(m, year, month, c, startDate, endDate, pName);
     return result;
+  }
+
+  @Override
+  public List<FlexiblePortfolio> getFlexiblePortfolioList() {
+    return this.flexiblePortfolio;
+  }
+
+  @Override
+  public DataStoreFromApi getDataStore() {
+    return this.data_store;
   }
 
   private ArrayList<String> getDatesForChart(int year, int month, int week, long timeLine,

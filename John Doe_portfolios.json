@@ -3,12 +3,12 @@
   "stocks" : [ {
     "ticker" : "tsla",
     "date" : "2022-10-28",
-    "qty" : 23,
+    "qty" : 23.0,
     "costBasis" : 5259.29
   }, {
     "ticker" : "aapl",
     "date" : "2022-11-02",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1453.6299999999999
   } ]
 }, {
@@ -16,12 +16,12 @@
   "stocks" : [ {
     "ticker" : "zs",
     "date" : "2022-10-24",
-    "qty" : 12,
+    "qty" : 12.0,
     "costBasis" : 1787.37
   }, {
     "ticker" : "msft",
     "date" : "2022-10-25",
-    "qty" : 8,
+    "qty" : 8.0,
     "costBasis" : 2008.61
   } ]
 }, {
@@ -29,12 +29,12 @@
   "stocks" : [ {
     "ticker" : "tsla",
     "date" : "2022-10-28",
-    "qty" : 23,
+    "qty" : 23.0,
     "costBasis" : 5259.29
   }, {
     "ticker" : "aapl",
     "date" : "2022-11-02",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1453.6299999999999
   } ]
 }, {
@@ -42,12 +42,12 @@
   "stocks" : [ {
     "ticker" : "zs",
     "date" : "2022-10-24",
-    "qty" : 12,
+    "qty" : 12.0,
     "costBasis" : 1787.37
   }, {
     "ticker" : "msft",
     "date" : "2022-10-25",
-    "qty" : 8,
+    "qty" : 8.0,
     "costBasis" : 2008.61
   } ]
 }, {
@@ -55,12 +55,12 @@
   "stocks" : [ {
     "ticker" : "tsla",
     "date" : "2022-10-28",
-    "qty" : 23,
+    "qty" : 23.0,
     "costBasis" : 5259.29
   }, {
     "ticker" : "aapl",
     "date" : "2022-11-02",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1453.6299999999999
   } ]
 }, {
@@ -68,12 +68,12 @@
   "stocks" : [ {
     "ticker" : "zs",
     "date" : "2022-10-24",
-    "qty" : 12,
+    "qty" : 12.0,
     "costBasis" : 1787.37
   }, {
     "ticker" : "msft",
     "date" : "2022-10-25",
-    "qty" : 8,
+    "qty" : 8.0,
     "costBasis" : 2008.61
   } ]
 }, {
@@ -81,12 +81,12 @@
   "stocks" : [ {
     "ticker" : "tsla",
     "date" : "2022-10-28",
-    "qty" : 23,
+    "qty" : 23.0,
     "costBasis" : 5259.29
   }, {
     "ticker" : "aapl",
     "date" : "2022-11-02",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1453.6299999999999
   } ]
 }, {
@@ -94,12 +94,12 @@
   "stocks" : [ {
     "ticker" : "zs",
     "date" : "2022-10-24",
-    "qty" : 12,
+    "qty" : 12.0,
     "costBasis" : 1787.37
   }, {
     "ticker" : "msft",
     "date" : "2022-10-25",
-    "qty" : 8,
+    "qty" : 8.0,
     "costBasis" : 2008.61
   } ]
 }, {
@@ -107,12 +107,12 @@
   "stocks" : [ {
     "ticker" : "tsla",
     "date" : "2022-10-28",
-    "qty" : 23,
+    "qty" : 23.0,
     "costBasis" : 5259.29
   }, {
     "ticker" : "aapl",
     "date" : "2022-11-02",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1453.6299999999999
   } ]
 }, {
@@ -120,12 +120,12 @@
   "stocks" : [ {
     "ticker" : "zs",
     "date" : "2022-10-24",
-    "qty" : 12,
+    "qty" : 12.0,
     "costBasis" : 1787.37
   }, {
     "ticker" : "msft",
     "date" : "2022-10-25",
-    "qty" : 8,
+    "qty" : 8.0,
     "costBasis" : 2008.61
   } ]
 }, {
@@ -133,12 +133,12 @@
   "stocks" : [ {
     "ticker" : "tsla",
     "date" : "2022-10-28",
-    "qty" : 23,
+    "qty" : 23.0,
     "costBasis" : 5259.29
   }, {
     "ticker" : "aapl",
     "date" : "2022-11-02",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1453.6299999999999
   } ]
 }, {
@@ -146,12 +146,38 @@
   "stocks" : [ {
     "ticker" : "zs",
     "date" : "2022-10-24",
-    "qty" : 12,
+    "qty" : 12.0,
     "costBasis" : 1787.37
   }, {
     "ticker" : "msft",
     "date" : "2022-10-25",
-    "qty" : 8,
+    "qty" : 8.0,
+    "costBasis" : 2008.61
+  } ]
+}, {
+  "name" : "test_p1",
+  "stocks" : [ {
+    "ticker" : "tsla",
+    "date" : "2022-10-28",
+    "qty" : 23.0,
+    "costBasis" : 5259.29
+  }, {
+    "ticker" : "aapl",
+    "date" : "2022-11-02",
+    "qty" : 10.0,
+    "costBasis" : 1453.6299999999999
+  } ]
+}, {
+  "name" : "test_p2",
+  "stocks" : [ {
+    "ticker" : "zs",
+    "date" : "2022-10-24",
+    "qty" : 12.0,
+    "costBasis" : 1787.37
+  }, {
+    "ticker" : "msft",
+    "date" : "2022-10-25",
+    "qty" : 8.0,
     "costBasis" : 2008.61
   } ]
 } ]
