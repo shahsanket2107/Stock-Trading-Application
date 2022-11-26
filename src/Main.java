@@ -1,7 +1,10 @@
 import controller.Controller;
+import controller.UserControllerImpl;
+import java.util.Scanner;
 import model.UserImpl;
 import view.IView;
 import view.JFrameView;
+import view.ViewImpl;
 
 /**
  * This is the main class which will run the program. Here we are calling the go method of the
@@ -10,9 +13,23 @@ import view.JFrameView;
 public class Main {
 
   public static void main(String[] args) {
-    //new UserControllerImpl(System.in, System.out, new UserImpl(), new ViewImpl()).runGo();
-    Controller controller = new Controller(new UserImpl());
-    IView view = new JFrameView();
-    controller.setView(view);
+    System.out.println("Enter 1 for text-based view and 2 for GUI view: ");
+    Scanner scan = new Scanner(System.in);
+    switch (scan.nextLine()){
+      case "1":
+        new UserControllerImpl(System.in, System.out, new UserImpl(), new ViewImpl()).runGo();
+        break;
+      case "2":
+        System.out.println("Please enter your name: ");
+        String name = scan.nextLine();
+        Controller controller = new Controller(new UserImpl(),name);
+        IView view = new JFrameView(name);
+        controller.setView(view);
+        break;
+      default:
+        System.out.println("Invalid input!");
+    }
+
+
   }
 }

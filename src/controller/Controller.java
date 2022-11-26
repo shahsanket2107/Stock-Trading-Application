@@ -18,8 +18,9 @@ public class Controller implements Features {
   private User user;
   private IView view;
 
-  public Controller(User m) {
-    user = m;
+  public Controller(User m,String name) {
+    this.user = m;
+    user.setName(name);
   }
 
   public void setView(IView v) {
@@ -56,7 +57,7 @@ public class Controller implements Features {
 
   @Override
   public void createPortfolio() {
-    user.setName("Strange");
+
     List<Stocks> stocks = new ArrayList<>();
     ArrayList<String> output = view.createPortfolioInput();
     String pName = output.get(0);
@@ -97,7 +98,6 @@ public class Controller implements Features {
 
   @Override
   public void buyStocks() {
-    user.setName("Strange");
     ArrayList<String> output = view.createPortfolioInput();
     String pName = output.get(0);
     String ticker = output.get(1);
@@ -148,7 +148,6 @@ public class Controller implements Features {
 
   @Override
   public void sellStocks() {
-    user.setName("Strange");
     ArrayList<String> output = view.createPortfolioInput();
     String pName = output.get(0);
     String ticker = output.get(1);
@@ -181,7 +180,6 @@ public class Controller implements Features {
 
   @Override
   public void getValuation() {
-    user.setName("Strange");
     ArrayList<String> output = view.getInput();
     String pName = output.get(0);
     String date = output.get(1);
@@ -206,7 +204,6 @@ public class Controller implements Features {
 
   @Override
   public void getCostBasis() {
-    user.setName("Strange");
     ArrayList<String> output = view.getInput();
     String pName = output.get(0);
     String date = output.get(1);
@@ -231,7 +228,6 @@ public class Controller implements Features {
 
   @Override
   public void getComposition() {
-    user.setName("Strange");
     ArrayList<String> output = view.getInput();
     String pName = output.get(0);
     String date = output.get(1);

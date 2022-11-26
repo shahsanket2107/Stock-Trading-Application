@@ -21,7 +21,7 @@ public class JFrameView extends JFrame implements IView {
   private JButton lpBtn;
   private JButton gcBtn;
 
-  public JFrameView() {
+  public JFrameView(String name) {
 
     setTitle("ASSIGNMENT 6");
     setSize(400, 500);
@@ -32,7 +32,7 @@ public class JFrameView extends JFrame implements IView {
 
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(
-        BorderFactory.createTitledBorder("Choose any option from the menu :"));
+        BorderFactory.createTitledBorder("Welcome "+name+"!! Choose any option from the menu :"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(dialogBoxesPanel);
 
