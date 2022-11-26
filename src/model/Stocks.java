@@ -22,7 +22,7 @@ public interface Stocks {
    * @param quantity the quantity of stocks in the portfolio
    * @param date     the date at which you need to find value.
    * @return the value of that particular ticker at the inputted date multiplied by its quantity, so
-   *         we get the final value of that stock in the portfolio.
+   * we get the final value of that stock in the portfolio.
    * @throws IllegalArgumentException when the data for entered date does not exist, or if the api
    *                                  is unable to fetch data
    */
@@ -47,14 +47,14 @@ public interface Stocks {
    *
    * @return the quantity of stocks
    */
-  int getQty();
+  double getQty();
 
   /**
    * This is a setter function used to set the updated quantity after stocks are bought/sold.
    *
    * @param qty the updated quantity
    */
-  void setQty(int qty);
+  void setQty(double qty);
 
   /**
    * This function is a getter function used to get the cost basis.

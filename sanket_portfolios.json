@@ -1,9 +1,42 @@
-[ {
-  "name" : "p1",
-  "stocks" : [ {
-    "ticker" : "AAPL",
-    "date" : "2022-10-28",
-    "qty" : 10,
-    "costBasis" : 1557.4
-  } ]
-} ]
+[
+  {
+    "name": "p1",
+    "stocks": [
+      {
+        "ticker": "AAPL",
+        "date": "2022-10-28",
+        "qty": 10.0,
+        "costBasis": 1557.4
+      }
+    ]
+  },
+  {
+    "name": "sanket_p1",
+    "stocks": [
+      {
+        "ticker": "AAPL",
+        "date": "2022-10-28",
+        "qty": 10.0,
+        "costBasis": 1577.4
+      },
+      {
+        "ticker": "AAPL",
+        "date": "2022-11-07",
+        "qty": -5.0,
+        "costBasis": 20.0
+      },
+      {
+        "ticker": "ZS",
+        "date": "2022-11-07",
+        "qty": 15.0,
+        "costBasis": 40
+      },
+      {
+        "ticker": "TSLA",
+        "date": "2022-11-07",
+        "qty": 10.0,
+        "costBasis": 100
+      }
+    ]
+  }
+]

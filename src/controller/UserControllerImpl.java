@@ -198,6 +198,15 @@ public class UserControllerImpl implements UserController {
     }
   }
 
+  private double checkCommissionFee(Scanner scan) {
+    view.getCommissionFee();
+    double commissionFee = Double.parseDouble(scan.nextLine());
+    if (commissionFee <= 0) {
+      return -1;
+    }
+    return commissionFee;
+  }
+
   private void createFlexiblePortfolio(Scanner scan) {
     String portfolioName = portfolioName(scan);
     int check = user.checkPortfolioExists(portfolioName);
@@ -206,10 +215,16 @@ public class UserControllerImpl implements UserController {
       portfolioName = portfolioName(scan);
       check = user.checkPortfolioExists(portfolioName);
     }
+
     try {
       List<Stocks> jsonArray = performJson(scan);
-      user.createFlexiblePortfolio(portfolioName, jsonArray);
-      view.getPortfolioMessage();
+      double commissionFee = checkCommissionFee(scan);
+      if (commissionFee != -1) {
+        user.createFlexiblePortfolio(portfolioName, jsonArray, commissionFee);
+        view.getPortfolioMessage();
+      } else {
+        view.invalidCommissionFee();
+      }
 
     } catch (IllegalArgumentException e) {
       view.displayMessage(e.getMessage());
@@ -299,16 +314,22 @@ public class UserControllerImpl implements UserController {
       int qty = getQty(scan);
       view.getDate();
       String date = scan.nextLine();
-      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
-        String message = user.sellStocks(ticker, qty, pName, date);
-        view.displayMessage(message);
-      } else if (!user.isValidFormat(date)) {
-        view.invalidDate();
+      double commissionFee = checkCommissionFee(scan);
+      if (commissionFee != -1) {
+        if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
+          String message = user.sellStocks(ticker, qty, pName, date, commissionFee);
+          view.displayMessage(message);
+        } else if (!user.isValidFormat(date)) {
+          view.invalidDate();
+        } else {
+          view.dataNotFound();
+        }
       } else {
-        view.dataNotFound();
+        view.invalidCommissionFee();
       }
     }
   }
+
 
   private void buyStocks(Scanner scan) {
     String pName = portfolioName(scan);
@@ -320,13 +341,18 @@ public class UserControllerImpl implements UserController {
       int qty = getQty(scan);
       view.getDate();
       String date = scan.nextLine();
-      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
-        String message = user.buyStocks(ticker, qty, pName, date);
-        view.displayMessage(message);
-      } else if (!user.isValidFormat(date)) {
-        view.invalidDate();
+      double commissionFee = checkCommissionFee(scan);
+      if (commissionFee != -1) {
+        if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
+          String message = user.buyStocks(ticker, qty, pName, date, commissionFee);
+          view.displayMessage(message);
+        } else if (!user.isValidFormat(date)) {
+          view.invalidDate();
+        } else {
+          view.dataNotFound();
+        }
       } else {
-        view.dataNotFound();
+        view.invalidCommissionFee();
       }
     }
   }

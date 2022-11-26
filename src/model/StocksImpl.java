@@ -9,7 +9,7 @@ public class StocksImpl implements Stocks {
 
   private String ticker;
   private String date;
-  private int qty;
+  private double qty;
   private double cost_basis;
 
   /**
@@ -25,11 +25,12 @@ public class StocksImpl implements Stocks {
 
   /**
    * This is a constructor which is used to set the date, quantity and ticker.
-   * @param date the date when the stocks were bought or sold.
+   *
+   * @param date   the date when the stocks were bought or sold.
    * @param ticker the ticker symbol of the stock.
-   * @param qty the quantity of stocks.
+   * @param qty    the quantity of stocks.
    */
-  public StocksImpl(String date, String ticker, int qty) {
+  public StocksImpl(String date, String ticker, double qty) {
     this.ticker = ticker;
     this.qty = qty;
     this.date = date;
@@ -37,6 +38,7 @@ public class StocksImpl implements Stocks {
 
   /**
    * This constructor is used to initialize the ticker.
+   *
    * @param ticker the ticker symbol of the stock to be initialized.
    */
   public StocksImpl(String ticker) {
@@ -62,12 +64,12 @@ public class StocksImpl implements Stocks {
   }
 
   @Override
-  public int getQty() {
+  public double getQty() {
     return this.qty;
   }
 
   @Override
-  public void setQty(int qty) {
+  public void setQty(double qty) {
     this.qty = qty;
   }
 

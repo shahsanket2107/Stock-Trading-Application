@@ -39,8 +39,8 @@ public class UserImplFlexibleTest extends UserImplTest {
 
 
     user = new UserImpl("test_user", new ArrayList<>(), new ArrayList<>());
-    user.createFlexiblePortfolio("p1", s);
-    user.createFlexiblePortfolio("p2", s2);
+    user.createFlexiblePortfolio("p1", s, 3.33);
+    user.createFlexiblePortfolio("p2", s2, 3.33);
   }
 
   @Test
@@ -68,8 +68,8 @@ public class UserImplFlexibleTest extends UserImplTest {
     s2.add(new StocksImpl("2022-10-24", "zs", 12));
     s2.add(new StocksImpl("2022-10-25", "msft", 8));
 
-    u.createFlexiblePortfolio("test_p1", s);
-    u.createFlexiblePortfolio("test_p2", s2);
+    u.createFlexiblePortfolio("test_p1", s, 3.33);
+    u.createFlexiblePortfolio("test_p2", s2, 3.33);
 
     assertEquals("The list of portfolios is:\n" +
             "test_p1\n" +
@@ -114,14 +114,14 @@ public class UserImplFlexibleTest extends UserImplTest {
 
   @Test
   public void testBuyStocksOnFutureDatePortfolio() {
-    String check = user.buyStocks("goog", 20, "p1", "2023-10-28");
+    String check = user.buyStocks("goog", 20, "p1", "2023-10-28", 3.33);
     assertEquals("Date cannot be greater or equal to current date. Try a different date",
             check);
   }
 
   @Test
   public void testValidBuyStocks() {
-    String check = user.buyStocks("amd", 20, "p1", "2022-10-28");
+    String check = user.buyStocks("amd", 20, "p1", "2022-10-28", 3.33);
     assertEquals("Stocks bought successfully and added to your portfolio!", check);
     assertEquals("The portfolio composition of portfolio p1 on 2022-10-28 is:-\n" +
             "{\n" +
@@ -130,7 +130,7 @@ public class UserImplFlexibleTest extends UserImplTest {
             "}", user.getFlexiblePortfolioComposition("p1", "2022-10-28")
             .toString().replace("\r", ""));
 
-    String check2 = user.buyStocks("amd", 20, "p1", "2022-10-27");
+    String check2 = user.buyStocks("amd", 20, "p1", "2022-10-27", 3.33);
     assertEquals("Stocks bought successfully and added to your portfolio!", check2);
     assertEquals("The portfolio composition of portfolio p1 on 2022-10-31 is:-\n" +
             "{\n" +
@@ -142,19 +142,19 @@ public class UserImplFlexibleTest extends UserImplTest {
 
   @Test
   public void testSellingStockDoesNotExist() {
-    String check = user.sellStocks("zs", 10, "p1", "2022-10-28");
+    String check = user.sellStocks("zs", 10, "p1", "2022-10-28", 3.33);
     assertEquals("The entered stock does not exist in your portfolio!", check);
   }
 
   @Test
   public void testSellingStockDoesNotHaveEnoughQty() {
-    String check = user.sellStocks("aapl", 40, "p1", "2022-10-28");
+    String check = user.sellStocks("aapl", 40, "p1", "2022-10-28", 3.33);
     assertEquals("Quantity entered is more than what you have in your portfolio!", check);
   }
 
   @Test
   public void testValidSellStocks() {
-    String check = user.sellStocks("tsla", 20, "p1", "2022-10-31");
+    String check = user.sellStocks("tsla", 20, "p1", "2022-10-31", 3.33);
     assertEquals("Stocks sold successfully!", check);
     assertEquals("The portfolio composition of portfolio p1 on 2022-11-01 is:-\n" +
             "{\n" +
@@ -215,12 +215,12 @@ public class UserImplFlexibleTest extends UserImplTest {
     assertEquals("Portfolio_Name: p1\n" +
                     "Cost basis of your portfolio at 2022-10-28 is : $ 5259.29\n",
             user.getCostBasis("2022-10-28", "p1").toString());
-    String check = user.sellStocks("tsla", 10, "p1", "2022-10-31");
+    String check = user.sellStocks("tsla", 10, "p1", "2022-10-31", 3.33);
     assertEquals("Stocks sold successfully!", check);
     assertEquals("Portfolio_Name: p1\n" +
                     "Cost basis of your portfolio at 2022-11-01 is : $ 5262.62\n",
             user.getCostBasis("2022-11-01", "p1").toString());
-    String check2 = user.buyStocks("zs", 2, "p1", "2022-11-03");
+    String check2 = user.buyStocks("zs", 2, "p1", "2022-11-03", 3.33);
     assertEquals("Stocks bought successfully and added to your portfolio!", check2);
     assertEquals("Portfolio_Name: p1\n" +
                     "Cost basis of your portfolio at 2022-11-04 is : $ 6981.72\n",
@@ -240,8 +240,8 @@ public class UserImplFlexibleTest extends UserImplTest {
     s.add(new StocksImpl("2022-10-25", "msft", 8));
     s.add(new StocksImpl("2022-10-28", "amd", 33));
     User user = new UserImpl("user", new ArrayList<>(), new ArrayList<>());
-    user.createFlexiblePortfolio("chart_p", s);
-    user.sellStocks("zs", 10, "chart_p", "2022-11-02");
+    user.createFlexiblePortfolio("chart_p", s, 3.33);
+    user.sellStocks("zs", 10, "chart_p", "2022-11-02", 3.33);
     assertEquals("Performance of portfolio chart_p from 2022-10-20 to 2022-11-05\n" +
                     "2022-10-20: *****\n" +
                     "2022-10-21: *****\n" +
@@ -271,8 +271,8 @@ public class UserImplFlexibleTest extends UserImplTest {
     s.add(new StocksImpl("2022-08-17", "msft", 8));
     s.add(new StocksImpl("2022-10-28", "amd", 33));
     User user = new UserImpl("user", new ArrayList<>(), new ArrayList<>());
-    user.createFlexiblePortfolio("chart_p", s);
-    user.sellStocks("zs", 10, "chart_p", "2022-11-02");
+    user.createFlexiblePortfolio("chart_p", s, 3.33);
+    user.sellStocks("zs", 10, "chart_p", "2022-11-02", 3.33);
     assertEquals("Performance of portfolio chart_p from 2022-06-20 to 2022-11-05\n" +
                     "2022-06-20: \n" +
                     "2022-06-27: \n" +
@@ -304,8 +304,8 @@ public class UserImplFlexibleTest extends UserImplTest {
     s.add(new StocksImpl("2022-08-17", "msft", 8));
     s.add(new StocksImpl("2022-10-28", "amd", 33));
     User user = new UserImpl("user", new ArrayList<>(), new ArrayList<>());
-    user.createFlexiblePortfolio("chart_p", s);
-    user.sellStocks("zs", 10, "chart_p", "2022-11-02");
+    user.createFlexiblePortfolio("chart_p", s, 3.33);
+    user.sellStocks("zs", 10, "chart_p", "2022-11-02", 3.33);
     assertEquals("Performance of portfolio chart_p from 2021-01-20 to 2022-11-05\n" +
                     "Jan 2021: ******\n" +
                     "Feb 2021: ******\n" +
@@ -341,8 +341,8 @@ public class UserImplFlexibleTest extends UserImplTest {
     s.add(new StocksImpl("2000-08-17", "msft", 850));
     s.add(new StocksImpl("2022-10-28", "amd", 33));
     User user = new UserImpl("user", new ArrayList<>(), new ArrayList<>());
-    user.createFlexiblePortfolio("chart_p", s);
-    user.sellStocks("zs", 10, "chart_p", "2022-11-02");
+    user.createFlexiblePortfolio("chart_p", s, 3.33);
+    user.sellStocks("zs", 10, "chart_p", "2022-11-02", 3.33);
     assertEquals("Performance of portfolio chart_p from 2000-01-20 to 2022-11-05\n" +
                     "2000: ****\n" +
                     "2001: ****\n" +
