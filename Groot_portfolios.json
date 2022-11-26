@@ -3,7 +3,12 @@
   "stocks" : [ {
     "ticker" : "AAPL",
     "date" : "2022-10-21",
-    "qty" : 10,
+    "qty" : 10.0,
     "costBasis" : 1476.03
+  }, {
+    "ticker" : "ZS",
+    "date" : "2022-11-07",
+    "qty" : 23.0,
+    "costBasis" : 2702.28
   } ]
 } ]

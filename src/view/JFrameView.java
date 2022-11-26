@@ -155,7 +155,7 @@ public class JFrameView extends JFrame implements IView {
     JTextField field2 = new JTextField();
     Object[] message = {
         "Please enter your portfolio name", field1,
-        "Please enter date at which you want to buy (yyyy-MM-dd)", field2,
+        "Please enter date in format (yyyy-MM-dd)", field2,
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
         JOptionPane.OK_CANCEL_OPTION);

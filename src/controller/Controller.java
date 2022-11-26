@@ -62,7 +62,12 @@ public class Controller implements Features {
     ArrayList<String> output = view.createPortfolioInput();
     String pName = output.get(0);
     String ticker = output.get(1);
-    int qty = Integer.parseInt(output.get(2));
+    int qty = 0;
+    try {
+      qty = Integer.parseInt(output.get(2));
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null,"Quantity cannot be fractional");
+    }
     String date = output.get(3);
     double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
@@ -74,8 +79,7 @@ public class Controller implements Features {
     int chk = user.checkPortfolioExists(pName);
     if (chk == 2) {
       view.showOutput("Portfolio with given name already exists");
-    }
-    else if(checker(ticker, qty)) {
+    } else if (checker(ticker, qty)) {
       ticker = ticker.toUpperCase();
       if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
         Stocks s = new StocksImpl(date, ticker, qty);
@@ -87,7 +91,7 @@ public class Controller implements Features {
             "Stock market is closed at this date, so please enter a different date!!");
       }
       try {
-        user.createFlexiblePortfolio(pName, stocks,commissionFee);
+        user.createFlexiblePortfolio(pName, stocks, commissionFee);
         view.showOutput("Portfolio created successfully!");
       } catch (Exception e) {
         view.showOutput(e.toString());
@@ -102,7 +106,12 @@ public class Controller implements Features {
     ArrayList<String> output = view.createPortfolioInput();
     String pName = output.get(0);
     String ticker = output.get(1);
-    int qty = Integer.parseInt(output.get(2));
+    int qty = 0;
+    try {
+      qty = Integer.parseInt(output.get(2));
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null,"Quantity cannot be fractional");
+    }
     String date = output.get(3);
     double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
@@ -153,7 +162,12 @@ public class Controller implements Features {
     ArrayList<String> output = view.createPortfolioInput();
     String pName = output.get(0);
     String ticker = output.get(1);
-    int qty = Integer.parseInt(output.get(2));
+    int qty = 0;
+    try {
+      qty = Integer.parseInt(output.get(2));
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null,"Quantity cannot be fractional");
+    }
     String date = output.get(3);
     double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
