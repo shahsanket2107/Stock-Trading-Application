@@ -238,4 +238,14 @@ public class Controller implements Features {
       view.showOutput("Portfolio with given name does not exist");
     }
   }
+
+  @Override
+  public void investInPortfolio() {
+
+  }
+
+  @Override
+  public void createPortfolioUsingDollarCost() {
+
+  }
 }

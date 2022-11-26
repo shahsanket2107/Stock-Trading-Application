@@ -21,6 +21,8 @@ public class JFrameView extends JFrame implements IView {
   private final JButton lpBtn;
   private final JButton gcBtn;
   private final JButton gpBtn;
+  private final JButton ipBtn;
+  private final JButton dcBtn;
 
   public JFrameView(String name) {
 
@@ -98,9 +100,25 @@ public class JFrameView extends JFrame implements IView {
     getPerformancePanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(getPerformancePanel);
 
-    gpBtn = new JButton("Get portfolio composition");
-    gpBtn.setActionCommand("Get portfolio composition");
+    gpBtn = new JButton("Get portfolio performance");
+    gpBtn.setActionCommand("Get portfolio performance");
     getPerformancePanel.add(gpBtn);
+
+    JPanel investPanel = new JPanel();
+    investPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(investPanel);
+
+    ipBtn = new JButton("Invest in a portfolio");
+    ipBtn.setActionCommand("Invest in a portfolio");
+    investPanel.add(ipBtn);
+
+    JPanel dollarCostPanel = new JPanel();
+    dollarCostPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(dollarCostPanel);
+
+    dcBtn = new JButton("Create portfolio using dollar-cost averaging");
+    dcBtn.setActionCommand("Create portfolio using dollar-cost averaging");
+    dollarCostPanel.add(dcBtn);
 
     setVisible(true);
   }
@@ -115,6 +133,8 @@ public class JFrameView extends JFrame implements IView {
     cbBtn.addActionListener(evt -> features.getCostBasis());
     gcBtn.addActionListener(evt -> features.getComposition());
     gpBtn.addActionListener(evt -> features.getPerformance());
+    ipBtn.addActionListener(evt -> features.investInPortfolio());
+    dcBtn.addActionListener(evt -> features.createPortfolioUsingDollarCost());
   }
 
   @Override
