@@ -118,11 +118,13 @@ public class JFrameView extends JFrame implements IView {
     JTextField field2 = new JTextField();
     JTextField field3 = new JTextField();
     JTextField field4 = new JTextField();
+    JTextField field5 = new JTextField();
     Object[] message = {
         "Please enter your portfolio name", field1,
         "Please enter ticker of stock you want to add to portfolio", field2,
         "Please enter quantity of stocks", field3,
         "Please enter date at which you want to buy (yyyy-MM-dd)", field4,
+        "Please enter the commission fee", field5
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
         JOptionPane.OK_CANCEL_OPTION);
@@ -130,17 +132,20 @@ public class JFrameView extends JFrame implements IView {
     String ticker = "";
     String qty = "";
     String date = "";
+    String commissionFee = "";
     if (option == JOptionPane.OK_OPTION) {
       pName = field1.getText();
       ticker = field2.getText();
       qty = field3.getText();
       date = field4.getText();
+      commissionFee = field5.getText();
     }
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(ticker);
     output.add(qty);
     output.add(date);
+    output.add(commissionFee);
     return output;
   }
 

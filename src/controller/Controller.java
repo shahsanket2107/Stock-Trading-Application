@@ -64,6 +64,7 @@ public class Controller implements Features {
     String ticker = output.get(1);
     int qty = Integer.parseInt(output.get(2));
     String date = output.get(3);
+    double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
     try {
       check = dateFormatHelper(date);
@@ -86,7 +87,7 @@ public class Controller implements Features {
             "Stock market is closed at this date, so please enter a different date!!");
       }
       try {
-        user.createFlexiblePortfolio(pName, stocks);
+        user.createFlexiblePortfolio(pName, stocks,commissionFee);
         view.showOutput("Portfolio created successfully!");
       } catch (Exception e) {
         view.showOutput(e.toString());
@@ -103,6 +104,7 @@ public class Controller implements Features {
     String ticker = output.get(1);
     int qty = Integer.parseInt(output.get(2));
     String date = output.get(3);
+    double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
     try {
       check = dateFormatHelper(date);
@@ -116,7 +118,7 @@ public class Controller implements Features {
     else if(checker(ticker, qty))  {
       ticker = ticker.toUpperCase();
       if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
-        String message = user.buyStocks(ticker, qty, pName, date);
+        String message = user.buyStocks(ticker, qty, pName, date,commissionFee);
         view.showOutput(message);
       } else if (!user.isValidFormat(date)) {
         view.showOutput("Date is not in proper format!!");
@@ -153,6 +155,7 @@ public class Controller implements Features {
     String ticker = output.get(1);
     int qty = Integer.parseInt(output.get(2));
     String date = output.get(3);
+    double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
     try {
       check = dateFormatHelper(date);
@@ -166,7 +169,7 @@ public class Controller implements Features {
     else if(checker(ticker, qty))  {
       ticker = ticker.toUpperCase();
       if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
-        String message = user.sellStocks(ticker, qty, pName, date);
+        String message = user.sellStocks(ticker, qty, pName, date,commissionFee);
         view.showOutput(message);
       } else if (!user.isValidFormat(date)) {
         view.showOutput("Date is not in proper format!!");
