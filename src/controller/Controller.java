@@ -10,15 +10,15 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Stocks;
 import model.StocksImpl;
-import model.User;
+import model.UserModelExtension;
 import view.IView;
 
 public class Controller implements Features {
 
-  private User user;
+  private UserModelExtension user;
   private IView view;
 
-  public Controller(User m, String name) {
+  public Controller(UserModelExtension m, String name) {
     this.user = m;
     user.setName(name);
   }
@@ -223,6 +223,18 @@ public class Controller implements Features {
       } else {
         view.showOutput("Date is not in proper format!!");
       }
+    }
+  }
+
+  @Override
+  public void getPerformance() {
+    ArrayList<String> output = view.getInput();
+    String pName = output.get(0);
+    String sDate = output.get(1);
+    String eDate = output.get(2);
+    int chk = user.checkPortfolioExists(pName);
+    if (chk != 2) {
+      view.showOutput("Portfolio with given name does not exist");
     }
   }
 }

@@ -13,13 +13,14 @@ import javax.swing.JTextField;
 
 public class JFrameView extends JFrame implements IView {
 
-  private JButton cpBtn;
-  private JButton bsBtn;
-  private JButton ssBtn;
-  private JButton cbBtn;
-  private JButton vBtn;
-  private JButton lpBtn;
-  private JButton gcBtn;
+  private final JButton cpBtn;
+  private final JButton bsBtn;
+  private final JButton ssBtn;
+  private final JButton cbBtn;
+  private final JButton vBtn;
+  private final JButton lpBtn;
+  private final JButton gcBtn;
+  private final JButton gpBtn;
 
   public JFrameView(String name) {
 
@@ -32,7 +33,8 @@ public class JFrameView extends JFrame implements IView {
 
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(
-        BorderFactory.createTitledBorder("Welcome "+name+"!! Choose any option from the menu :"));
+        BorderFactory.createTitledBorder(
+            "Welcome " + name + "!! Choose any option from the menu :"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(dialogBoxesPanel);
 
@@ -92,6 +94,13 @@ public class JFrameView extends JFrame implements IView {
     gcBtn.setActionCommand("Get portfolio composition");
     getCompositionPanel.add(gcBtn);
 
+    JPanel getPerformancePanel = new JPanel();
+    getPerformancePanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(getPerformancePanel);
+
+    gpBtn = new JButton("Get portfolio composition");
+    gpBtn.setActionCommand("Get portfolio composition");
+    getPerformancePanel.add(gpBtn);
 
     setVisible(true);
   }
@@ -105,6 +114,7 @@ public class JFrameView extends JFrame implements IView {
     vBtn.addActionListener(evt -> features.getValuation());
     cbBtn.addActionListener(evt -> features.getCostBasis());
     gcBtn.addActionListener(evt -> features.getComposition());
+    gpBtn.addActionListener(evt -> features.getPerformance());
   }
 
   @Override
@@ -168,6 +178,33 @@ public class JFrameView extends JFrame implements IView {
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(date);
+    return output;
+  }
+
+  @Override
+  public ArrayList<String> getInputForPerformance() {
+    JTextField field1 = new JTextField();
+    JTextField field2 = new JTextField();
+    JTextField field3 = new JTextField();
+    Object[] message = {
+        "Please enter your portfolio name", field1,
+        "Please enter start date in format (yyyy-MM-dd)", field2,
+        "Please enter end date in format (yyyy-MM-dd)", field3
+    };
+    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+        JOptionPane.OK_CANCEL_OPTION);
+    String pName = "";
+    String sDate = "";
+    String eDate = "";
+    if (option == JOptionPane.OK_OPTION) {
+      pName = field1.getText();
+      sDate = field2.getText();
+      eDate = field3.getText();
+    }
+    ArrayList<String> output = new ArrayList<>();
+    output.add(pName);
+    output.add(sDate);
+    output.add(eDate);
     return output;
   }
 }

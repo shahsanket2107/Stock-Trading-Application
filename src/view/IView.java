@@ -8,4 +8,5 @@ public interface IView {
   void showOutput(String message);
   ArrayList<String> createPortfolioInput();
   ArrayList<String> getInput();
+  ArrayList<String> getInputForPerformance();
 }
