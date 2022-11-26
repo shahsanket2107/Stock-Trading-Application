@@ -53,6 +53,7 @@ public class Controller implements Features {
       return false;
     } else if (cf<0) {
       view.showOutput("Commission fee cannot be negative");
+      return false;
     }
     return true;
   }
