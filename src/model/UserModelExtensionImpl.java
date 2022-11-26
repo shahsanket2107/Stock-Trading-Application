@@ -135,14 +135,17 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   @Override
-  public String createDollarCostAveragingPortfolio(String pname, Map<String, Double> m,
-                                                   double amount, double commissionFee,
-                                                   String startDate, String endDate, int interval)
+  public String dollarCostAveragingPortfolio(String pname, Map<String, Double> m,
+                                             double amount, double commissionFee,
+                                             String startDate, String endDate, int interval)
           throws IllegalArgumentException {
     if (super.dateCompare(startDate, endDate)) {
       return ("Start date cannot be more than end date!");
     }
-    super.createFlexiblePortfolio(pname, new ArrayList(), commissionFee);
+    int chk = super.checkPortfolioExists(pname);
+    if (chk == 0) {
+      super.createFlexiblePortfolio(pname, new ArrayList(), commissionFee);
+    }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Calendar c = Calendar.getInstance();
     Date s;
