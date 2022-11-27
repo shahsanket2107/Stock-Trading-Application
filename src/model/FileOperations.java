@@ -18,7 +18,7 @@ public interface FileOperations {
    * @throws IllegalArgumentException when there is some error in writing to the file.
    */
   void writeToFile(String fileName, String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * This function writes the flexible portfolio to a json file which can be loaded later.
@@ -30,7 +30,7 @@ public interface FileOperations {
    * @throws IllegalArgumentException when there is some error in writing to the file.
    */
   void writeToJson(String fileName, String portfolioName, List<Stocks> stocks)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * This function is used to read the contents of a xml file.
@@ -60,5 +60,21 @@ public interface FileOperations {
    *                                  file.
    */
   void editJson(String fileName, String portfolioName, List<Stocks> stocks)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
+
+  /**
+   * This method persists the future date for an investment strategy.
+   *
+   * @param fileName      is the name of the file where data is to be persisted.
+   * @param pname         is the name of the portfolio.
+   * @param m             is the map of stocks and the fractional share percentage.
+   * @param amount        is the amount to be invested.
+   * @param commissionFee is the commissionFee charged per transaction.
+   * @param startDate     is the start date to start investment in a strategy.
+   * @param endDate       is the date till which the investment in the strategy continues.
+   * @param interval      is the time interval at which the periodic investments are to be made.
+   */
+  void futureDatesStrategyHelper(String fileName, String pname, Map<String, Double> m,
+                                 double amount, double commissionFee,
+                                 String startDate, String endDate, int interval);
 }

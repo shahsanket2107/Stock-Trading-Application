@@ -146,7 +146,7 @@ public interface User {
    * @param commissionFee is the commission fee for each transaction.
    * @return the appropriate message of successful/unsuccessful buying of stocks.
    */
-  String buyStocks(String ticker, int qty, String pName, String date, double commissionFee);
+  String buyStocks(String ticker, double qty, String pName, String date, double commissionFee);
 
   /**
    * This method is used to sell stocks in a particular flexible portfolio.
@@ -158,7 +158,7 @@ public interface User {
    * @param commissionFee is the commission fee for each transaction.
    * @return the appropriate message of successful/unsuccessful selling of stocks.
    */
-  String sellStocks(String ticker, int qty, String pName, String date, double commissionFee);
+  String sellStocks(String ticker, double qty, String pName, String date, double commissionFee);
 
   /**
    * This method is used to get total valuation of Flexible Portfolio on a particular date.

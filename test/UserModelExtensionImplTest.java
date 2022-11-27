@@ -28,7 +28,8 @@ public class UserModelExtensionImplTest {
     Map<String, Double> m = new HashMap();
     m.put("AAPL", 55.0);
     m.put("ZS", 25.0);
-    m.put("TSLA", 20.0);
+    m.put("TSLA", 10.0);
+    m.put("MSFT", 10.0);
     String test = user.investFractionalPercentage("sanket_p1", "2022-11-19",
             2000, m, 20);
     assertEquals("Amount Invested Successfully!!", test);
@@ -39,9 +40,10 @@ public class UserModelExtensionImplTest {
     Map<String, Double> m = new HashMap();
     m.put("AAPL", 55.0);
     m.put("ZS", 25.0);
-    m.put("TSLA", 20.0);
+    m.put("TSLA", 10.0);
+    m.put("MSFT", 10.0);
     String test = user.dollarCostAveragingPortfolio("test_p1", m, 2000,
-            20, "2021-06-19", "2022-11-19", 30);
+            20, "2021-06-19", "2023-11-19", 30);
     assertEquals("Dollar Cost Averaging Portfolio Created Successfully!!", test);
     assertEquals("", user.getFlexiblePortfolioComposition("test_p1", "2022-11-19"));
   }
@@ -53,10 +55,17 @@ public class UserModelExtensionImplTest {
     m.put("ZS", 25.0);
     m.put("TSLA", 20.0);
     String test = user.dollarCostAveragingPortfolio("sanket_p1", m, 2000,
-            20, "2021-06-19", "2022-11-19", 30);
+            20, "2022-06-19", "2022-11-19", 30);
     assertEquals("Dollar Cost Averaging Portfolio Created Successfully!!", test);
     assertEquals("", user.getFlexiblePortfolioComposition("sanket_p1", "2022-11-19"));
   }
 
+  @Test
+  public void testLoadFutureStrategy() {
+    boolean check = user.loadPersistantStrategy("sanket_p1");
+    boolean check2 = user.loadPersistantStrategy("test_p1");
+    assertEquals(false, check);
+    assertEquals(false, check2);
+  }
 
 }

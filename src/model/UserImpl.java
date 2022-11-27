@@ -379,7 +379,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String buyStocks(String ticker, int qty, String pName, String date, double commissionFee) {
+  public String buyStocks(String ticker, double qty, String pName, String date, double commissionFee) {
 
     StringBuilder check = dateFormatHelper(date);
     if (!check.isEmpty()) {
@@ -402,7 +402,7 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String sellStocks(String ticker, int qty, String pName, String date, double commissionFee) {
+  public String sellStocks(String ticker, double qty, String pName, String date, double commissionFee) {
 
     int tempQty = 0;
     int flg = 0;

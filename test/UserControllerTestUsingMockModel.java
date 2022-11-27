@@ -417,7 +417,7 @@ public class UserControllerTestUsingMockModel {
     }
 
     @Override
-    public String buyStocks(String ticker, int qty, String pName, String date,
+    public String buyStocks(String ticker, double qty, String pName, String date,
                             double commissionFees) {
       out.println("buyStocks called with ticker name as: " + ticker
               + ",date as " + date + ",quantity as " + qty + " and portfolio name as " + pName);
@@ -425,7 +425,7 @@ public class UserControllerTestUsingMockModel {
     }
 
     @Override
-    public String sellStocks(String ticker, int qty, String pName, String date,
+    public String sellStocks(String ticker, double qty, String pName, String date,
                              double commissionFees) {
       out.println("sellStocks called with ticker name as: " + ticker
               + ",date as " + date + ",quantity as " + qty + " and portfolio name as " + pName);

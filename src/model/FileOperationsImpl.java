@@ -1,8 +1,18 @@
 package model;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.map.util.JSONPObject;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.util.DefaultPrettyPrinter;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,6 +21,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -37,7 +49,7 @@ public class FileOperationsImpl implements FileOperations {
 
   @Override
   public void writeToFile(String fileName, String portfolioName, Map<String, Integer> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     File file = new File(fileName);
     try {
@@ -74,9 +86,63 @@ public class FileOperationsImpl implements FileOperations {
     }
   }
 
+  private void writerJSONHelper(String fileName, String pname) {
+    JSONObject result;
+    if (!fileExists(fileName)) {
+      try {
+        result = new JSONObject();
+        result.put(pname, null);
+        FileWriter writer = new FileWriter(fileName);
+        writer.write(result.toJSONString());
+        writer.close();
+      } catch (Exception e) {
+        throw new IllegalArgumentException("Error in creating new file!!");
+      }
+    }
+  }
+
+  @Override
+  public void futureDatesStrategyHelper(String fileName, String pname, Map<String, Double> m,
+                                        double amount, double commissionFee,
+                                        String startDate, String endDate, int interval)
+          throws IllegalArgumentException {
+    writerJSONHelper(fileName, pname);
+    JSONObject result;
+    try {
+      FileReader reader = new FileReader(fileName);
+      JSONParser parser = new JSONParser();
+      result = (JSONObject) parser.parse(reader);
+      JSONArray values = (JSONArray) result.get(pname);
+      if (values == null) {
+        values = new JSONArray();
+      }
+      JSONObject investment = new JSONObject();
+      JSONObject map = new JSONObject(m);
+      investment.put("startDate", startDate);
+      investment.put("endDate", endDate);
+      investment.put("interval", interval);
+      investment.put("amount", amount);
+      investment.put("fractionalShares", map);
+      investment.put("commissionFee", commissionFee);
+      values.add(investment);
+      result.put(pname, values);
+
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Error in parsing the file!!");
+    }
+
+    try {
+      FileWriter writer = new FileWriter(fileName);
+      writer.write(result.toJSONString());
+      writer.close();
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Error in writing to file!!");
+    }
+  }
+
   @Override
   public void writeToJson(String fileName, String portfolioName, List<Stocks> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     List<FlexiblePortfolio> result;
     List<FlexiblePortfolio> temp;
@@ -87,7 +153,7 @@ public class FileOperationsImpl implements FileOperations {
         temp = new ArrayList<>();
       } else {
         temp = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
-            FlexiblePortfolio[].class));
+                FlexiblePortfolio[].class));
       }
       result = new ArrayList<>(temp);
       FlexiblePortfolio p = new FlexiblePortfolioImpl(portfolioName, stocks);
@@ -100,7 +166,7 @@ public class FileOperationsImpl implements FileOperations {
 
   @Override
   public void editJson(String fileName, String portfolioName, List<Stocks> stocks)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     boolean fileExist = fileExists(fileName);
     List<FlexiblePortfolio> temp;
     try {
@@ -110,7 +176,7 @@ public class FileOperationsImpl implements FileOperations {
         throw new IllegalArgumentException("File does not exist!!");
       } else {
         temp = Arrays.asList(mapper.readValue(Paths.get(fileName).toFile(),
-            FlexiblePortfolio[].class));
+                FlexiblePortfolio[].class));
       }
       int flg = 0;
       for (FlexiblePortfolio fp : temp) {
@@ -146,7 +212,7 @@ public class FileOperationsImpl implements FileOperations {
       }
       ObjectMapper mapper = new ObjectMapper();
       portfolios_list = Arrays.asList(mapper.readValue(Paths.get(fName).toFile(),
-          FlexiblePortfolio[].class));
+              FlexiblePortfolio[].class));
       List<FlexiblePortfolio> result = new ArrayList<>(portfolios_list);
       return result;
     } catch (Exception e) {
@@ -184,7 +250,7 @@ public class FileOperationsImpl implements FileOperations {
       }
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new IllegalArgumentException(
-          "Unable to read xml file!!\n Please check proper xml format and try again!!");
+              "Unable to read xml file!!\n Please check proper xml format and try again!!");
     }
     return portfolios_list;
   }
@@ -198,7 +264,7 @@ public class FileOperationsImpl implements FileOperations {
    * @param portfolio XML parsing node passed to helper method to write portfolio to xml file.
    */
   private void loadPortfolioHelper(ArrayList<String> ticker, ArrayList<String> qty,
-      Map<String, Integer> m, Node portfolio, List<Portfolio> portfoliosList) {
+                                   Map<String, Integer> m, Node portfolio, List<Portfolio> portfoliosList) {
     String name;
     String type;
     if (portfolio.getNodeType() == Node.ELEMENT_NODE) {
@@ -234,7 +300,7 @@ public class FileOperationsImpl implements FileOperations {
    */
 
   private void writeXMLHelper(Document doc, String fileName) throws
-      TransformerConfigurationException {
+          TransformerConfigurationException {
     try {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();
