@@ -8,4 +8,7 @@ public interface Features {
   void getValuation();
   void getCostBasis();
   void getComposition();
+  void getPerformance();
+  void investInPortfolio();
+  void createPortfolioUsingDollarCost();
 }
