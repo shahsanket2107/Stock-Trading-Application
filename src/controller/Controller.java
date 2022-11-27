@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -44,14 +45,14 @@ public class Controller implements Features {
     return true;
   }
 
-  private boolean checker(String ticker, int qty,double cf) {
+  private boolean checker(String ticker, int qty, double cf) {
     if (!user.ifStocksExist(ticker)) {
       view.showOutput("Ticker is invalid!");
       return false;
     } else if (qty < 0) {
       view.showOutput("Quantity must be positive!");
       return false;
-    } else if (cf<0) {
+    } else if (cf < 0) {
       view.showOutput("Commission fee cannot be negative");
       return false;
     }
@@ -100,51 +101,52 @@ public class Controller implements Features {
     String pName = output.get(0);
     String ticker = output.get(1);
     int qty = 0;
-    try {
-      qty = Integer.parseInt(output.get(2));
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Quantity cannot be fractional");
-
-    }
     String date = output.get(3);
     double commissionFee = Double.parseDouble(output.get(4));
     boolean check = true;
-    try {
-      check = dateFormatHelper(date);
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(null, e.toString());
-    }
     int chk = user.checkPortfolioExists(pName);
     if (chk != 2 && flg != 2) {
       view.showOutput("Portfolio with given name does not exist");
     } else if (chk == 2 && flg == 2) {
       view.showOutput("Portfolio with the given name already exists");
-    } else if (checker(ticker, qty,commissionFee)) {
-      ticker = ticker.toUpperCase();
-      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
-        String message = "";
-        if (flg == 0) {
-          message = user.buyStocks(ticker, qty, pName, date, commissionFee);
-          view.showOutput(message);
-        } else if (flg == 1) {
-          message = user.sellStocks(ticker, qty, pName, date, commissionFee);
-          view.showOutput(message);
-        } else if (flg == 2) {
-          Stocks s = new StocksImpl(date, ticker, qty);
-          stocks.add(s);
-          try {
-            user.createFlexiblePortfolio(pName, stocks, commissionFee);
-            view.showOutput("Portfolio created successfully!");
-          } catch (Exception e) {
-            view.showOutput(e.toString());
+    } else {
+      try {
+        qty = Integer.parseInt(output.get(2));
+      } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("Quantity cannot be fractional");
+      }
+      try {
+        check = dateFormatHelper(date);
+      } catch (Exception e) {
+        view.showOutput(e.toString());
+      }
+      if (checker(ticker, qty, commissionFee)) {
+        ticker = ticker.toUpperCase();
+        if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
+          String message = "";
+          if (flg == 0) {
+            message = user.buyStocks(ticker, qty, pName, date, commissionFee);
+            view.showOutput(message);
+          } else if (flg == 1) {
+            message = user.sellStocks(ticker, qty, pName, date, commissionFee);
+            view.showOutput(message);
+          } else if (flg == 2) {
+            Stocks s = new StocksImpl(date, ticker, qty);
+            stocks.add(s);
+            try {
+              user.createFlexiblePortfolio(pName, stocks, commissionFee);
+              view.showOutput("Portfolio created successfully!");
+            } catch (Exception e) {
+              view.showOutput(e.toString());
+            }
           }
-        }
 
-      } else if (!user.isValidFormat(date)) {
-        view.showOutput("Date is not in proper format!!");
-      } else if (!user.validateDateAccToApi(ticker, date)) {
-        view.showOutput(
-            "Stock market is closed at this date, so please enter a different date!!");
+        } else if (!user.isValidFormat(date)) {
+          view.showOutput("Date is not in proper format!!");
+        } else if (!user.validateDateAccToApi(ticker, date)) {
+          view.showOutput(
+              "Stock market is closed at this date, so please enter a different date!!");
+        }
       }
     }
   }
@@ -229,7 +231,7 @@ public class Controller implements Features {
 
   @Override
   public void getPerformance() {
-    ArrayList<String> output = view.getInput();
+    ArrayList<String> output = view.getInputForPerformance();
     String pName = output.get(0);
     String sDate = output.get(1);
     String eDate = output.get(2);
@@ -241,11 +243,28 @@ public class Controller implements Features {
 
   @Override
   public void investInPortfolio() {
-
+    ArrayList<String> output = view.getInvestmentDetails();
+    Map<String, Double> m = view.getInvestmentShares();
+    String pName = output.get(0);
+    double amount = Double.parseDouble(output.get(1));
+    String date = output.get(2);
+    double commissionFee = Double.parseDouble(output.get(3));
+    String op = user.investFractionalPercentage(pName, date, amount, m, commissionFee);
+    view.showOutput(op);
   }
 
   @Override
   public void createPortfolioUsingDollarCost() {
-
+    ArrayList<String> output = view.getDollarCostDetails();
+    Map<String, Double> m = view.getInvestmentShares();
+    String pName = output.get(0);
+    double amount = Double.parseDouble(output.get(1));
+    double commissionFee = Double.parseDouble(output.get(2));
+    String sDate = output.get(3);
+    String eDate = output.get(4);
+    int interval = Integer.parseInt(output.get(5));
+    String op = user.dollarCostAveragingPortfolio(pName, m, amount, commissionFee, sDate, eDate,
+        interval);
+    view.showOutput(op);
   }
 }

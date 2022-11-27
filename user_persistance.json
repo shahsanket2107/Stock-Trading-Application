@@ -3,9 +3,9 @@
     {
       "fractionalShares": {
         "MSFT": 10.0,
-        "ZS": 25.0,
         "AAPL": 55.0,
-        "TSLA": 10.0
+        "TSLA": 10.0,
+        "ZS": 25.0
       },
       "amount": 2000.0,
       "commissionFee": 20.0,
@@ -26,6 +26,20 @@
       "endDate": "2023-11-19",
       "interval": 30,
       "startDate": "2023-06-19"
+    }
+  ],
+  "DC": [
+    {
+      "fractionalShares": {
+        "aapl": 25.0,
+        "googl": 50.0,
+        "msft": 25.0
+      },
+      "amount": 2000.0,
+      "commissionFee": 3.0,
+      "endDate": "2023-10-21",
+      "interval": 30,
+      "startDate": "2022-12-20"
     }
   ]
 }

@@ -3,6 +3,8 @@ package view;
 import controller.Features;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -153,7 +155,7 @@ public class JFrameView extends JFrame implements IView {
         "Please enter your portfolio name", field1,
         "Please enter ticker of stock you want to add to portfolio", field2,
         "Please enter quantity of stocks", field3,
-        "Please enter date at which you want to buy (yyyy-MM-dd)", field4,
+        "Please enter date in format (yyyy-MM-dd)", field4,
         "Please enter the commission fee", field5
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
@@ -225,6 +227,102 @@ public class JFrameView extends JFrame implements IView {
     output.add(pName);
     output.add(sDate);
     output.add(eDate);
+    return output;
+  }
+
+  @Override
+  public ArrayList<String> getInvestmentDetails() {
+    JTextField field1 = new JTextField();
+    JTextField field2 = new JTextField();
+    JTextField field3 = new JTextField();
+    JTextField field4 = new JTextField();
+    Object[] message = {
+        "Please enter your portfolio name", field1,
+        "Please enter amount you want to invest", field2,
+        "Please enter date (yyyy-MM-dd)", field3,
+        "Please enter the commission fee", field4
+    };
+    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+        JOptionPane.OK_CANCEL_OPTION);
+    String pName = "";
+    String amount = "";
+    String date = "";
+    String commissionFee = "";
+    if (option == JOptionPane.OK_OPTION) {
+      pName = field1.getText();
+      amount = field2.getText();
+      date = field3.getText();
+      commissionFee = field4.getText();
+    }
+    ArrayList<String> output = new ArrayList<>();
+    output.add(pName);
+    output.add(amount);
+    output.add(date);
+    output.add(commissionFee);
+    return output;
+  }
+
+  @Override
+  public Map<String, Double> getInvestmentShares() {
+    Map<String, Double> m = new HashMap<>();
+    int num = Integer.parseInt(
+        JOptionPane.showInputDialog("Please enter the number of stocks you want to invest in:"));
+    for (int i=0;i<num;i++){
+      JTextField field1 = new JTextField();
+      JTextField field2 = new JTextField();
+      Object[] message = {
+          "Please enter the ticker of stock "+(i+1)+"", field1,
+          "Please enter percentage amount you want to invest", field2,
+      };
+      int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+          JOptionPane.OK_CANCEL_OPTION);
+      if (option == JOptionPane.OK_OPTION) {
+        m.put(field1.getText(), Double.valueOf(field2.getText()));
+      }
+
+    }
+    return m;
+  }
+
+  @Override
+  public ArrayList<String> getDollarCostDetails() {
+    JTextField field1 = new JTextField();
+    JTextField field2 = new JTextField();
+    JTextField field3 = new JTextField();
+    JTextField field4 = new JTextField();
+    JTextField field5 = new JTextField();
+    JTextField field6 = new JTextField();
+    Object[] message = {
+        "Please enter your portfolio name", field1,
+        "Please enter amount you want to invest", field2,
+        "Please enter the commission fee", field3,
+        "Please enter start date (yyyy-MM-dd)", field4,
+        "Please enter end date (yyyy-MM-dd)", field5,
+        "Please enter the interval at which you want to periodically invest", field6
+    };
+    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+        JOptionPane.OK_CANCEL_OPTION);
+    String pName = "";
+    String amount = "";
+    String sDate = "";
+    String eDate = "";
+    String commissionFee = "";
+    String interval = "";
+    if (option == JOptionPane.OK_OPTION) {
+      pName = field1.getText();
+      amount = field2.getText();
+      commissionFee = field3.getText();
+      sDate = field4.getText();
+      eDate = field5.getText();
+      interval = field6.getText();
+    }
+    ArrayList<String> output = new ArrayList<>();
+    output.add(pName);
+    output.add(amount);
+    output.add(commissionFee);
+    output.add(sDate);
+    output.add(eDate);
+    output.add(interval);
     return output;
   }
 }
