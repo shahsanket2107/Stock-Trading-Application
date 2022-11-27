@@ -203,6 +203,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
         Map<String, Double> map = (Map<String, Double>) temp.get("fractionalShares");
         String newStartDate = compareStartDateHelper(startDate, endDate, interval);
         temp.put("startDate", newStartDate);
+        System.out.println(newStartDate);
         if (!newStartDate.equals(startDate)) {
           flg = 1;
           dollarCostAveragingPortfolio(pname, map, amount, commissionFee, startDate, newStartDate,
