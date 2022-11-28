@@ -6,11 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import model.Stocks;
 import model.StocksImpl;
 import model.UserModelExtension;
@@ -38,11 +36,11 @@ public class Controller implements Features {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       throw new IllegalArgumentException(
-              "Date cannot be greater or equal to current date. Try a different date");
+          "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       throw new IllegalArgumentException(
-              "Date should be more than 1st January 2000. Try a different date");
+          "Date should be more than 1st January 2000. Try a different date");
     }
     return true;
   }
@@ -83,7 +81,7 @@ public class Controller implements Features {
   public void loadPortfolio() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JSON files only", "json");
+        "JSON files only", "json");
     fchooser.setFileFilter(filter);
     int retvalue = fchooser.showOpenDialog(null);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
@@ -98,57 +96,79 @@ public class Controller implements Features {
   }
 
   private void buySellAndCreateHelper(int flg) throws IllegalArgumentException {
+    ArrayList<String> output;
+    try {
+      output = view.createPortfolioInput();
+      String pName = output.get(0);
+      String ticker = output.get(1);
+      int qty = 0;
+      String date = output.get(3);
+      String cFee = output.get(4);
+      boolean check = true;
+      int chk = user.checkPortfolioExists(pName);
+
+      double commissionFee = Double.parseDouble(cFee);
+      if (chk != 2 && flg != 2) {
+        view.showOutput("Portfolio with given name does not exist");
+      } else if (chk == 2 && flg == 2) {
+        view.showOutput("Portfolio with the given name already exists");
+      } else {
+        try {
+          qty = Integer.parseInt(output.get(2));
+        } catch (NumberFormatException e) {
+          throw new IllegalArgumentException("Quantity cannot be fractional");
+        }
+        try {
+          check = dateFormatHelper(date);
+        } catch (Exception e) {
+          view.showOutput(e.toString());
+        }
+        buySellAndCreateHelper2(pName, ticker, qty, date, check, commissionFee, flg);
+      }
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
+    }
+
+
+  }
+
+  private void buySellAndCreateHelper2(String pName, String ticker, int qty, String date,
+      boolean check, double commissionFee, int flg) {
     List<Stocks> stocks = new ArrayList<>();
-    ArrayList<String> output = view.createPortfolioInput();
-    String pName = output.get(0);
-    String ticker = output.get(1);
-    int qty = 0;
-    String date = output.get(3);
-    double commissionFee = Double.parseDouble(output.get(4));
-    boolean check = true;
-    int chk = user.checkPortfolioExists(pName);
-    if (chk != 2 && flg != 2) {
-      view.showOutput("Portfolio with given name does not exist");
-    } else if (chk == 2 && flg == 2) {
-      view.showOutput("Portfolio with the given name already exists");
-    } else {
-      try {
-        qty = Integer.parseInt(output.get(2));
-      } catch (NumberFormatException e) {
-        throw new IllegalArgumentException("Quantity cannot be fractional");
-      }
-      try {
-        check = dateFormatHelper(date);
-      } catch (Exception e) {
-        view.showOutput(e.toString());
-      }
-      if (checker(ticker, qty, commissionFee)) {
-        ticker = ticker.toUpperCase();
-        if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
-          String message = "";
-          if (flg == 0) {
+    if (checker(ticker, qty, commissionFee)) {
+      ticker = ticker.toUpperCase();
+      if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date) && check) {
+        String message = "";
+        if (flg == 0) {
+          try {
             message = user.buyStocks(ticker, qty, pName, date, commissionFee);
             view.showOutput(message);
-          } else if (flg == 1) {
+          } catch (Exception e) {
+            view.showOutput(e.toString());
+          }
+        } else if (flg == 1) {
+          try {
             message = user.sellStocks(ticker, qty, pName, date, commissionFee);
             view.showOutput(message);
-          } else if (flg == 2) {
-            Stocks s = new StocksImpl(date, ticker, qty);
-            stocks.add(s);
-            try {
-              user.createFlexiblePortfolio(pName, stocks, commissionFee);
-              view.showOutput("Portfolio created successfully!");
-            } catch (Exception e) {
-              view.showOutput(e.toString());
-            }
+          } catch (Exception e) {
+            view.showOutput(e.toString());
           }
-
-        } else if (!user.isValidFormat(date)) {
-          view.showOutput("Date is not in proper format!!");
-        } else if (!user.validateDateAccToApi(ticker, date)) {
-          view.showOutput(
-                  "Stock market is closed at this date, so please enter a different date!!");
+        } else if (flg == 2) {
+          Stocks s = new StocksImpl(date, ticker, qty);
+          stocks.add(s);
+          try {
+            user.createFlexiblePortfolio(pName, stocks, commissionFee);
+            view.showOutput("Portfolio created successfully!");
+          } catch (Exception e) {
+            view.showOutput(e.toString());
+          }
         }
+
+      } else if (!user.isValidFormat(date)) {
+        view.showOutput("Date is not in proper format!!");
+      } else if (!user.validateDateAccToApi(ticker, date)) {
+        view.showOutput(
+            "Stock market is closed at this date, so please enter a different date!!");
       }
     }
   }
@@ -164,70 +184,86 @@ public class Controller implements Features {
 
   @Override
   public void getValuation() {
-    ArrayList<String> output = view.getInput();
-    String pName = output.get(0);
-    String date = output.get(1);
-    int chk = user.checkPortfolioExists(pName);
-    if (chk != 2) {
-      view.showOutput("Portfolio with given name does not exist");
-    } else {
-      if (user.isValidFormat(date)) {
-        StringBuilder result = new StringBuilder();
-        try {
-          result.append(user.getFlexiblePortfolioTotalValuation(date, pName));
-        } catch (IllegalArgumentException e) {
-          result.append(e.getMessage());
-        }
-        view.showOutput(String.valueOf(result));
+    try {
+      ArrayList<String> output = view.getInput();
+      String pName = output.get(0);
+      String date = output.get(1);
+
+      int chk = user.checkPortfolioExists(pName);
+      if (chk != 2) {
+        view.showOutput("Portfolio with given name does not exist");
       } else {
-        view.showOutput("Date is not in proper format!!");
+        if (user.isValidFormat(date)) {
+          StringBuilder result = new StringBuilder();
+          try {
+            result.append(user.getFlexiblePortfolioTotalValuation(date, pName));
+          } catch (IllegalArgumentException e) {
+            result.append(e.getMessage());
+          }
+          view.showOutput(String.valueOf(result));
+        } else {
+          view.showOutput("Date is not in proper format!!");
+        }
       }
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
     }
+
   }
 
   @Override
   public void getCostBasis() {
-    ArrayList<String> output = view.getInput();
-    String pName = output.get(0);
-    String date = output.get(1);
-    int chk = user.checkPortfolioExists(pName);
-    if (chk != 2) {
-      view.showOutput("Portfolio with given name does not exist");
-    } else {
-      if (user.isValidFormat(date) && dateFormatHelper(date)) {
-        StringBuilder result = new StringBuilder();
-        try {
-          result = user.getCostBasis(date, pName);
-        } catch (IllegalArgumentException e) {
-          result.append(e.getMessage());
-        }
-        view.showOutput(String.valueOf(result));
+    try {
+      ArrayList<String> output = view.getInput();
+      String pName = output.get(0);
+      String date = output.get(1);
+
+      int chk = user.checkPortfolioExists(pName);
+      if (chk != 2) {
+        view.showOutput("Portfolio with given name does not exist");
       } else {
-        view.showOutput("Date is not in proper format!!");
+        if (user.isValidFormat(date) && dateFormatHelper(date)) {
+          StringBuilder result = new StringBuilder();
+          try {
+            result = user.getCostBasis(date, pName);
+          } catch (IllegalArgumentException e) {
+            result.append(e.getMessage());
+          }
+          view.showOutput(String.valueOf(result));
+        } else {
+          view.showOutput("Date is not in proper format!!");
+        }
       }
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
     }
   }
 
   @Override
   public void getComposition() {
-    ArrayList<String> output = view.getInput();
-    String pName = output.get(0);
-    String date = output.get(1);
-    int chk = user.checkPortfolioExists(pName);
-    if (chk != 2) {
-      view.showOutput("Portfolio with given name does not exist");
-    } else {
-      if (user.isValidFormat(date) && dateFormatHelper(date)) {
-        StringBuilder result = new StringBuilder();
-        try {
-          result = user.getFlexiblePortfolioComposition(pName, date);
-        } catch (IllegalArgumentException e) {
-          result.append(e.getMessage());
-        }
-        view.showOutput(String.valueOf(result));
+    try {
+      ArrayList<String> output = view.getInput();
+      String pName = output.get(0);
+      String date = output.get(1);
+
+      int chk = user.checkPortfolioExists(pName);
+      if (chk != 2) {
+        view.showOutput("Portfolio with given name does not exist");
       } else {
-        view.showOutput("Date is not in proper format!!");
+        if (user.isValidFormat(date) && dateFormatHelper(date)) {
+          StringBuilder result = new StringBuilder();
+          try {
+            result = user.getFlexiblePortfolioComposition(pName, date);
+          } catch (IllegalArgumentException e) {
+            result.append(e.getMessage());
+          }
+          view.showOutput(String.valueOf(result));
+        } else {
+          view.showOutput("Date is not in proper format!!");
+        }
       }
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
     }
   }
 
@@ -245,25 +281,23 @@ public class Controller implements Features {
 
   @Override
   public void investInPortfolio() {
-    ArrayList<String> output = view.getInvestmentDetails();
-    String pName = output.get(0);
-    String amount = output.get(1);
-    String date = output.get(2);
-    String commissionFee = output.get(3);
-    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || date.equals("")) {
-      view.showOutput("Input fields cannot be blank");
-    } else {
-      Map<String, Double> m = view.getInvestmentShares();
-      if (m.isEmpty()) {
-        view.showOutput("Input fields cannot be blank");
-      } else {
+    try {
+      ArrayList<String> output = view.getInvestmentDetails();
+      String pName = output.get(0);
+      String amount = output.get(1);
+      String date = output.get(2);
+      String commissionFee = output.get(3);
+
+      Map<String, Double> m;
+      try {
+        m = view.getInvestmentShares();
         int chk = user.checkPortfolioExists(pName);
         if (chk != 2) {
           view.showOutput("Portfolio with given name does not exist");
         } else {
           try {
             boolean op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount), m,
-                    Double.parseDouble(commissionFee));
+                Double.parseDouble(commissionFee));
             if (op) {
               view.showOutput("Amount Invested Successfully!!");
             }
@@ -271,39 +305,47 @@ public class Controller implements Features {
             view.showOutput(e.toString());
           }
         }
+      } catch (IllegalArgumentException e) {
+        view.showBlank();
       }
+
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
     }
+
   }
 
   @Override
   public void createPortfolioUsingDollarCost() {
-    ArrayList<String> output = view.getDollarCostDetails();
+    try {
+      ArrayList<String> output = view.getDollarCostDetails();
 
-    String pName = output.get(0);
-    String amount = output.get(1);
-    String commissionFee = output.get(2);
-    String sDate = output.get(3);
-    String eDate = output.get(4);
-    String interval = output.get(5);
-    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || sDate.equals("")
-            || interval.equals("")) {
-      view.showOutput("Input fields cannot be blank");
-    } else {
-      Map<String, Double> m = view.getInvestmentShares();
-      if (m.isEmpty()) {
-        view.showOutput("Input fields cannot be blank");
-      } else {
+      String pName = output.get(0);
+      String amount = output.get(1);
+      String commissionFee = output.get(2);
+      String sDate = output.get(3);
+      String eDate = output.get(4);
+      String interval = output.get(5);
+      Map<String, Double> m;
+      try {
+        m = view.getInvestmentShares();
         try {
           boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
-                  Double.parseDouble(commissionFee), sDate, eDate,
-                  Integer.parseInt(interval));
+              Double.parseDouble(commissionFee), sDate, eDate,
+              Integer.parseInt(interval));
           if (op) {
             view.showOutput("Dollar Cost Averaging Portfolio Created Successfully!!");
           }
         } catch (Exception e) {
           view.showOutput(e.toString());
         }
+      } catch (IllegalArgumentException e) {
+        view.showBlank();
       }
+
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
     }
   }
+
 }
