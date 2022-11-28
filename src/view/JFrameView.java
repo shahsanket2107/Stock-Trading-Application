@@ -145,7 +145,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public ArrayList<String> createPortfolioInput() {
+  public ArrayList<String> createPortfolioInput() throws IllegalArgumentException{
     JTextField field1 = new JTextField();
     JTextField field2 = new JTextField();
     JTextField field3 = new JTextField();
@@ -172,6 +172,10 @@ public class JFrameView extends JFrame implements IView {
       date = field4.getText();
       commissionFee = field5.getText();
     }
+    if (pName.equals("") || ticker.equals("") || date.equals("") || commissionFee.equals("")
+        || qty.equals("")) {
+      throw new IllegalArgumentException("Input fields cannot be bank");
+    }
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(ticker);
@@ -182,7 +186,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public ArrayList<String> getInput() {
+  public ArrayList<String> getInput() throws IllegalArgumentException{
     JTextField field1 = new JTextField();
     JTextField field2 = new JTextField();
     Object[] message = {
@@ -197,6 +201,9 @@ public class JFrameView extends JFrame implements IView {
       pName = field1.getText();
       date = field2.getText();
     }
+    if (pName.equals("") || date.equals("")) {
+      throw new IllegalArgumentException("Input cannot be blank");
+    }
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(date);
@@ -204,7 +211,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public ArrayList<String> getInputForPerformance() {
+  public ArrayList<String> getInputForPerformance() throws IllegalArgumentException{
     JTextField field1 = new JTextField();
     JTextField field2 = new JTextField();
     JTextField field3 = new JTextField();
@@ -231,7 +238,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public ArrayList<String> getInvestmentDetails() {
+  public ArrayList<String> getInvestmentDetails() throws IllegalArgumentException{
     JTextField field1 = new JTextField();
     JTextField field2 = new JTextField();
     JTextField field3 = new JTextField();
@@ -254,6 +261,9 @@ public class JFrameView extends JFrame implements IView {
       date = field3.getText();
       commissionFee = field4.getText();
     }
+    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || date.equals("")) {
+      throw new IllegalArgumentException("Input fields cannot be blank");
+    }
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(amount);
@@ -263,20 +273,23 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public Map<String, Double> getInvestmentShares() {
+  public Map<String, Double> getInvestmentShares() throws IllegalArgumentException {
     Map<String, Double> m = new HashMap<>();
     int num = Integer.parseInt(
         JOptionPane.showInputDialog("Please enter the number of stocks you want to invest in:"));
-    for (int i=0;i<num;i++){
+    for (int i = 0; i < num; i++) {
       JTextField field1 = new JTextField();
       JTextField field2 = new JTextField();
       Object[] message = {
-          "Please enter the ticker of stock "+(i+1)+"", field1,
+          "Please enter the ticker of stock " + (i + 1) + "", field1,
           "Please enter percentage amount you want to invest", field2,
       };
       int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
           JOptionPane.OK_CANCEL_OPTION);
       if (option == JOptionPane.OK_OPTION) {
+        if (field1.getText().equals("") || field2.getText().equals("")) {
+          throw new IllegalArgumentException("Input fields cannot be blank");
+        }
         m.put(field1.getText(), Double.valueOf(field2.getText()));
       }
 
@@ -285,7 +298,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public ArrayList<String> getDollarCostDetails() {
+  public ArrayList<String> getDollarCostDetails() throws IllegalArgumentException{
     JTextField field1 = new JTextField();
     JTextField field2 = new JTextField();
     JTextField field3 = new JTextField();
@@ -316,6 +329,10 @@ public class JFrameView extends JFrame implements IView {
       eDate = field5.getText();
       interval = field6.getText();
     }
+    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || sDate.equals("")
+        || interval.equals("")) {
+      throw new IllegalArgumentException("Input fields cannot be blank");
+    }
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(amount);
@@ -324,5 +341,10 @@ public class JFrameView extends JFrame implements IView {
     output.add(eDate);
     output.add(interval);
     return output;
+  }
+
+  @Override
+  public void showBlank() {
+    JOptionPane.showMessageDialog(null, "Input fields cannot be blank");
   }
 }
