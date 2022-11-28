@@ -277,20 +277,26 @@ public class JFrameView extends JFrame implements IView {
     Map<String, Double> m = new HashMap<>();
     int num = Integer.parseInt(
         JOptionPane.showInputDialog("Please enter the number of stocks you want to invest in:"));
-    for (int i = 0; i < num; i++) {
-      JTextField field1 = new JTextField();
-      JTextField field2 = new JTextField();
-      Object[] message = {
-          "Please enter the ticker of stock " + (i + 1) + "", field1,
-          "Please enter percentage amount you want to invest", field2,
+    JTextField[] fields = new JTextField[num*2+1];
+    Object[] message = new Object[num*4+1];
+    int c=0;
+    for (int i = 0; i < num*2; i += 2) {
+      message[c++]= "Please enter the ticker of stock ";
+      fields[i]= new JTextField();
+      message[c++]=fields[i];
+      message[c++]= "Please enter percentage amount you want to invest";
+      fields[i+1]=new JTextField();
+      message[c++]=fields[i + 1];
       };
-      int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-          JOptionPane.OK_CANCEL_OPTION);
-      if (option == JOptionPane.OK_OPTION) {
-        if (field1.getText().equals("") || field2.getText().equals("")) {
+
+    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+        JOptionPane.OK_CANCEL_OPTION);
+    if (option == JOptionPane.OK_OPTION) {
+      for (int i = 0; i < num*2 - 1; i += 2) {
+        if (fields[i].getText().equals("") || fields[i + 1].getText().equals("")) {
           throw new IllegalArgumentException("Input fields cannot be blank");
         }
-        m.put(field1.getText(), Double.valueOf(field2.getText()));
+        m.put(fields[i].getText(), Double.valueOf(fields[i + 1].getText()));
       }
 
     }
