@@ -52,14 +52,10 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     return temp;
   }
 
-  private void invalidInputHelperForFractionalPercentage(String pname, String date,
+  private void invalidInputHelperForFractionalPercentage(String date,
                                                          double amount, Map<String, Double> m,
                                                          double commissionFee)
           throws IllegalArgumentException {
-    List<String> validPortfolios = super.getPortfolioNames();
-    if (!validPortfolios.contains(pname)) {
-      throw new IllegalArgumentException("Portfolio Name does not exist !!");
-    }
     if (!super.isValidFormat(date)) {
       throw new IllegalArgumentException("Date is not in proper format !!");
     }
@@ -83,8 +79,12 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   public boolean investFractionalPercentage(String pname, String date,
                                             double amount, Map<String, Double> m,
                                             double commissionFee) throws IllegalArgumentException {
+    List<String> validPortfolios = super.getPortfolioNames();
+    if (!validPortfolios.contains(pname)) {
+      throw new IllegalArgumentException("Portfolio Name does not exist !!");
+    }
     try {
-      invalidInputHelperForFractionalPercentage(pname, date, amount, m, commissionFee);
+      invalidInputHelperForFractionalPercentage(date, amount, m, commissionFee);
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException(e.getMessage());
     }
@@ -162,23 +162,24 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     String formattedCurrentDate = sdf.format(currentDate);
     Date s;
     String fEndDate = endDate;
+    String fStartDate = startDate;
     if (endDate.isEmpty()) {
       fEndDate = formattedCurrentDate;
     }
-    while (super.dateCompare(fEndDate, startDate)) {
+    while (super.dateCompare(fEndDate, fStartDate)) {
       try {
-        s = sdf.parse(startDate);
+        s = sdf.parse(fStartDate);
       } catch (Exception e) {
         throw new IllegalArgumentException("Error in parsing date!!");
       }
-      if (super.dateCompare(startDate, formattedCurrentDate)) {
-        return startDate;
+      if (super.dateCompare(fStartDate, formattedCurrentDate)) {
+        return fStartDate;
       }
       c.setTime(s);
       c.add(Calendar.DATE, interval);
-      startDate = sdf.format(c.getTime());
+      fStartDate = sdf.format(c.getTime());
     }
-    return fEndDate;
+    return startDate;
   }
 
   @Override
@@ -187,7 +188,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
                                               String startDate, String endDate, int interval)
           throws IllegalArgumentException {
     try {
-      invalidInputHelperForFractionalPercentage(pname, startDate, amount, m, commissionFee);
+      invalidInputHelperForFractionalPercentage(startDate, amount, m, commissionFee);
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException(e.getMessage());
     }
@@ -248,6 +249,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
       }
 
     } catch (Exception e) {
+      e.printStackTrace();
       throw new IllegalArgumentException("Error in parsing the file!!");
     }
     if (flg == 1) {
