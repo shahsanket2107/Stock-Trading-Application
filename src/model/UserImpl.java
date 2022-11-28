@@ -143,11 +143,8 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getTotalValuation(String date, String pName) {
-    StringBuilder check = dateFormatHelper(date);
-    if (!check.isEmpty()) {
-      return check;
-    }
+  public StringBuilder getTotalValuation(String date, String pName) throws IllegalArgumentException {
+    dateFormatHelper(date);
     StringBuilder temp = new StringBuilder();
     Portfolio p;
     for (Portfolio value : this.portfolio) {
@@ -264,11 +261,8 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getCostBasis(String date, String pName) {
-    StringBuilder check = dateFormatHelper(date);
-    if (!check.isEmpty()) {
-      return check;
-    }
+  public StringBuilder getCostBasis(String date, String pName) throws IllegalArgumentException {
+    dateFormatHelper(date);
     StringBuilder temp = new StringBuilder();
     FlexiblePortfolio p;
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
@@ -332,12 +326,11 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getFlexiblePortfolioComposition(String pName, String date) {
+  public StringBuilder getFlexiblePortfolioComposition(String pName, String date)
+          throws IllegalArgumentException {
     StringBuilder temp = new StringBuilder();
-    StringBuilder check = dateFormatHelper(date);
-    if (!check.isEmpty()) {
-      return check;
-    }
+    dateFormatHelper(date);
+
     Map<String, Double> m;
     Map<String, Double> result = new HashMap<>();
     try {
@@ -379,12 +372,11 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String buyStocks(String ticker, double qty, String pName, String date, double commissionFee) {
+  public String buyStocks(String ticker, double qty, String pName, String date,
+                          double commissionFee) throws IllegalArgumentException {
 
-    StringBuilder check = dateFormatHelper(date);
-    if (!check.isEmpty()) {
-      return check.toString();
-    }
+    dateFormatHelper(date);
+
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         Stocks stocks = new StocksImpl(date, ticker, qty);
@@ -402,16 +394,13 @@ public class UserImpl implements User {
   }
 
   @Override
-  public String sellStocks(String ticker, double qty, String pName, String date, double commissionFee) {
+  public String sellStocks(String ticker, double qty, String pName, String date,
+                           double commissionFee) throws IllegalArgumentException {
 
     int tempQty = 0;
     int flg = 0;
 
-    StringBuilder check = dateFormatHelper(date);
-    if (!check.isEmpty()) {
-      return check.toString();
-    }
-
+    dateFormatHelper(date);
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
       if (pName.equals(value.getName())) {
         List<Stocks> stocks = value.getStocks();
@@ -443,11 +432,9 @@ public class UserImpl implements User {
   }
 
   @Override
-  public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) {
-    StringBuilder check = dateFormatHelper(date);
-    if (!check.isEmpty()) {
-      return check;
-    }
+  public StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName) throws
+          IllegalArgumentException {
+    dateFormatHelper(date);
     StringBuilder temp = new StringBuilder();
     FlexiblePortfolio p;
     for (FlexiblePortfolio value : this.flexiblePortfolio) {
@@ -508,19 +495,19 @@ public class UserImpl implements User {
     return temp;
   }
 
-  private StringBuilder dateFormatHelper(String date) {
+  protected void dateFormatHelper(String date) throws IllegalArgumentException {
     String temp_date = date.replaceAll("[\\s\\-()]", "");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDateTime now = LocalDateTime.now();
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
-      return new StringBuilder(
+      throw new IllegalArgumentException(
               "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
-      return new StringBuilder("Date should be more than 1st January 2000. Try a different date");
+      throw new IllegalArgumentException(
+              "Date should be more than 1st January 2000. Try a different date");
     }
-    return new StringBuilder();
   }
 
   protected boolean dateCompare(String date1, String date2) {

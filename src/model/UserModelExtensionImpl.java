@@ -63,6 +63,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     if (!super.isValidFormat(date)) {
       throw new IllegalArgumentException("Date is not in proper format !!");
     }
+    super.dateFormatHelper(date);
     if (amount <= 0) {
       throw new IllegalArgumentException("Amount should be positive !!");
     }
@@ -79,9 +80,9 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   @Override
-  public String investFractionalPercentage(String pname, String date,
-                                           double amount, Map<String, Double> m,
-                                           double commissionFee) throws IllegalArgumentException {
+  public boolean investFractionalPercentage(String pname, String date,
+                                            double amount, Map<String, Double> m,
+                                            double commissionFee) throws IllegalArgumentException {
     try {
       invalidInputHelperForFractionalPercentage(pname, date, amount, m, commissionFee);
     } catch (IllegalArgumentException e) {
@@ -110,9 +111,9 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
       }
     }
     if (flg == 0) {
-      return "Portfolio Name does not exist!!";
+      throw new IllegalArgumentException("Portfolio Name does not exist!!");
     }
-    return "Amount Invested Successfully!!";
+    return true;
   }
 
   private void dataStoreHelper(String ticker) throws IllegalArgumentException {
@@ -181,19 +182,28 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   @Override
-  public String dollarCostAveragingPortfolio(String pname, Map<String, Double> m,
-                                             double amount, double commissionFee,
-                                             String startDate, String endDate, int interval)
+  public boolean dollarCostAveragingPortfolio(String pname, Map<String, Double> m,
+                                              double amount, double commissionFee,
+                                              String startDate, String endDate, int interval)
           throws IllegalArgumentException {
+    try {
+      invalidInputHelperForFractionalPercentage(pname, startDate, amount, m, commissionFee);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    }
+    if (interval <= 0) {
+      throw new IllegalArgumentException("Time interval to invest must be a positive number of " +
+              "days!!");
+    }
     if (!endDate.isEmpty() && super.dateCompare(startDate, endDate)) {
-      return ("Start date cannot be more than end date!");
+      throw new IllegalArgumentException("Start date cannot be more than end date!");
     }
     int chk = super.checkPortfolioExists(pname);
     if (chk == 0) {
-      super.createFlexiblePortfolio(pname, new ArrayList(), commissionFee);
+      super.createFlexiblePortfolio(pname, new ArrayList<>(), commissionFee);
     }
     dollarCostAveragingHelper(pname, m, amount, commissionFee, startDate, endDate, interval);
-    return "Dollar Cost Averaging Portfolio Created Successfully!!";
+    return true;
   }
 
   private void futureDatesStrategyHelper(String pname, String startDate, String endDate,

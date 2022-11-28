@@ -275,8 +275,12 @@ public class UserControllerImpl implements UserController {
     view.getDate();
     String date = scan.nextLine();
     if (user.isValidFormat(date)) {
-      StringBuilder composition = user.getFlexiblePortfolioComposition(p_name, date);
-      view.displayMessage(String.valueOf(composition));
+      try {
+        StringBuilder composition = user.getFlexiblePortfolioComposition(p_name, date);
+        view.displayMessage(String.valueOf(composition));
+      } catch (IllegalArgumentException e) {
+        view.displayMessage(e.getMessage());
+      }
     } else {
       view.invalidDate();
     }
@@ -317,8 +321,12 @@ public class UserControllerImpl implements UserController {
       double commissionFee = checkCommissionFee(scan);
       if (commissionFee != -1) {
         if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
-          String message = user.sellStocks(ticker, qty, pName, date, commissionFee);
-          view.displayMessage(message);
+          try {
+            String message = user.sellStocks(ticker, qty, pName, date, commissionFee);
+            view.displayMessage(message);
+          } catch (IllegalArgumentException e) {
+            view.displayMessage(e.getMessage());
+          }
         } else if (!user.isValidFormat(date)) {
           view.invalidDate();
         } else {
@@ -344,8 +352,12 @@ public class UserControllerImpl implements UserController {
       double commissionFee = checkCommissionFee(scan);
       if (commissionFee != -1) {
         if (user.isValidFormat(date) && user.validateDateAccToApi(ticker, date)) {
-          String message = user.buyStocks(ticker, qty, pName, date, commissionFee);
-          view.displayMessage(message);
+          try {
+            String message = user.buyStocks(ticker, qty, pName, date, commissionFee);
+            view.displayMessage(message);
+          } catch (IllegalArgumentException e) {
+            view.displayMessage(e.getMessage());
+          }
         } else if (!user.isValidFormat(date)) {
           view.invalidDate();
         } else {
@@ -387,8 +399,12 @@ public class UserControllerImpl implements UserController {
       String date = scan.nextLine();
       if (user.isValidFormat(date)) {
         StringBuilder result;
-        result = user.getCostBasis(date, pName);
-        view.displayMessage(String.valueOf(result));
+        try {
+          result = user.getCostBasis(date, pName);
+          view.displayMessage(String.valueOf(result));
+        } catch (IllegalArgumentException e) {
+          view.displayMessage(e.getMessage());
+        }
       } else {
         view.invalidDate();
       }

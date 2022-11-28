@@ -123,8 +123,10 @@ public interface User {
    * @param date  defines the date at the point of which the user can view the net composition of
    *              his portfolio till that date.
    * @return the String Builder with the portfolio composition till that date.
+   * @throws IllegalArgumentException when date is invalid.
    */
-  StringBuilder getFlexiblePortfolioComposition(String pName, String date);
+  StringBuilder getFlexiblePortfolioComposition(String pName, String date)
+          throws IllegalArgumentException;
 
   /**
    * This method loads the Flexible Portfolio from the .json file.
@@ -145,8 +147,10 @@ public interface User {
    * @param date          is the date at which he wishes to buy the stocks.
    * @param commissionFee is the commission fee for each transaction.
    * @return the appropriate message of successful/unsuccessful buying of stocks.
+   * @throws IllegalArgumentException when date is invalid.
    */
-  String buyStocks(String ticker, double qty, String pName, String date, double commissionFee);
+  String buyStocks(String ticker, double qty, String pName, String date, double commissionFee)
+          throws IllegalArgumentException;
 
   /**
    * This method is used to sell stocks in a particular flexible portfolio.
@@ -157,8 +161,9 @@ public interface User {
    * @param date          is the date at which he wishes to sell the stocks.
    * @param commissionFee is the commission fee for each transaction.
    * @return the appropriate message of successful/unsuccessful selling of stocks.
+   * @throws IllegalArgumentException when date is invalid.
    */
-  String sellStocks(String ticker, double qty, String pName, String date, double commissionFee);
+  String sellStocks(String ticker, double qty, String pName, String date, double commissionFee) throws IllegalArgumentException;
 
   /**
    * This method is used to get total valuation of Flexible Portfolio on a particular date.
@@ -166,8 +171,10 @@ public interface User {
    * @param date  is the date at which user would like to determine the total portfolio valuation.
    * @param pName is the name of the portfolio whose valuation is to be determined.
    * @return the valuation of the portfolio with the valuation breakdown of each stock.
+   * @throws IllegalArgumentException when date is invalid.
    */
-  StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName);
+  StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName)
+          throws IllegalArgumentException;
 
   /**
    * This method determines if data for a particular date exists in the API call result or not.
@@ -184,8 +191,9 @@ public interface User {
    * @param date  is the date till which the cost basis is to be computed.
    * @param pName is the name of the portfolio.
    * @return the cost basis for that portfolio.
+   * @throws IllegalArgumentException when date is invalid.
    */
-  StringBuilder getCostBasis(String date, String pName);
+  StringBuilder getCostBasis(String date, String pName) throws IllegalArgumentException;
 
   /**
    * This method displays the chart for the performance of portfolio over a period of time.

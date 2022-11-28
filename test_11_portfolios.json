@@ -373,4 +373,47 @@
 }, {
   "name" : "test_p1",
   "stocks" : [ ]
+}, {
+  "name" : "sanket_p1",
+  "stocks" : [ {
+    "ticker" : "AAPL",
+    "date" : "2022-10-28",
+    "qty" : 10.0,
+    "costBasis" : 1577.4
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-11-07",
+    "qty" : -5.0,
+    "costBasis" : 20.0
+  }, {
+    "ticker" : "ZS",
+    "date" : "2022-11-07",
+    "qty" : 15.0,
+    "costBasis" : 40.0
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-11-07",
+    "qty" : 10.0,
+    "costBasis" : 100.0
+  }, {
+    "ticker" : "MSFT",
+    "date" : "2022-11-19",
+    "qty" : 0.8180128072712249,
+    "costBasis" : 203.0
+  }, {
+    "ticker" : "AAPL",
+    "date" : "2022-11-19",
+    "qty" : 7.3576109722316065,
+    "costBasis" : 1094.0
+  }, {
+    "ticker" : "TSLA",
+    "date" : "2022-11-19",
+    "qty" : 1.1794841246202419,
+    "costBasis" : 203.0
+  }, {
+    "ticker" : "ZS",
+    "date" : "2022-11-19",
+    "qty" : 3.641848145968217,
+    "costBasis" : 500.0
+  } ]
 } ]

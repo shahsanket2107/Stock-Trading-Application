@@ -6,9 +6,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import model.Stocks;
 import model.StocksImpl;
 import model.UserModelExtension;
@@ -36,11 +38,11 @@ public class Controller implements Features {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
       throw new IllegalArgumentException(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be greater or equal to current date. Try a different date");
     }
     if (Integer.parseInt(temp_date) <= 20000101) {
       throw new IllegalArgumentException(
-          "Date should be more than 1st January 2000. Try a different date");
+              "Date should be more than 1st January 2000. Try a different date");
     }
     return true;
   }
@@ -81,7 +83,7 @@ public class Controller implements Features {
   public void loadPortfolio() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "JSON files only", "json");
+            "JSON files only", "json");
     fchooser.setFileFilter(filter);
     int retvalue = fchooser.showOpenDialog(null);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
@@ -145,7 +147,7 @@ public class Controller implements Features {
           view.showOutput("Date is not in proper format!!");
         } else if (!user.validateDateAccToApi(ticker, date)) {
           view.showOutput(
-              "Stock market is closed at this date, so please enter a different date!!");
+                  "Stock market is closed at this date, so please enter a different date!!");
         }
       }
     }
@@ -192,7 +194,7 @@ public class Controller implements Features {
     if (chk != 2) {
       view.showOutput("Portfolio with given name does not exist");
     } else {
-      if (user.isValidFormat(date)&&dateFormatHelper(date)) {
+      if (user.isValidFormat(date) && dateFormatHelper(date)) {
         StringBuilder result = new StringBuilder();
         try {
           result = user.getCostBasis(date, pName);
@@ -215,7 +217,7 @@ public class Controller implements Features {
     if (chk != 2) {
       view.showOutput("Portfolio with given name does not exist");
     } else {
-      if (user.isValidFormat(date)&&dateFormatHelper(date)) {
+      if (user.isValidFormat(date) && dateFormatHelper(date)) {
         StringBuilder result = new StringBuilder();
         try {
           result = user.getFlexiblePortfolioComposition(pName, date);
@@ -260,9 +262,11 @@ public class Controller implements Features {
           view.showOutput("Portfolio with given name does not exist");
         } else {
           try {
-            String op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount), m,
-                Double.parseDouble(commissionFee));
-            view.showOutput(op);
+            boolean op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount), m,
+                    Double.parseDouble(commissionFee));
+            if (op) {
+              view.showOutput("Amount Invested Successfully!!");
+            }
           } catch (Exception e) {
             view.showOutput(e.toString());
           }
@@ -282,7 +286,7 @@ public class Controller implements Features {
     String eDate = output.get(4);
     String interval = output.get(5);
     if (pName.equals("") || amount.equals("") || commissionFee.equals("") || sDate.equals("")
-        || interval.equals("")) {
+            || interval.equals("")) {
       view.showOutput("Input fields cannot be blank");
     } else {
       Map<String, Double> m = view.getInvestmentShares();
@@ -290,10 +294,12 @@ public class Controller implements Features {
         view.showOutput("Input fields cannot be blank");
       } else {
         try {
-          String op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
-              Double.parseDouble(commissionFee), sDate, eDate,
-              Integer.parseInt(interval));
-          view.showOutput(op);
+          boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
+                  Double.parseDouble(commissionFee), sDate, eDate,
+                  Integer.parseInt(interval));
+          if (op) {
+            view.showOutput("Dollar Cost Averaging Portfolio Created Successfully!!");
+          }
         } catch (Exception e) {
           view.showOutput(e.toString());
         }
