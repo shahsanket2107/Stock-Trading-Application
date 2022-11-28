@@ -192,7 +192,7 @@ public class Controller implements Features {
     if (chk != 2) {
       view.showOutput("Portfolio with given name does not exist");
     } else {
-      if (user.isValidFormat(date)) {
+      if (user.isValidFormat(date)&&dateFormatHelper(date)) {
         StringBuilder result = new StringBuilder();
         try {
           result = user.getCostBasis(date, pName);
@@ -215,7 +215,7 @@ public class Controller implements Features {
     if (chk != 2) {
       view.showOutput("Portfolio with given name does not exist");
     } else {
-      if (user.isValidFormat(date)) {
+      if (user.isValidFormat(date)&&dateFormatHelper(date)) {
         StringBuilder result = new StringBuilder();
         try {
           result = user.getFlexiblePortfolioComposition(pName, date);
@@ -244,27 +244,60 @@ public class Controller implements Features {
   @Override
   public void investInPortfolio() {
     ArrayList<String> output = view.getInvestmentDetails();
-    Map<String, Double> m = view.getInvestmentShares();
     String pName = output.get(0);
-    double amount = Double.parseDouble(output.get(1));
+    String amount = output.get(1);
     String date = output.get(2);
-    double commissionFee = Double.parseDouble(output.get(3));
-    String op = user.investFractionalPercentage(pName, date, amount, m, commissionFee);
-    view.showOutput(op);
+    String commissionFee = output.get(3);
+    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || date.equals("")) {
+      view.showOutput("Input fields cannot be blank");
+    } else {
+      Map<String, Double> m = view.getInvestmentShares();
+      if (m.isEmpty()) {
+        view.showOutput("Input fields cannot be blank");
+      } else {
+        int chk = user.checkPortfolioExists(pName);
+        if (chk != 2) {
+          view.showOutput("Portfolio with given name does not exist");
+        } else {
+          try {
+            String op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount), m,
+                Double.parseDouble(commissionFee));
+            view.showOutput(op);
+          } catch (Exception e) {
+            view.showOutput(e.toString());
+          }
+        }
+      }
+    }
   }
 
   @Override
   public void createPortfolioUsingDollarCost() {
     ArrayList<String> output = view.getDollarCostDetails();
-    Map<String, Double> m = view.getInvestmentShares();
+
     String pName = output.get(0);
-    double amount = Double.parseDouble(output.get(1));
-    double commissionFee = Double.parseDouble(output.get(2));
+    String amount = output.get(1);
+    String commissionFee = output.get(2);
     String sDate = output.get(3);
     String eDate = output.get(4);
-    int interval = Integer.parseInt(output.get(5));
-    String op = user.dollarCostAveragingPortfolio(pName, m, amount, commissionFee, sDate, eDate,
-        interval);
-    view.showOutput(op);
+    String interval = output.get(5);
+    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || sDate.equals("")
+        || interval.equals("")) {
+      view.showOutput("Input fields cannot be blank");
+    } else {
+      Map<String, Double> m = view.getInvestmentShares();
+      if (m.isEmpty()) {
+        view.showOutput("Input fields cannot be blank");
+      } else {
+        try {
+          String op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
+              Double.parseDouble(commissionFee), sDate, eDate,
+              Integer.parseInt(interval));
+          view.showOutput(op);
+        } catch (Exception e) {
+          view.showOutput(e.toString());
+        }
+      }
+    }
   }
 }
