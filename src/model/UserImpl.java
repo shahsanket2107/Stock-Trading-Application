@@ -720,5 +720,13 @@ public class UserImpl implements User {
     }
     return m;
   }
+
+  protected List<String> getPortfolioNames() {
+    List<String> ans = new ArrayList<>();
+    for (FlexiblePortfolio p : flexiblePortfolio) {
+      ans.add(p.getName());
+    }
+    return ans;
+  }
 }
 

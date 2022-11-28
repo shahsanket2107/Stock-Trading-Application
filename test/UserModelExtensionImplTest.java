@@ -49,6 +49,19 @@ public class UserModelExtensionImplTest {
   }
 
   @Test
+  public void testCreateDollarCostAveragePortfolioWithNoEndDate() {
+    Map<String, Double> m = new HashMap();
+    m.put("AAPL", 55.0);
+    m.put("ZS", 25.0);
+    m.put("TSLA", 10.0);
+    m.put("MSFT", 10.0);
+    String test = user.dollarCostAveragingPortfolio("test_p1", m, 2000,
+            20, "2021-06-19", "", 30);
+    assertEquals("Dollar Cost Averaging Portfolio Created Successfully!!", test);
+    assertEquals("", user.getFlexiblePortfolioComposition("test_p1", "2022-11-19"));
+  }
+
+  @Test
   public void testExistingDollarCostAveragePortfolio() {
     Map<String, Double> m = new HashMap();
     m.put("AAPL", 55.0);
@@ -59,6 +72,7 @@ public class UserModelExtensionImplTest {
     assertEquals("Dollar Cost Averaging Portfolio Created Successfully!!", test);
     assertEquals("", user.getFlexiblePortfolioComposition("sanket_p1", "2022-11-19"));
   }
+
 
   @Test
   public void testLoadFutureStrategy() {

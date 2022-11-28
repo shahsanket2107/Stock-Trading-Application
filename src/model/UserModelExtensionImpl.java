@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 
 public class UserModelExtensionImpl extends UserImpl implements UserModelExtension {
 
-
   public UserModelExtensionImpl() {
     super();
   }
@@ -53,10 +52,41 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     return temp;
   }
 
+  private void invalidInputHelperForFractionalPercentage(String pname, String date,
+                                                         double amount, Map<String, Double> m,
+                                                         double commissionFee)
+          throws IllegalArgumentException {
+    List<String> validPortfolios = super.getPortfolioNames();
+    if (!validPortfolios.contains(pname)) {
+      throw new IllegalArgumentException("Portfolio Name does not exist !!");
+    }
+    if (!super.isValidFormat(date)) {
+      throw new IllegalArgumentException("Date is not in proper format !!");
+    }
+    if (amount <= 0) {
+      throw new IllegalArgumentException("Amount should be positive !!");
+    }
+    if (commissionFee <= 0) {
+      throw new IllegalArgumentException("Commission Fee must be positive !!");
+    }
+    double temp = 0;
+    for (String ticker : m.keySet()) {
+      temp += m.get(ticker);
+    }
+    if (temp != 100.0) {
+      throw new IllegalArgumentException("The fractional shares must sum up to be 100% !!");
+    }
+  }
+
   @Override
   public String investFractionalPercentage(String pname, String date,
                                            double amount, Map<String, Double> m,
                                            double commissionFee) throws IllegalArgumentException {
+    try {
+      invalidInputHelperForFractionalPercentage(pname, date, amount, m, commissionFee);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    }
     List<FlexiblePortfolio> flexiblePortfolioList = super.getFlexiblePortfolioList();
     double finalAmount = amount - commissionFee;
     int flg = 0;
@@ -85,20 +115,6 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     return "Amount Invested Successfully!!";
   }
 
-  @Override
-  public List<String> setOfStocks(String pName, String date) throws IllegalArgumentException {
-    List<String> stocksSet = new ArrayList();
-    Map<String, Double> m = super.getPortfolioCompositionOnADateHelper(pName, date);
-
-    for (String s : m.keySet()) {
-      double value = m.get(s);
-      if (value > 0) {
-        stocksSet.add(s);
-      }
-    }
-    return stocksSet;
-  }
-
   private void dataStoreHelper(String ticker) throws IllegalArgumentException {
     Set set = super.getDataStore().getTickers();
     if (!set.contains(ticker)) {
@@ -112,9 +128,13 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Calendar c = Calendar.getInstance();
     Date currentDate = new Date();
+    String fEndDate = endDate;
     String formattedCurrentDate = sdf.format(currentDate);
+    if (endDate.isEmpty()) {
+      fEndDate = formattedCurrentDate;
+    }
     Date s;
-    while (super.dateCompare(endDate, startDate)) {
+    while (super.dateCompare(fEndDate, startDate)) {
       try {
         s = sdf.parse(startDate);
       } catch (Exception e) {
@@ -129,6 +149,9 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
       c.add(Calendar.DATE, interval);
       startDate = sdf.format(c.getTime());
     }
+    if (!fEndDate.equals(endDate)) {
+      futureDatesStrategyHelper(pname, startDate, endDate, amount, m, commissionFee, interval);
+    }
   }
 
   private String compareStartDateHelper(String startDate, String endDate, int interval) {
@@ -137,7 +160,11 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     Date currentDate = new Date();
     String formattedCurrentDate = sdf.format(currentDate);
     Date s;
-    while (super.dateCompare(endDate, startDate)) {
+    String fEndDate = endDate;
+    if (endDate.isEmpty()) {
+      fEndDate = formattedCurrentDate;
+    }
+    while (super.dateCompare(fEndDate, startDate)) {
       try {
         s = sdf.parse(startDate);
       } catch (Exception e) {
@@ -150,7 +177,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
       c.add(Calendar.DATE, interval);
       startDate = sdf.format(c.getTime());
     }
-    return endDate;
+    return fEndDate;
   }
 
   @Override
@@ -158,7 +185,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
                                              double amount, double commissionFee,
                                              String startDate, String endDate, int interval)
           throws IllegalArgumentException {
-    if (super.dateCompare(startDate, endDate)) {
+    if (!endDate.isEmpty() && super.dateCompare(startDate, endDate)) {
       return ("Start date cannot be more than end date!");
     }
     int chk = super.checkPortfolioExists(pname);
@@ -181,7 +208,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   @Override
-  public boolean loadPersistantStrategy(String pname) {
+  public boolean loadPersistantStrategy(String pname) throws IllegalArgumentException {
     String fileName = "user_persistance.json";
     JSONObject result;
     int flg = 0;
@@ -203,7 +230,6 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
         Map<String, Double> map = (Map<String, Double>) temp.get("fractionalShares");
         String newStartDate = compareStartDateHelper(startDate, endDate, interval);
         temp.put("startDate", newStartDate);
-        System.out.println(newStartDate);
         if (!newStartDate.equals(startDate)) {
           flg = 1;
           dollarCostAveragingPortfolio(pname, map, amount, commissionFee, startDate, newStartDate,

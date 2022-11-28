@@ -8,9 +8,6 @@ public interface UserModelExtension extends User {
                                     double amount, Map<String, Double> m,
                                     double commissionFee) throws IllegalArgumentException;
 
-  //Remove this at the end.
-  List<String> setOfStocks(String pName, String date) throws IllegalArgumentException;
-
   String dollarCostAveragingPortfolio(String pname, Map<String, Double> m, double amount,
                                       double commissionFee, String startDate, String endDate,
                                       int interval) throws IllegalArgumentException;
