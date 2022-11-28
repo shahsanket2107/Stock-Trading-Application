@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFileChooser;
@@ -287,23 +288,30 @@ public class Controller implements Features {
       String amount = output.get(1);
       String date = output.get(2);
       String commissionFee = output.get(3);
-
-      Map<String, Double> m;
+      String num = output.get(4);
+      Map<String, Double> m = new HashMap<>();
       try {
-        m = view.getInvestmentShares();
-        int chk = user.checkPortfolioExists(pName);
-        if (chk != 2) {
-          view.showOutput("Portfolio with given name does not exist");
-        } else {
-          try {
-            boolean op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount), m,
-                Double.parseDouble(commissionFee));
-            if (op) {
-              view.showOutput("Amount Invested Successfully!!");
+        if (Integer.parseInt(num) > 0) {
+          m = view.getInvestmentShares(Integer.parseInt(num));
+
+          int chk = user.checkPortfolioExists(pName);
+          if (chk != 2) {
+            view.showOutput("Portfolio with given name does not exist");
+          } else {
+            try {
+              boolean op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount),
+                  m,
+                  Double.parseDouble(commissionFee));
+              if (op) {
+                view.showOutput("Amount Invested Successfully!!");
+              }
+            } catch (Exception e) {
+              view.showOutput(e.toString());
             }
-          } catch (Exception e) {
-            view.showOutput(e.toString());
           }
+        }
+        else{
+          view.showOutput("Number of stocks should be greater than 0");
         }
       } catch (IllegalArgumentException e) {
         view.showBlank();
@@ -326,22 +334,30 @@ public class Controller implements Features {
       String sDate = output.get(3);
       String eDate = output.get(4);
       String interval = output.get(5);
-      Map<String, Double> m;
+      String num = output.get(6);
+      Map<String, Double> m = new HashMap<>();
       try {
-        m = view.getInvestmentShares();
-        try {
-          boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
-              Double.parseDouble(commissionFee), sDate, eDate,
-              Integer.parseInt(interval));
-          if (op) {
-            view.showOutput("Dollar Cost Averaging Portfolio Created Successfully!!");
+        if (Integer.parseInt(num) > 0) {
+          m = view.getInvestmentShares(Integer.parseInt(num));
+
+          try {
+            boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
+                Double.parseDouble(commissionFee), sDate, eDate,
+                Integer.parseInt(interval));
+            if (op) {
+              view.showOutput("Dollar Cost Averaging Portfolio Created Successfully!!");
+            }
+          } catch (Exception e) {
+            view.showOutput(e.toString());
           }
-        } catch (Exception e) {
-          view.showOutput(e.toString());
+        }
+        else{
+          view.showOutput("Number of stocks should be greater than 0");
         }
       } catch (IllegalArgumentException e) {
         view.showBlank();
       }
+
 
     } catch (IllegalArgumentException e) {
       view.showBlank();

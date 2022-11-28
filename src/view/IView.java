@@ -11,7 +11,7 @@ public interface IView {
   ArrayList<String> getInput() throws IllegalArgumentException;
   ArrayList<String> getInputForPerformance() throws IllegalArgumentException;
   ArrayList<String> getInvestmentDetails() throws IllegalArgumentException;
-  Map<String,Double> getInvestmentShares() throws IllegalArgumentException;
+  Map<String,Double> getInvestmentShares(int num) throws IllegalArgumentException;
   ArrayList<String> getDollarCostDetails() throws IllegalArgumentException;
   void showBlank();
 }
