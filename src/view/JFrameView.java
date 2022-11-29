@@ -47,6 +47,7 @@ public class JFrameView extends JFrame implements IView {
     mainPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     add(mainPanel);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     cpBtn = new JButton("Create a flexible portfolio");
 
