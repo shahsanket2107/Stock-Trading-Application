@@ -164,7 +164,6 @@ public class Controller implements Features {
             view.showOutput(e.toString());
           }
         }
-
       } else if (!user.isValidFormat(date)) {
         view.showOutput("Date is not in proper format!!");
       } else if (!user.validateDateAccToApi(ticker, date)) {

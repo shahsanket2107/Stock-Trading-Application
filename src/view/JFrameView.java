@@ -38,20 +38,44 @@ public class JFrameView extends JFrame implements IView {
   private final JButton gpBtn;
   private final JButton ipBtn;
   private final JButton dcBtn;
+  private JPanel mainPanel;
 
   public JFrameView(String name) {
 
     setTitle("ASSIGNMENT 6");
     setSize(400, 500);
-    JPanel mainPanel = new JPanel();
+    mainPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-    //mainScrollPane = new JScrollPane(mainPanel);
     add(mainPanel);
 
+    cpBtn = new JButton("Create a flexible portfolio");
+
+    bsBtn = new JButton("Buy stocks");
+
+    ssBtn = new JButton("Sell stocks");
+
+    cbBtn = new JButton("Find cost basis of a portfolio");
+
+    vBtn = new JButton("Find value of a portfolio");
+
+    lpBtn = new JButton("Load portfolio");
+
+    gcBtn = new JButton("Get portfolio composition");
+
+    gpBtn = new JButton("Get portfolio performance");
+
+    ipBtn = new JButton("Invest in a portfolio");
+
+    dcBtn = new JButton("Create portfolio using dollar-cost averaging");
+    createMenu(name);
+    setVisible(true);
+  }
+
+  private void createMenu(String name) {
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(
-            BorderFactory.createTitledBorder(
-                    "Welcome " + name + "!! Choose any option from the menu :"));
+        BorderFactory.createTitledBorder(
+            "Welcome " + name + "!! Choose any option from the menu :"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(dialogBoxesPanel);
 
@@ -59,7 +83,6 @@ public class JFrameView extends JFrame implements IView {
     createPortfolioPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(createPortfolioPanel);
 
-    cpBtn = new JButton("Create a flexible portfolio");
     cpBtn.setActionCommand("Create portfolio");
     createPortfolioPanel.add(cpBtn);
 
@@ -67,7 +90,6 @@ public class JFrameView extends JFrame implements IView {
     buyStocksPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(buyStocksPanel);
 
-    bsBtn = new JButton("Buy stocks");
     bsBtn.setActionCommand("Buy Stocks");
     buyStocksPanel.add(bsBtn);
 
@@ -75,7 +97,6 @@ public class JFrameView extends JFrame implements IView {
     sellStocksPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(sellStocksPanel);
 
-    ssBtn = new JButton("Sell stocks");
     ssBtn.setActionCommand("Sell Stocks");
     sellStocksPanel.add(ssBtn);
 
@@ -83,15 +104,16 @@ public class JFrameView extends JFrame implements IView {
     findCostBasisPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(findCostBasisPanel);
 
-    cbBtn = new JButton("Find cost basis of a portfolio");
     cbBtn.setActionCommand("Cost Basis");
     findCostBasisPanel.add(cbBtn);
 
+   createMenuHelper(dialogBoxesPanel);
+  }
+  private void createMenuHelper(JPanel dialogBoxesPanel){
     JPanel findValuePanel = new JPanel();
     findValuePanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(findValuePanel);
 
-    vBtn = new JButton("Find value of a portfolio");
     vBtn.setActionCommand("Value");
     findValuePanel.add(vBtn);
 
@@ -99,7 +121,6 @@ public class JFrameView extends JFrame implements IView {
     loadPortfolioPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(loadPortfolioPanel);
 
-    lpBtn = new JButton("Load portfolio");
     lpBtn.setActionCommand("Load Portfolio");
     loadPortfolioPanel.add(lpBtn);
 
@@ -107,23 +128,13 @@ public class JFrameView extends JFrame implements IView {
     getCompositionPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(getCompositionPanel);
 
-    gcBtn = new JButton("Get portfolio composition");
     gcBtn.setActionCommand("Get portfolio composition");
     getCompositionPanel.add(gcBtn);
-
-    JPanel getPerformancePanel = new JPanel();
-    getPerformancePanel.setLayout(new FlowLayout());
-    dialogBoxesPanel.add(getPerformancePanel);
-
-    gpBtn = new JButton("Get portfolio performance");
-    gpBtn.setActionCommand("Get portfolio performance");
-    getPerformancePanel.add(gpBtn);
 
     JPanel investPanel = new JPanel();
     investPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(investPanel);
 
-    ipBtn = new JButton("Invest in a portfolio");
     ipBtn.setActionCommand("Invest in a portfolio");
     investPanel.add(ipBtn);
 
@@ -131,11 +142,14 @@ public class JFrameView extends JFrame implements IView {
     dollarCostPanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(dollarCostPanel);
 
-    dcBtn = new JButton("Create portfolio using dollar-cost averaging");
     dcBtn.setActionCommand("Create portfolio using dollar-cost averaging");
     dollarCostPanel.add(dcBtn);
 
-    setVisible(true);
+    JPanel getPerformancePanel = new JPanel();
+    getPerformancePanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(getPerformancePanel);
+    gpBtn.setActionCommand("Get portfolio performance");
+    getPerformancePanel.add(gpBtn);
   }
 
   @Override
@@ -165,14 +179,14 @@ public class JFrameView extends JFrame implements IView {
     JTextField field4 = new JTextField();
     JTextField field5 = new JTextField();
     Object[] message = {
-            "Please enter your portfolio name", field1,
-            "Please enter ticker of stock you want to add to portfolio", field2,
-            "Please enter quantity of stocks", field3,
-            "Please enter date in format (yyyy-MM-dd)", field4,
-            "Please enter the commission fee", field5
+        "Please enter your portfolio name", field1,
+        "Please enter ticker of stock you want to add to portfolio", field2,
+        "Please enter quantity of stocks", field3,
+        "Please enter date in format (yyyy-MM-dd)", field4,
+        "Please enter the commission fee", field5
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-            JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.OK_CANCEL_OPTION);
     String pName = "";
     String ticker = "";
     String qty = "";
@@ -186,7 +200,7 @@ public class JFrameView extends JFrame implements IView {
       commissionFee = field5.getText();
     }
     if (pName.equals("") || ticker.equals("") || date.equals("") || commissionFee.equals("")
-            || qty.equals("")) {
+        || qty.equals("")) {
       throw new IllegalArgumentException("Input fields cannot be bank");
     }
     ArrayList<String> output = new ArrayList<>();
@@ -203,11 +217,11 @@ public class JFrameView extends JFrame implements IView {
     JTextField field1 = new JTextField();
     JTextField field2 = new JTextField();
     Object[] message = {
-            "Please enter your portfolio name", field1,
-            "Please enter date in format (yyyy-MM-dd)", field2,
+        "Please enter your portfolio name", field1,
+        "Please enter date in format (yyyy-MM-dd)", field2,
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-            JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.OK_CANCEL_OPTION);
     String pName = "";
     String date = "";
     if (option == JOptionPane.OK_OPTION) {
@@ -229,12 +243,12 @@ public class JFrameView extends JFrame implements IView {
     JTextField field2 = new JTextField();
     JTextField field3 = new JTextField();
     Object[] message = {
-            "Please enter your portfolio name", field1,
-            "Please enter start date in format (yyyy-MM-dd)", field2,
-            "Please enter end date in format (yyyy-MM-dd)", field3
+        "Please enter your portfolio name", field1,
+        "Please enter start date in format (yyyy-MM-dd)", field2,
+        "Please enter end date in format (yyyy-MM-dd)", field3
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-            JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.OK_CANCEL_OPTION);
     String pName = "";
     String sDate = "";
     String eDate = "";
@@ -261,14 +275,14 @@ public class JFrameView extends JFrame implements IView {
     JTextField field4 = new JTextField();
     JTextField field5 = new JTextField();
     Object[] message = {
-            "Please enter your portfolio name", field1,
-            "Please enter amount you want to invest", field2,
-            "Please enter date (yyyy-MM-dd)", field3,
-            "Please enter the commission fee", field4,
-            "Please enter the number of stocks you want to invest in", field5
+        "Please enter your portfolio name", field1,
+        "Please enter amount you want to invest", field2,
+        "Please enter date (yyyy-MM-dd)", field3,
+        "Please enter the commission fee", field4,
+        "Please enter the number of stocks you want to invest in", field5
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-            JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.OK_CANCEL_OPTION);
     String pName = "";
     String amount = "";
     String date = "";
@@ -282,7 +296,7 @@ public class JFrameView extends JFrame implements IView {
       num = field5.getText();
     }
     if (pName.equals("") || amount.equals("") || commissionFee.equals("") || date.equals("")
-            || num.equals("")) {
+        || num.equals("")) {
       throw new IllegalArgumentException("Input fields cannot be blank");
     }
     ArrayList<String> output = new ArrayList<>();
@@ -325,7 +339,7 @@ public class JFrameView extends JFrame implements IView {
     add(scrollPane);
 
     int option = JOptionPane.showConfirmDialog(null, scrollPane, "Enter all values",
-            JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.OK_CANCEL_OPTION);
     if (option == JOptionPane.OK_OPTION) {
       for (int i = 0; i < num * 2 - 1; i += 2) {
         if (fields[i].getText().equals("") || fields[i + 1].getText().equals("")) {
@@ -348,16 +362,16 @@ public class JFrameView extends JFrame implements IView {
     JTextField field6 = new JTextField();
     JTextField field7 = new JTextField();
     Object[] message = {
-            "Please enter your portfolio name", field1,
-            "Please enter amount you want to invest", field2,
-            "Please enter the commission fee", field3,
-            "Please enter start date (yyyy-MM-dd)", field4,
-            "Please enter end date (yyyy-MM-dd)", field5,
-            "Please enter the interval at which you want to periodically invest", field6,
-            "Please enter the number of stocks you want to invest in", field7
+        "Please enter your portfolio name", field1,
+        "Please enter amount you want to invest", field2,
+        "Please enter the commission fee", field3,
+        "Please enter start date (yyyy-MM-dd)", field4,
+        "Please enter end date (yyyy-MM-dd)", field5,
+        "Please enter the interval at which you want to periodically invest", field6,
+        "Please enter the number of stocks you want to invest in", field7
     };
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-            JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.OK_CANCEL_OPTION);
     String pName = "";
     String amount = "";
     String sDate = "";
@@ -375,7 +389,7 @@ public class JFrameView extends JFrame implements IView {
       num = field7.getText();
     }
     if (pName.equals("") || amount.equals("") || commissionFee.equals("") || sDate.equals("")
-            || interval.equals("") || num.equals("")) {
+        || interval.equals("") || num.equals("")) {
       throw new IllegalArgumentException("Input fields cannot be blank");
     }
     ArrayList<String> output = new ArrayList<>();
@@ -397,16 +411,16 @@ public class JFrameView extends JFrame implements IView {
   @Override
   public void showChart(Map<String, Double> m, String pName, String sdate, String eDate) {
     JFrame frame = new JFrame();
-    frame.setSize(800,600);
+    frame.setSize(800, 600);
 
     CategoryDataset dataset = createDataset(m);
-    JFreeChart chart= ChartFactory.createStackedBarChart(
-        "Performace of Portfolio "+pName+" from "+sdate+" to "+eDate,
+    JFreeChart chart = ChartFactory.createStackedBarChart(
+        "Performace of Portfolio " + pName + " from " + sdate + " to " + eDate,
         "Dates",
         "Value",
         dataset,
         PlotOrientation.VERTICAL,
-        false,true,false
+        false, true, false
     );
     CategoryAxis axis = chart.getCategoryPlot().getDomainAxis();
     axis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
@@ -416,11 +430,12 @@ public class JFrameView extends JFrame implements IView {
     frame.add(cp);
     frame.setVisible(true);
   }
-  private CategoryDataset createDataset(Map<String,Double> m) {
+
+  private CategoryDataset createDataset(Map<String, Double> m) {
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
     for (Entry<String, Double> entry : m.entrySet()) {
-      dataset.addValue(entry.getValue(), entry.getKey(),entry.getKey());
+      dataset.addValue(entry.getValue(), entry.getKey(), entry.getKey());
     }
 
     return dataset;
