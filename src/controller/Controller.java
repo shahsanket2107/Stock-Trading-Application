@@ -270,13 +270,31 @@ public class Controller implements Features {
 
   @Override
   public void getPerformance() {
-    ArrayList<String> output = view.getInputForPerformance();
-    String pName = output.get(0);
-    String sDate = output.get(1);
-    String eDate = output.get(2);
-    int chk = user.checkPortfolioExists(pName);
-    if (chk != 2) {
-      view.showOutput("Portfolio with given name does not exist");
+    try {
+      ArrayList<String> output = view.getInputForPerformance();
+      String pName = output.get(0);
+      String sDate = output.get(1);
+      String eDate = output.get(2);
+      int chk = user.checkPortfolioExists(pName);
+      if (chk != 2) {
+        view.showOutput("Portfolio with given name does not exist");
+      } else {
+        if (user.isValidFormat(sDate) && dateFormatHelper(sDate) && user.isValidFormat(eDate)
+            && dateFormatHelper(eDate)) {
+          Map<String,Double> m = new HashMap<>();
+          try {
+            m = user.showPerformance(pName, sDate,eDate);
+            view.showChart(m,pName,sDate,eDate);
+          } catch (IllegalArgumentException e) {
+            view.showOutput(e.toString());
+          }
+
+        } else {
+          view.showOutput("Date is not in proper format!!");
+        }
+      }
+    } catch (IllegalArgumentException e) {
+      view.showBlank();
     }
   }
 
@@ -309,8 +327,7 @@ public class Controller implements Features {
               view.showOutput(e.toString());
             }
           }
-        }
-        else{
+        } else {
           view.showOutput("Number of stocks should be greater than 0");
         }
       } catch (IllegalArgumentException e) {
@@ -349,8 +366,7 @@ public class Controller implements Features {
           } catch (Exception e) {
             view.showOutput(e.toString());
           }
-        }
-        else{
+        } else {
           view.showOutput("Number of stocks should be greater than 0");
         }
       } catch (IllegalArgumentException e) {

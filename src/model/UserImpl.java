@@ -595,7 +595,7 @@ public class UserImpl implements User {
     return this.data_store;
   }
 
-  private ArrayList<String> getDatesForChart(int year, int month, int week, long timeLine,
+  protected ArrayList<String> getDatesForChart(int year, int month, int week, long timeLine,
                                              Calendar c, Date e) {
     ArrayList<String> dates = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -674,7 +674,7 @@ public class UserImpl implements User {
     return star;
   }
 
-  private Map<String, Double> insertValueInMapForChart(String pName, ArrayList<String> dates,
+  protected Map<String, Double> insertValueInMapForChart(String pName, ArrayList<String> dates,
                                                        Calendar c) throws IllegalArgumentException {
     String temp_date;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

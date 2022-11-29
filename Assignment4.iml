@@ -21,5 +21,6 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="codehaus.jackson.xc" level="project" />
     <orderEntry type="library" exported="" name="googlecode.json.simple" level="project" />
+    <orderEntry type="library" name="jfree.jfreechart" level="project" />
   </component>
 </module>

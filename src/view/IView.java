@@ -14,4 +14,5 @@ public interface IView {
   Map<String,Double> getInvestmentShares(int num) throws IllegalArgumentException;
   ArrayList<String> getDollarCostDetails() throws IllegalArgumentException;
   void showBlank();
+  void showChart(Map<String,Double> m, String pName, String sdate, String eDate);
 }

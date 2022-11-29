@@ -1,16 +1,30 @@
 package view;
 
 import controller.Features;
-
-import java.awt.*;
-import java.time.chrono.JapaneseChronology;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.*;
-import javax.swing.border.Border;
+import java.util.Map.Entry;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class JFrameView extends JFrame implements IView {
 
@@ -229,6 +243,9 @@ public class JFrameView extends JFrame implements IView {
       sDate = field2.getText();
       eDate = field3.getText();
     }
+    if (pName.equals("") || sDate.equals("") || eDate.equals("")) {
+      throw new IllegalArgumentException("Input fields cannot be blank");
+    }
     ArrayList<String> output = new ArrayList<>();
     output.add(pName);
     output.add(sDate);
@@ -375,5 +392,37 @@ public class JFrameView extends JFrame implements IView {
   @Override
   public void showBlank() {
     JOptionPane.showMessageDialog(null, "Input fields cannot be blank");
+  }
+
+  @Override
+  public void showChart(Map<String, Double> m, String pName, String sdate, String eDate) {
+    JFrame frame = new JFrame();
+    frame.setSize(800,600);
+
+    CategoryDataset dataset = createDataset(m);
+    JFreeChart chart= ChartFactory.createStackedBarChart(
+        "Performace of Portfolio "+pName+" from "+sdate+" to "+eDate,
+        "Dates",
+        "Value",
+        dataset,
+        PlotOrientation.VERTICAL,
+        false,true,false
+    );
+    CategoryAxis axis = chart.getCategoryPlot().getDomainAxis();
+    axis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
+    ChartPanel cp = new ChartPanel(chart);
+    add(cp);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    frame.add(cp);
+    frame.setVisible(true);
+  }
+  private CategoryDataset createDataset(Map<String,Double> m) {
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    for (Entry<String, Double> entry : m.entrySet()) {
+      dataset.addValue(entry.getValue(), entry.getKey(),entry.getKey());
+    }
+
+    return dataset;
   }
 }

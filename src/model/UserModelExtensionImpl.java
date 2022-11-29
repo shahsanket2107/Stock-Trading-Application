@@ -1,18 +1,10 @@
 package model;
 
 
-import org.codehaus.jackson.JsonNode;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class UserModelExtensionImpl extends UserImpl implements UserModelExtension {
 
@@ -28,7 +23,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   public UserModelExtensionImpl(String name, List<Portfolio> portfolio,
-                                List<FlexiblePortfolio> flexiblePortfolio) {
+      List<FlexiblePortfolio> flexiblePortfolio) {
     super(name, portfolio, flexiblePortfolio);
   }
 
@@ -53,9 +48,9 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   private void invalidInputHelperForFractionalPercentage(String date,
-                                                         double amount, Map<String, Double> m,
-                                                         double commissionFee)
-          throws IllegalArgumentException {
+      double amount, Map<String, Double> m,
+      double commissionFee)
+      throws IllegalArgumentException {
     if (!super.isValidFormat(date)) {
       throw new IllegalArgumentException("Date is not in proper format !!");
     }
@@ -77,8 +72,8 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
 
   @Override
   public boolean investFractionalPercentage(String pname, String date,
-                                            double amount, Map<String, Double> m,
-                                            double commissionFee) throws IllegalArgumentException {
+      double amount, Map<String, Double> m,
+      double commissionFee) throws IllegalArgumentException {
     List<String> validPortfolios = super.getPortfolioNames();
     if (!validPortfolios.contains(pname)) {
       throw new IllegalArgumentException("Portfolio Name does not exist !!");
@@ -124,8 +119,8 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   private void dollarCostAveragingHelper(String pname, Map<String, Double> m,
-                                         double amount, double commissionFee,
-                                         String startDate, String endDate, int interval) {
+      double amount, double commissionFee,
+      String startDate, String endDate, int interval) {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Calendar c = Calendar.getInstance();
     Date currentDate = new Date();
@@ -184,9 +179,9 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
 
   @Override
   public boolean dollarCostAveragingPortfolio(String pname, Map<String, Double> m,
-                                              double amount, double commissionFee,
-                                              String startDate, String endDate, int interval)
-          throws IllegalArgumentException {
+      double amount, double commissionFee,
+      String startDate, String endDate, int interval)
+      throws IllegalArgumentException {
     try {
       invalidInputHelperForFractionalPercentage(startDate, amount, m, commissionFee);
     } catch (IllegalArgumentException e) {
@@ -194,7 +189,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     }
     if (interval <= 0) {
       throw new IllegalArgumentException("Time interval to invest must be a positive number of " +
-              "days!!");
+          "days!!");
     }
     if (!endDate.isEmpty() && super.dateCompare(startDate, endDate)) {
       throw new IllegalArgumentException("Start date cannot be more than end date!");
@@ -208,14 +203,14 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
   }
 
   private void futureDatesStrategyHelper(String pname, String startDate, String endDate,
-                                         double amount, Map<String, Double> m,
-                                         double commissionFee, int interval)
-          throws IllegalArgumentException {
+      double amount, Map<String, Double> m,
+      double commissionFee, int interval)
+      throws IllegalArgumentException {
 
     String fileName = "user_persistance.json";
     FileOperations file = new FileOperationsImpl();
     file.futureDatesStrategyHelper(fileName, pname, m, amount, commissionFee, startDate,
-            endDate, interval);
+        endDate, interval);
   }
 
   @Override
@@ -244,7 +239,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
         if (!newStartDate.equals(startDate)) {
           flg = 1;
           dollarCostAveragingPortfolio(pname, map, amount, commissionFee, startDate, newStartDate,
-                  interval);
+              interval);
         }
       }
 
@@ -263,6 +258,46 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
       }
     }
     return false;
+  }
+
+  @Override
+  public Map<String, Double> showPerformance(String pName, String startDate, String endDate)
+      throws IllegalArgumentException {
+    if (dateCompare(startDate, endDate)) {
+      throw new IllegalArgumentException("Start date cannot be more than end date!");
+    }
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date e;
+    Date s;
+    try {
+      s = sdf.parse(startDate);
+      e = sdf.parse(endDate);
+    } catch (ParseException ex) {
+      throw new IllegalArgumentException("Error in parsing date!");
+    }
+    long diff = TimeUnit.DAYS.convert(Math.abs(e.getTime() - s.getTime()),
+        TimeUnit.MILLISECONDS);
+
+    long timeLine = diff;
+    int week = 0;
+    int month = 0;
+    int year = 0;
+    Calendar c = Calendar.getInstance();
+    c.setTime(s);
+    if (diff > 30) {
+      timeLine = diff / 7;
+      week = 1;
+      if (timeLine > 20) {
+        timeLine = timeLine / 4;
+        month = 1;
+        if (timeLine > 30) {
+          timeLine = timeLine / 12;
+          year = 1;
+        }
+      }
+    }
+    ArrayList<String> dates = getDatesForChart(year, month, week, timeLine, c, e);
+    return insertValueInMapForChart(pName, dates, c);
   }
 
   @Override
@@ -285,7 +320,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
 
   @Override
   public StringBuilder displayChart(String startDate, String endDate, String pName)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     loadPersistantStrategy(pName);
     return super.displayChart(startDate, endDate, pName);
   }
