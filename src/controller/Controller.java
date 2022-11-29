@@ -339,7 +339,6 @@ public class Controller implements Features {
       try {
         if (Integer.parseInt(num) > 0) {
           m = view.getInvestmentShares(Integer.parseInt(num));
-
           try {
             boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
                 Double.parseDouble(commissionFee), sDate, eDate,
