@@ -15,14 +15,7 @@ import java.util.List;
  * FlexiblePortfolioImpl class.
  */
 @JsonDeserialize(as = FlexiblePortfolioImpl.class)
-public interface FlexiblePortfolio {
-
-  /**
-   * This function is a getter to get the name of flexible portfolio.
-   *
-   * @return the name of the flexible portfolio
-   */
-  String getName();
+public interface FlexiblePortfolio extends SuperPortfolio {
 
   /**
    * This function is a getter to get the list of stocks consisting ticker, date, quantity and cost

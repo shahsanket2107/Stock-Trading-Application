@@ -63,7 +63,7 @@ public class UserModelExtensionImpl extends UserImpl implements UserModelExtensi
     if (amount <= 0) {
       throw new IllegalArgumentException("Amount should be positive !!");
     }
-    if (commissionFee <= 0) {
+    if (commissionFee < 0) {
       throw new IllegalArgumentException("Commission Fee must be positive !!");
     }
     double temp = 0;

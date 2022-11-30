@@ -44,11 +44,11 @@ public class Controller implements Features {
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
     if (Integer.parseInt(tempDate) >= Integer.parseInt(curr_date)) {
       throw new IllegalArgumentException(
-          "Date cannot be in the future!!");
+              "Date cannot be in the future!!");
     }
     if (Integer.parseInt(tempDate) <= 20000101) {
       throw new IllegalArgumentException(
-          "Date should be more than 1st January 2000. Try a different date");
+              "Date should be more than 1st January 2000. Try a different date");
     }
     return true;
   }
@@ -89,7 +89,7 @@ public class Controller implements Features {
   public void loadPortfolio() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "JSON files only", "json");
+            "JSON files only", "json");
     fchooser.setFileFilter(filter);
     int retvalue = fchooser.showOpenDialog(null);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
@@ -114,7 +114,9 @@ public class Controller implements Features {
       String cFee = output.get(4);
       boolean check = true;
       int chk = user.checkPortfolioExists(pName);
-
+      if (cFee.isEmpty()) {
+        cFee = "0";
+      }
       double commissionFee = Double.parseDouble(cFee);
       if (chk != 2 && flg != 2) {
         view.showOutput("Portfolio with given name does not exist");
@@ -141,7 +143,7 @@ public class Controller implements Features {
   }
 
   private void buySellAndCreateHelper2(String pName, String ticker, int qty, String date,
-      boolean check, double commissionFee, int flg) {
+                                       boolean check, double commissionFee, int flg) {
     List<Stocks> stocks = new ArrayList<>();
     if (checker(ticker, qty, commissionFee)) {
       ticker = ticker.toUpperCase();
@@ -175,7 +177,7 @@ public class Controller implements Features {
         view.showOutput("Date is not in proper format!!");
       } else if (!user.validateDateAccToApi(ticker, date)) {
         view.showOutput(
-            "Stock market is closed at this date, so please enter a different date!!");
+                "Stock market is closed at this date, so please enter a different date!!");
       }
     }
   }
@@ -286,7 +288,7 @@ public class Controller implements Features {
         view.showOutput("Portfolio with given name does not exist");
       } else {
         if (user.isValidFormat(sDate) && dateFormatHelper(sDate) && user.isValidFormat(eDate)
-            && dateFormatHelper(eDate)) {
+                && dateFormatHelper(eDate)) {
           Map<String, Double> m = new HashMap<>();
           try {
             m = user.showPerformance(pName, sDate, eDate);
@@ -325,8 +327,8 @@ public class Controller implements Features {
           } else {
             try {
               boolean op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount),
-                  m,
-                  Double.parseDouble(commissionFee));
+                      m,
+                      Double.parseDouble(commissionFee));
               if (op) {
                 view.showOutput("Amount Invested Successfully!!");
               }
@@ -368,8 +370,8 @@ public class Controller implements Features {
           m = view.getInvestmentShares(number);
           try {
             boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
-                Double.parseDouble(commissionFee), sDate, eDate,
-                interval);
+                    Double.parseDouble(commissionFee), sDate, eDate,
+                    interval);
             if (op) {
               view.showOutput("Dollar Cost Averaging Portfolio Created Successfully!!");
             }

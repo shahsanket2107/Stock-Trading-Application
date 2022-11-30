@@ -17,6 +17,12 @@ import model.UserModelExtensionImpl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * In this test class we test the methods like create new portfolio with dollar cost averaging,
+ * invest a certain amount to an existing portfolio and apply dollar cost strategy to an
+ * existing portfolio. We test all these methods with correct as well as incorrect inputs and
+ * verify their behavior.
+ */
 public class UserModelExtensionImplTest {
 
   private UserModelExtension user;
@@ -90,7 +96,7 @@ public class UserModelExtensionImplTest {
     m.put("ZS", 25.0);
     m.put("TSLA", 10.0);
     m.put("MSFT", 10.0);
-    boolean test = user.investFractionalPercentage("testPortfolio", "19-11-2022",
+    boolean test = user.investFractionalPercentage("sanket_p1", "19-11-2022",
             2000, m, 20);
   }
 
@@ -104,7 +110,7 @@ public class UserModelExtensionImplTest {
     m.put("ZS", 25.0);
     m.put("TSLA", 10.0);
     m.put("MSFT", 10.0);
-    boolean test = user.investFractionalPercentage("testPortfolio", "2023-11-19",
+    boolean test = user.investFractionalPercentage("sanket_p1", "2023-11-19",
             2000, m, 20);
   }
 
@@ -118,7 +124,7 @@ public class UserModelExtensionImplTest {
     m.put("ZS", 25.0);
     m.put("TSLA", 10.0);
     m.put("MSFT", 10.0);
-    boolean test = user.investFractionalPercentage("testPortfolio", "2022-11-19",
+    boolean test = user.investFractionalPercentage("sanket_p1", "2022-11-19",
             -1000, m, 20);
   }
 
@@ -132,8 +138,31 @@ public class UserModelExtensionImplTest {
     m.put("ZS", 25.0);
     m.put("TSLA", 10.0);
     m.put("MSFT", 10.0);
-    boolean test = user.investFractionalPercentage("testPortfolio", "2022-11-19",
+    boolean test = user.investFractionalPercentage("sanket_p1", "2022-11-19",
             1000, m, -20);
+  }
+
+  @Test
+  public void investFractionalPercentageWithNoCommissionFees() {
+    assertEquals("The list of portfolios is:\n" +
+            "p1\n" +
+            "sanket_p1\n", user.getPortfoliosName().toString());
+    assertEquals("Portfolio_Name: sanket_p1\n" +
+            "Cost basis of your portfolio at 2022-11-19 is : $ 1737.4\n",
+            user.getCostBasis("2022-11-19", "sanket_p1")
+            .toString().replace("\r", ""));
+    Map<String, Double> m = new HashMap();
+    m.put("AAPL", 55.0);
+    m.put("ZS", 25.0);
+    m.put("TSLA", 10.0);
+    m.put("MSFT", 10.0);
+    boolean test = user.investFractionalPercentage("sanket_p1", "2022-11-19",
+            2000, m, 0);
+    assertEquals(true, test);
+    assertEquals("Portfolio_Name: sanket_p1\n" +
+                    "Cost basis of your portfolio at 2022-11-19 is : $ 3737.4\n",
+            user.getCostBasis("2022-11-19", "sanket_p1")
+                    .toString().replace("\r", ""));
   }
 
   @Test(expected = IllegalArgumentException.class)

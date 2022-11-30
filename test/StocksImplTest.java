@@ -49,13 +49,13 @@ public class StocksImplTest {
 
   @Test
   public void testGetQty() {
-    assertEquals(23, stocks.getQty());
+    assertEquals(23, stocks.getQty(),0.0f);
   }
 
   @Test
   public void testSetQty() {
     stocks.setQty(45);
-    assertEquals(45, stocks.getQty());
+    assertEquals(45, stocks.getQty(),0.0f);
   }
 
   @Test

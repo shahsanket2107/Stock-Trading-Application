@@ -83,8 +83,8 @@ public class JFrameView extends JFrame implements IView {
   private void createMenu(String name) {
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(
-        BorderFactory.createTitledBorder(
-            "Welcome " + name + "!! Choose any option from the menu :"));
+            BorderFactory.createTitledBorder(
+                    "Welcome " + name + "!! Choose any option from the menu :"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(dialogBoxesPanel);
 
@@ -181,10 +181,10 @@ public class JFrameView extends JFrame implements IView {
     JOptionPane.showMessageDialog(null, message);
   }
 
-  private ArrayList<String> inputFieldHelper(Object[] message, List<JTextField> fields)
-      throws IllegalArgumentException {
+  private ArrayList<String> inputFieldHelper(Object[] message, List<JTextField> fields, int val)
+          throws IllegalArgumentException {
     int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
+            JOptionPane.OK_CANCEL_OPTION);
     int n = fields.size();
     String[] inputs = new String[n];
     for (int i = 0; i < n; i++) {
@@ -198,6 +198,9 @@ public class JFrameView extends JFrame implements IView {
     }
 
     for (int i = 0; i < n; i++) {
+      if (i == val) {
+        continue;
+      }
       if (inputs[i].equals("")) {
         throw new IllegalArgumentException("Input fields cannot be bank");
       }
@@ -218,14 +221,14 @@ public class JFrameView extends JFrame implements IView {
       fields.add(new JTextField());
     }
     Object[] message = {
-        "Please enter your portfolio name", fields.get(0),
-        "Please enter ticker of stock you want to add to portfolio", fields.get(1),
-        "Please enter quantity of stocks", fields.get(2),
-        "Please enter date in format (yyyy-MM-dd)", fields.get(3),
-        "Please enter the commission fee", fields.get(4)
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter ticker of stock you want to add to portfolio", fields.get(1),
+            "Please enter quantity of stocks", fields.get(2),
+            "Please enter date in format (yyyy-MM-dd)", fields.get(3),
+            "Please enter the commission fee", fields.get(4)
     };
     ArrayList<String> result;
-    result = inputFieldHelper(message, fields);
+    result = inputFieldHelper(message, fields, 4);
     return result;
   }
 
@@ -237,12 +240,12 @@ public class JFrameView extends JFrame implements IView {
     }
 
     Object[] message = {
-        "Please enter your portfolio name", fields.get(0),
-        "Please enter date in format (yyyy-MM-dd)", fields.get(1),
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter date in format (yyyy-MM-dd)", fields.get(1),
     };
 
     ArrayList<String> result;
-    result = inputFieldHelper(message, fields);
+    result = inputFieldHelper(message, fields, -1);
     return result;
   }
 
@@ -253,12 +256,12 @@ public class JFrameView extends JFrame implements IView {
       fields.add(new JTextField());
     }
     Object[] message = {
-        "Please enter your portfolio name", fields.get(0),
-        "Please enter start date in format (yyyy-MM-dd)", fields.get(1),
-        "Please enter end date in format (yyyy-MM-dd)", fields.get(2)
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter start date in format (yyyy-MM-dd)", fields.get(1),
+            "Please enter end date in format (yyyy-MM-dd)", fields.get(2)
     };
     ArrayList<String> result;
-    result = inputFieldHelper(message, fields);
+    result = inputFieldHelper(message, fields, -1);
     return result;
   }
 
@@ -269,14 +272,14 @@ public class JFrameView extends JFrame implements IView {
       fields.add(new JTextField());
     }
     Object[] message = {
-        "Please enter your portfolio name", fields.get(0),
-        "Please enter amount you want to invest", fields.get(1),
-        "Please enter date (yyyy-MM-dd)", fields.get(2),
-        "Please enter the commission fee", fields.get(3),
-        "Please enter the number of stocks you want to invest in", fields.get(4)
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter amount you want to invest", fields.get(1),
+            "Please enter date (yyyy-MM-dd)", fields.get(2),
+            "Please enter the commission fee", fields.get(3),
+            "Please enter the number of stocks you want to invest in", fields.get(4)
     };
     ArrayList<String> result;
-    result = inputFieldHelper(message, fields);
+    result = inputFieldHelper(message, fields, -1);
     return result;
   }
 
@@ -311,7 +314,7 @@ public class JFrameView extends JFrame implements IView {
     add(scrollPane);
 
     int option = JOptionPane.showConfirmDialog(null, scrollPane, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
+            JOptionPane.OK_CANCEL_OPTION);
     if (option == JOptionPane.OK_OPTION) {
       for (int i = 0; i < num * 2 - 1; i += 2) {
         if (fields[i].getText().equals("") || fields[i + 1].getText().equals("")) {
@@ -331,43 +334,17 @@ public class JFrameView extends JFrame implements IView {
       fields.add(new JTextField());
     }
     Object[] message = {
-        "Please enter your portfolio name", fields.get(0),
-        "Please enter amount you want to invest", fields.get(1),
-        "Please enter the commission fee", fields.get(2),
-        "Please enter start date (yyyy-MM-dd)", fields.get(3),
-        "Please enter end date (yyyy-MM-dd)", fields.get(4),
-        "Please enter the interval at which you want to periodically invest", fields.get(5),
-        "Please enter the number of stocks you want to invest in", fields.get(6)
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter amount you want to invest", fields.get(1),
+            "Please enter the commission fee", fields.get(2),
+            "Please enter start date (yyyy-MM-dd)", fields.get(3),
+            "Please enter end date (yyyy-MM-dd)", fields.get(4),
+            "Please enter the interval at which you want to periodically invest", fields.get(5),
+            "Please enter the number of stocks you want to invest in", fields.get(6)
     };
-    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
-    int n = 7;
-    String[] inputs = new String[n];
-    for (int i = 0; i < 7; i++) {
-      inputs[i] = "";
-    }
-
-    for (int i = 0; i < n; i++) {
-      if (option == JOptionPane.OK_OPTION) {
-        inputs[i] = fields.get(i).getText();
-      }
-    }
-
-    for (int i = 0; i < n; i++) {
-      if (i == 4) {
-        continue;
-      }
-      if (inputs[i].equals("")) {
-        throw new IllegalArgumentException("Input fields cannot be bank");
-      }
-    }
-
-    ArrayList<String> output = new ArrayList<>();
-
-    for (int i = 0; i < n; i++) {
-      output.add(inputs[i]);
-    }
-    return output;
+    ArrayList<String> result;
+    result = inputFieldHelper(message, fields, 4);
+    return result;
   }
 
   @Override
@@ -382,12 +359,12 @@ public class JFrameView extends JFrame implements IView {
 
     CategoryDataset dataset = createDataset(m);
     JFreeChart chart = ChartFactory.createStackedBarChart(
-        "Performace of Portfolio " + pName + " from " + sdate + " to " + eDate,
-        "Dates",
-        "Value",
-        dataset,
-        PlotOrientation.VERTICAL,
-        false, true, false
+            "Performace of Portfolio " + pName + " from " + sdate + " to " + eDate,
+            "Dates",
+            "Value",
+            dataset,
+            PlotOrientation.VERTICAL,
+            false, true, false
     );
     CategoryAxis axis = chart.getCategoryPlot().getDomainAxis();
     axis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);

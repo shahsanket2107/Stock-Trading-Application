@@ -132,7 +132,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testCreateFlexiblePortfolio() {
     InputStream input = new ByteArrayInputStream(
-            "samved\n6\np1\n1\naapl\n100\n2022-10-21\nq\nq\n"
+            "samved\n6\np1\n1\naapl\n100\n2022-10-21\nq\n20\nq\n"
                     .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -178,7 +178,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testBuyStocks() {
     InputStream input = new ByteArrayInputStream(
-            "samved\n9\nport_1\naapl\n30\n2022-10-21\nq\n"
+            "samved\n9\nport_1\naapl\n30\n2022-10-21\n20\nq\n"
                     .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -196,7 +196,7 @@ public class UserControllerTestUsingMockModel {
     out.println("validateDateAccToApi called with ticker as: AAPL and date as 2022-10-21");
 
     out.println(
-            "buyStocks called with ticker name as: AAPL,date as 2022-10-21,quantity as 30 and " +
+            "buyStocks called with ticker name as: AAPL,date as 2022-10-21,quantity as 30.0 and " +
                     "portfolio name as port_1");
     assertEquals(b.toString(), mock.toString());
   }
@@ -204,7 +204,7 @@ public class UserControllerTestUsingMockModel {
   @Test
   public void testSellStocks() {
     InputStream input = new ByteArrayInputStream(
-            "samved\n10\nport_1\naapl\n20\n2022-10-25\nq\n"
+            "samved\n10\nport_1\naapl\n20\n2022-10-25\n20\nq\n"
                     .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -222,7 +222,7 @@ public class UserControllerTestUsingMockModel {
     out.println("validateDateAccToApi called with ticker as: AAPL and date as 2022-10-25");
 
     out.println(
-            "sellStocks called with ticker name as: AAPL,date as 2022-10-25,quantity as 20 and " +
+            "sellStocks called with ticker name as: AAPL,date as 2022-10-25,quantity as 20.0 and " +
                     "portfolio name as port_1");
     assertEquals(b.toString(), mock.toString());
   }
