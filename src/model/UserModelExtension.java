@@ -62,10 +62,20 @@ public interface UserModelExtension extends User {
    * @param pname is the name of the portfolio which is to be loaded.
    * @return true if the strategy is loaded and all the operations are performed successfully on it
    * without any error.
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if there is some problem reading from and writing to the file.
    */
   boolean loadPersistantStrategy(String pname) throws IllegalArgumentException;
 
+  /**
+   * This method is used to display performace of a particular portfolio over a period of time.
+   *
+   * @param pName is the name of the portfolio whose performance is to be viewed.
+   * @param sDate is the start date at which user wants to start viewing the portfolio performance.
+   * @param eDate is the end date at which user wants to stop viewing the portfolio performance.
+   * @return the map containing the date mapping to the portfolio valuation at that date.
+   * @throws IllegalArgumentException if date format is improper or if start date is greater than
+   *                                  the end date.
+   */
   Map<String, Double> showPerformance(String pName, String sDate, String eDate)
           throws IllegalArgumentException;
 }

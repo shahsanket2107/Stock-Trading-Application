@@ -17,15 +17,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * This class implements the UserModelExtension interface and extends the UserImpl class. This class
+ * is used to implement the methods of the new strategy development according to dollar cost
+ * averaging and also investment feature. It also overrides the UserImpl methods that require to
+ * be checked for changing composition of future transactions.
+ */
 public class UserModelExtensionImpl extends UserImpl implements UserModelExtension {
 
+  /**
+   * Default constructor for ExtensionImpl class which calls the parent default constructor.
+   */
   public UserModelExtensionImpl() {
     super();
-  }
-
-  public UserModelExtensionImpl(String name, List<Portfolio> portfolio,
-                                List<FlexiblePortfolio> flexiblePortfolio) {
-    super(name, portfolio, flexiblePortfolio);
   }
 
   private double getValuationHelper(String ticker, String date) throws IllegalArgumentException {
