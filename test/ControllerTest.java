@@ -1,11 +1,12 @@
-package controller;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import junit.framework.TestCase;
+
+import controller.Controller;
+import controller.Features;
 import model.UserModelExtensionImpl;
 import org.junit.Before;
 import org.junit.Test;
