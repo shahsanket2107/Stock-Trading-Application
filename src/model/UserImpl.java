@@ -496,15 +496,14 @@ public class UserImpl implements User {
   }
 
   protected void dateFormatHelper(String date) throws IllegalArgumentException {
-    String temp_date = date.replaceAll("[\\s\\-()]", "");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String tempDate = date.replaceAll("[\\s\\-()]", "");
     LocalDateTime now = LocalDateTime.now();
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
-      throw new IllegalArgumentException(
-              "Date cannot be greater or equal to current date. Try a different date");
+    if (Integer.parseInt(tempDate) >= Integer.parseInt(curr_date)) {
+      throw new IllegalArgumentException("Future dates not allowed");
     }
-    if (Integer.parseInt(temp_date) <= 20000101) {
+    if (Integer.parseInt(tempDate) <= 20000101) {
       throw new IllegalArgumentException(
               "Date should be more than 1st January 2000. Try a different date");
     }
@@ -554,20 +553,20 @@ public class UserImpl implements User {
       s = sdf.parse(startDate);
       e = sdf.parse(endDate);
     } catch (ParseException ex) {
-      throw new IllegalArgumentException("Error in parsing date!");
+      throw new IllegalArgumentException("Error in parsing date!!");
     }
-    long diff = TimeUnit.DAYS.convert(Math.abs(e.getTime() - s.getTime()),
-            TimeUnit.MILLISECONDS);
 
-    long timeLine = diff;
+    long diff = TimeUnit.DAYS.convert(Math.abs(e.getTime() - s.getTime()), TimeUnit.MILLISECONDS);
+
     int week = 0;
     int month = 0;
     int year = 0;
     Calendar c = Calendar.getInstance();
     c.setTime(s);
+    long timeLine = diff;
     if (diff > 30) {
-      timeLine = diff / 7;
       week = 1;
+      timeLine = diff / 7;
       if (timeLine > 20) {
         timeLine = timeLine / 4;
         month = 1;
@@ -578,9 +577,7 @@ public class UserImpl implements User {
       }
     }
     ArrayList<String> dates = getDatesForChart(year, month, week, timeLine, c, e);
-
     Map<String, Double> m = insertValueInMapForChart(pName, dates, c);
-
     StringBuilder result = printChart(m, year, month, c, startDate, endDate, pName);
     return result;
   }
@@ -596,7 +593,7 @@ public class UserImpl implements User {
   }
 
   protected ArrayList<String> getDatesForChart(int year, int month, int week, long timeLine,
-                                             Calendar c, Date e) {
+                                               Calendar c, Date e) {
     ArrayList<String> dates = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     if (year == 1) {
@@ -675,7 +672,7 @@ public class UserImpl implements User {
   }
 
   protected Map<String, Double> insertValueInMapForChart(String pName, ArrayList<String> dates,
-                                                       Calendar c) throws IllegalArgumentException {
+                                                         Calendar c) throws IllegalArgumentException {
     String temp_date;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Map<String, Double> m = new TreeMap<>();

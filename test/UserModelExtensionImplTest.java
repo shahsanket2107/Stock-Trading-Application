@@ -326,7 +326,6 @@ public class UserModelExtensionImplTest {
             20, "2021-06-19", "2022-11-19", 30);
   }
 
-
   @Test
   public void testLoadFutureStrategy() {
     boolean check = user.loadPersistantStrategy("sanket_p1");
