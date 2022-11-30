@@ -1,1 +1,71 @@
-{"test_p1":[{"fractionalShares":{"MSFT":10.0,"AAPL":55.0,"TSLA":10.0,"ZS":25.0},"amount":2000.0,"commissionFee":20.0,"endDate":"","interval":30,"startDate":"2022-12-11"}],"sanket_p1":[{"fractionalShares":{"AAPL":55.0,"TSLA":20.0,"ZS":25.0},"amount":2000.0,"commissionFee":20.0,"endDate":"2023-11-19","interval":30,"startDate":"2022-12-16"},{"fractionalShares":{"ZS":25.0,"AAPL":55.0,"TSLA":20.0},"amount":2000.0,"commissionFee":20.0,"endDate":"","interval":30,"startDate":"2022-12-16"}]}
+{
+  "p1": [
+    {
+      "fractionalShares": {
+        "MSFT": 45.0,
+        "AAPL": 10.0,
+        "TSLA": 5.0,
+        "ZS": 40.0
+      },
+      "amount": 3000.0,
+      "commissionFee": 30.0,
+      "endDate": "",
+      "interval": 2,
+      "startDate": "2022-11-30"
+    },
+    {
+      "fractionalShares": {
+        "MSFT": 45.0,
+        "ZS": 40.0,
+        "AAPL": 10.0,
+        "TSLA": 5.0
+      },
+      "amount": 3000.0,
+      "commissionFee": 30.0,
+      "endDate": "",
+      "interval": 2,
+      "startDate": "2022-11-30"
+    }
+  ],
+  "test_p1": [
+    {
+      "fractionalShares": {
+        "MSFT": 10.0,
+        "AAPL": 55.0,
+        "TSLA": 10.0,
+        "ZS": 25.0
+      },
+      "amount": 2000.0,
+      "commissionFee": 20.0,
+      "endDate": "",
+      "interval": 30,
+      "startDate": "2022-12-11"
+    }
+  ],
+  "sanket_p1": [
+    {
+      "fractionalShares": {
+        "AAPL": 55.0,
+        "TSLA": 20.0,
+        "ZS": 25.0
+      },
+      "amount": 2000.0,
+      "commissionFee": 20.0,
+      "endDate": "2023-11-19",
+      "interval": 30,
+      "startDate": "2022-12-16"
+    },
+    {
+      "fractionalShares": {
+        "AAPL": 55.0,
+        "TSLA": 20.0,
+        "ZS": 25.0
+      },
+      "amount": 2000.0,
+      "commissionFee": 20.0,
+      "endDate": "",
+      "interval": 30,
+      "startDate": "2022-12-16"
+    }
+  ]
+}

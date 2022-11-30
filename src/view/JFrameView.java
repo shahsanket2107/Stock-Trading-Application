@@ -335,9 +335,35 @@ public class JFrameView extends JFrame implements IView {
             "Please enter the interval at which you want to periodically invest", fields.get(5),
             "Please enter the number of stocks you want to invest in", fields.get(6)
     };
-    ArrayList<String> result;
-    result = inputFieldHelper(message, fields);
-    return result;
+    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+            JOptionPane.OK_CANCEL_OPTION);
+    int n = 7;
+    String[] inputs = new String[n];
+    for (int i = 0; i < 7; i++) {
+      inputs[i] = "";
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (option == JOptionPane.OK_OPTION) {
+        inputs[i] = fields.get(i).getText();
+      }
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (i == 4) {
+        continue;
+      }
+      if (inputs[i].equals("")) {
+        throw new IllegalArgumentException("Input fields cannot be bank");
+      }
+    }
+
+    ArrayList<String> output = new ArrayList<>();
+
+    for (int i = 0; i < n; i++) {
+      output.add(inputs[i]);
+    }
+    return output;
   }
 
   @Override

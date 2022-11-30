@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import model.Stocks;
 import model.StocksImpl;
 import model.UserModelExtension;
@@ -31,17 +33,17 @@ public class Controller implements Features {
   }
 
   private boolean dateFormatHelper(String date) throws IllegalArgumentException {
-    String temp_date = date.replaceAll("[\\s\\-()]", "");
+    String tempDate = date.replaceAll("[\\s\\-()]", "");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDateTime now = LocalDateTime.now();
     String curr_date = dtf.format(now).replaceAll("[\\s\\-()]", "");
-    if (Integer.parseInt(temp_date) >= Integer.parseInt(curr_date)) {
+    if (Integer.parseInt(tempDate) >= Integer.parseInt(curr_date)) {
       throw new IllegalArgumentException(
-          "Date cannot be greater or equal to current date. Try a different date");
+              "Date cannot be in the future!!");
     }
-    if (Integer.parseInt(temp_date) <= 20000101) {
+    if (Integer.parseInt(tempDate) <= 20000101) {
       throw new IllegalArgumentException(
-          "Date should be more than 1st January 2000. Try a different date");
+              "Date should be more than 1st January 2000. Try a different date");
     }
     return true;
   }
@@ -82,7 +84,7 @@ public class Controller implements Features {
   public void loadPortfolio() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "JSON files only", "json");
+            "JSON files only", "json");
     fchooser.setFileFilter(filter);
     int retvalue = fchooser.showOpenDialog(null);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
@@ -134,7 +136,7 @@ public class Controller implements Features {
   }
 
   private void buySellAndCreateHelper2(String pName, String ticker, int qty, String date,
-      boolean check, double commissionFee, int flg) {
+                                       boolean check, double commissionFee, int flg) {
     List<Stocks> stocks = new ArrayList<>();
     if (checker(ticker, qty, commissionFee)) {
       ticker = ticker.toUpperCase();
@@ -168,7 +170,7 @@ public class Controller implements Features {
         view.showOutput("Date is not in proper format!!");
       } else if (!user.validateDateAccToApi(ticker, date)) {
         view.showOutput(
-            "Stock market is closed at this date, so please enter a different date!!");
+                "Stock market is closed at this date, so please enter a different date!!");
       }
     }
   }
@@ -279,11 +281,11 @@ public class Controller implements Features {
         view.showOutput("Portfolio with given name does not exist");
       } else {
         if (user.isValidFormat(sDate) && dateFormatHelper(sDate) && user.isValidFormat(eDate)
-            && dateFormatHelper(eDate)) {
-          Map<String,Double> m = new HashMap<>();
+                && dateFormatHelper(eDate)) {
+          Map<String, Double> m = new HashMap<>();
           try {
-            m = user.showPerformance(pName, sDate,eDate);
-            view.showChart(m,pName,sDate,eDate);
+            m = user.showPerformance(pName, sDate, eDate);
+            view.showChart(m, pName, sDate, eDate);
           } catch (IllegalArgumentException e) {
             view.showOutput(e.toString());
           }
@@ -308,8 +310,9 @@ public class Controller implements Features {
       String num = output.get(4);
       Map<String, Double> m = new HashMap<>();
       try {
-        if (Integer.parseInt(num) > 0) {
-          m = view.getInvestmentShares(Integer.parseInt(num));
+        int number = Integer.parseInt(num);
+        if (number > 0) {
+          m = view.getInvestmentShares(number);
 
           int chk = user.checkPortfolioExists(pName);
           if (chk != 2) {
@@ -317,8 +320,8 @@ public class Controller implements Features {
           } else {
             try {
               boolean op = user.investFractionalPercentage(pName, date, Double.parseDouble(amount),
-                  m,
-                  Double.parseDouble(commissionFee));
+                      m,
+                      Double.parseDouble(commissionFee));
               if (op) {
                 view.showOutput("Amount Invested Successfully!!");
               }
@@ -329,8 +332,8 @@ public class Controller implements Features {
         } else {
           view.showOutput("Number of stocks should be greater than 0");
         }
-      } catch (IllegalArgumentException e) {
-        view.showBlank();
+      } catch (NumberFormatException e) {
+        view.showOutput("Fractional entry not allowed for number of stocks");
       }
 
     } catch (IllegalArgumentException e) {
@@ -349,16 +352,19 @@ public class Controller implements Features {
       String commissionFee = output.get(2);
       String sDate = output.get(3);
       String eDate = output.get(4);
-      String interval = output.get(5);
+      String ivl = output.get(5);
       String num = output.get(6);
       Map<String, Double> m = new HashMap<>();
       try {
-        if (Integer.parseInt(num) > 0) {
-          m = view.getInvestmentShares(Integer.parseInt(num));
+        int interval = Integer.parseInt(ivl);
+        int number = Integer.parseInt(num);
+
+        if (number > 0) {
+          m = view.getInvestmentShares(number);
           try {
             boolean op = user.dollarCostAveragingPortfolio(pName, m, Double.parseDouble(amount),
-                Double.parseDouble(commissionFee), sDate, eDate,
-                Integer.parseInt(interval));
+                    Double.parseDouble(commissionFee), sDate, eDate,
+                    interval);
             if (op) {
               view.showOutput("Dollar Cost Averaging Portfolio Created Successfully!!");
             }
@@ -368,10 +374,9 @@ public class Controller implements Features {
         } else {
           view.showOutput("Number of stocks should be greater than 0");
         }
-      } catch (IllegalArgumentException e) {
-        view.showBlank();
+      } catch (NumberFormatException e) {
+        view.showOutput("Fractional entry not allowed for number of stocks and interval");
       }
-
 
     } catch (IllegalArgumentException e) {
       view.showBlank();
