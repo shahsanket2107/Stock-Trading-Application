@@ -53,7 +53,7 @@ public interface UserModelExtension extends User {
                                        int interval) throws IllegalArgumentException;
 
   /**
-   * This method is used to load the persistant strategy which was persisted because the amount was
+   * This method is used to load the persistent strategy which was persisted because the amount was
    * to be invested in the future. So this method loads that strategy and compares the start date
    * of that strategy with the current date and if the start date is less than the current date, it
    * makes the investment for the user, updates the user portfolio and also updates the start date

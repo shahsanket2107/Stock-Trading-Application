@@ -1,12 +1,26 @@
 SETUP-README
 
-Libraries used: org.codehaus.jackson:jackson-xc:1.9.13
+Libraries used: Jackson, Simple and JfreeChart
+-> org.codehaus.jackson:jackson-xc:1.9.13
+-> com.googlecode.json-simple:json-simple:1.1.1
+-> org.jfree:jfreechart:1.5.3
+
 
 To set up the project in IntelliJ create a new project, add the src, test and res folders to it.
 Go to the project structure and go to modules to add external dependency.
+
 Click on the + icon -> Libraries -> From Maven -> Search in org.codehaus.jackson:jackson-xc:1.9.13 and press enter.
 The dependency will be added, click apply and then click ok.
+
+Click on the + icon -> Libraries -> From Maven -> Search in com.googlecode.json-simple:json-simple:1.1.1 and press enter.
+The dependency will be added, click apply and then click ok.
+
+Click on the + icon -> Libraries -> From Maven -> Search in org.org.jfree:jfreechart:1.5.3 and press enter.
+The dependency will be added, click apply and then click ok.
+
 Now you can run the main method and it will work just as running the jar file.
+
+-------------Till Assignment 5 i.e. the Text - based view-----------------------
 
 After running the jar file if you would directly like to run flexible portfolio methods for assignment-2
 Please go to the latter section of this file. I have described how to run each methods.
