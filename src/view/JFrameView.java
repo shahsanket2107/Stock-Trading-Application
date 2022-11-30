@@ -38,7 +38,7 @@ public class JFrameView extends JFrame implements IView {
   private final JButton gpBtn;
   private final JButton ipBtn;
   private final JButton dcBtn;
-  private JPanel mainPanel;
+  private final JPanel mainPanel;
 
   public JFrameView(String name) {
 
@@ -346,7 +346,7 @@ public class JFrameView extends JFrame implements IView {
         if (fields[i].getText().equals("") || fields[i + 1].getText().equals("")) {
           throw new IllegalArgumentException("Input fields cannot be blank");
         }
-        m.put(fields[i].getText(), Double.valueOf(fields[i + 1].getText()));
+        m.put(fields[i].getText().toUpperCase(), Double.valueOf(fields[i + 1].getText()));
       }
 
     }
