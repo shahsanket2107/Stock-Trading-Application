@@ -1,12 +1,15 @@
 package view;
 
 import controller.Features;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -75,8 +79,8 @@ public class JFrameView extends JFrame implements IView {
   private void createMenu(String name) {
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(
-        BorderFactory.createTitledBorder(
-            "Welcome " + name + "!! Choose any option from the menu :"));
+            BorderFactory.createTitledBorder(
+                    "Welcome " + name + "!! Choose any option from the menu :"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(dialogBoxesPanel);
 
@@ -108,9 +112,10 @@ public class JFrameView extends JFrame implements IView {
     cbBtn.setActionCommand("Cost Basis");
     findCostBasisPanel.add(cbBtn);
 
-   createMenuHelper(dialogBoxesPanel);
+    createMenuHelper(dialogBoxesPanel);
   }
-  private void createMenuHelper(JPanel dialogBoxesPanel){
+
+  private void createMenuHelper(JPanel dialogBoxesPanel) {
     JPanel findValuePanel = new JPanel();
     findValuePanel.setLayout(new FlowLayout());
     dialogBoxesPanel.add(findValuePanel);
@@ -172,141 +177,103 @@ public class JFrameView extends JFrame implements IView {
     JOptionPane.showMessageDialog(null, message);
   }
 
+  private ArrayList<String> inputFieldHelper(Object[] message, List<JTextField> fields)
+          throws IllegalArgumentException {
+    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
+            JOptionPane.OK_CANCEL_OPTION);
+    int n = fields.size();
+    String[] inputs = new String[n];
+    for (int i = 0; i < n; i++) {
+      inputs[i] = "";
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (option == JOptionPane.OK_OPTION) {
+        inputs[i] = fields.get(i).getText();
+      }
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (inputs[i].equals("")) {
+        throw new IllegalArgumentException("Input fields cannot be bank");
+      }
+    }
+
+    ArrayList<String> output = new ArrayList<>();
+
+    for (int i = 0; i < n; i++) {
+      output.add(inputs[i]);
+    }
+    return output;
+  }
+
   @Override
   public ArrayList<String> createPortfolioInput() throws IllegalArgumentException {
-    JTextField field1 = new JTextField();
-    JTextField field2 = new JTextField();
-    JTextField field3 = new JTextField();
-    JTextField field4 = new JTextField();
-    JTextField field5 = new JTextField();
+    List<JTextField> fields = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      fields.add(new JTextField());
+    }
     Object[] message = {
-        "Please enter your portfolio name", field1,
-        "Please enter ticker of stock you want to add to portfolio", field2,
-        "Please enter quantity of stocks", field3,
-        "Please enter date in format (yyyy-MM-dd)", field4,
-        "Please enter the commission fee", field5
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter ticker of stock you want to add to portfolio", fields.get(1),
+            "Please enter quantity of stocks", fields.get(2),
+            "Please enter date in format (yyyy-MM-dd)", fields.get(3),
+            "Please enter the commission fee", fields.get(4)
     };
-    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
-    String pName = "";
-    String ticker = "";
-    String qty = "";
-    String date = "";
-    String commissionFee = "";
-    if (option == JOptionPane.OK_OPTION) {
-      pName = field1.getText();
-      ticker = field2.getText();
-      qty = field3.getText();
-      date = field4.getText();
-      commissionFee = field5.getText();
-    }
-    if (pName.equals("") || ticker.equals("") || date.equals("") || commissionFee.equals("")
-        || qty.equals("")) {
-      throw new IllegalArgumentException("Input fields cannot be bank");
-    }
-    ArrayList<String> output = new ArrayList<>();
-    output.add(pName);
-    output.add(ticker);
-    output.add(qty);
-    output.add(date);
-    output.add(commissionFee);
-    return output;
+    ArrayList<String> result;
+    result = inputFieldHelper(message, fields);
+    return result;
   }
 
   @Override
   public ArrayList<String> getInput() throws IllegalArgumentException {
-    JTextField field1 = new JTextField();
-    JTextField field2 = new JTextField();
+    List<JTextField> fields = new ArrayList<>();
+    for (int i = 0; i < 2; i++) {
+      fields.add(new JTextField());
+    }
+
     Object[] message = {
-        "Please enter your portfolio name", field1,
-        "Please enter date in format (yyyy-MM-dd)", field2,
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter date in format (yyyy-MM-dd)", fields.get(1),
     };
-    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
-    String pName = "";
-    String date = "";
-    if (option == JOptionPane.OK_OPTION) {
-      pName = field1.getText();
-      date = field2.getText();
-    }
-    if (pName.equals("") || date.equals("")) {
-      throw new IllegalArgumentException("Input cannot be blank");
-    }
-    ArrayList<String> output = new ArrayList<>();
-    output.add(pName);
-    output.add(date);
-    return output;
+
+    ArrayList<String> result;
+    result = inputFieldHelper(message, fields);
+    return result;
   }
 
   @Override
   public ArrayList<String> getInputForPerformance() throws IllegalArgumentException {
-    JTextField field1 = new JTextField();
-    JTextField field2 = new JTextField();
-    JTextField field3 = new JTextField();
+    List<JTextField> fields = new ArrayList<>();
+    for (int i = 0; i < 3; i++) {
+      fields.add(new JTextField());
+    }
     Object[] message = {
-        "Please enter your portfolio name", field1,
-        "Please enter start date in format (yyyy-MM-dd)", field2,
-        "Please enter end date in format (yyyy-MM-dd)", field3
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter start date in format (yyyy-MM-dd)", fields.get(1),
+            "Please enter end date in format (yyyy-MM-dd)", fields.get(2)
     };
-    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
-    String pName = "";
-    String sDate = "";
-    String eDate = "";
-    if (option == JOptionPane.OK_OPTION) {
-      pName = field1.getText();
-      sDate = field2.getText();
-      eDate = field3.getText();
-    }
-    if (pName.equals("") || sDate.equals("") || eDate.equals("")) {
-      throw new IllegalArgumentException("Input fields cannot be blank");
-    }
-    ArrayList<String> output = new ArrayList<>();
-    output.add(pName);
-    output.add(sDate);
-    output.add(eDate);
-    return output;
+    ArrayList<String> result;
+    result = inputFieldHelper(message, fields);
+    return result;
   }
 
   @Override
   public ArrayList<String> getInvestmentDetails() throws IllegalArgumentException {
-    JTextField field1 = new JTextField();
-    JTextField field2 = new JTextField();
-    JTextField field3 = new JTextField();
-    JTextField field4 = new JTextField();
-    JTextField field5 = new JTextField();
+    List<JTextField> fields = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      fields.add(new JTextField());
+    }
     Object[] message = {
-        "Please enter your portfolio name", field1,
-        "Please enter amount you want to invest", field2,
-        "Please enter date (yyyy-MM-dd)", field3,
-        "Please enter the commission fee", field4,
-        "Please enter the number of stocks you want to invest in", field5
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter amount you want to invest", fields.get(1),
+            "Please enter date (yyyy-MM-dd)", fields.get(2),
+            "Please enter the commission fee", fields.get(3),
+            "Please enter the number of stocks you want to invest in", fields.get(4)
     };
-    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
-    String pName = "";
-    String amount = "";
-    String date = "";
-    String commissionFee = "";
-    String num = "";
-    if (option == JOptionPane.OK_OPTION) {
-      pName = field1.getText();
-      amount = field2.getText();
-      date = field3.getText();
-      commissionFee = field4.getText();
-      num = field5.getText();
-    }
-    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || date.equals("")
-        || num.equals("")) {
-      throw new IllegalArgumentException("Input fields cannot be blank");
-    }
-    ArrayList<String> output = new ArrayList<>();
-    output.add(pName);
-    output.add(amount);
-    output.add(date);
-    output.add(commissionFee);
-    output.add(num);
-    return output;
+    ArrayList<String> result;
+    result = inputFieldHelper(message, fields);
+    return result;
   }
 
   @Override
@@ -340,7 +307,7 @@ public class JFrameView extends JFrame implements IView {
     add(scrollPane);
 
     int option = JOptionPane.showConfirmDialog(null, scrollPane, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
+            JOptionPane.OK_CANCEL_OPTION);
     if (option == JOptionPane.OK_OPTION) {
       for (int i = 0; i < num * 2 - 1; i += 2) {
         if (fields[i].getText().equals("") || fields[i + 1].getText().equals("")) {
@@ -355,53 +322,22 @@ public class JFrameView extends JFrame implements IView {
 
   @Override
   public ArrayList<String> getDollarCostDetails() throws IllegalArgumentException {
-    JTextField field1 = new JTextField();
-    JTextField field2 = new JTextField();
-    JTextField field3 = new JTextField();
-    JTextField field4 = new JTextField();
-    JTextField field5 = new JTextField();
-    JTextField field6 = new JTextField();
-    JTextField field7 = new JTextField();
+    List<JTextField> fields = new ArrayList<>();
+    for (int i = 0; i < 7; i++) {
+      fields.add(new JTextField());
+    }
     Object[] message = {
-        "Please enter your portfolio name", field1,
-        "Please enter amount you want to invest", field2,
-        "Please enter the commission fee", field3,
-        "Please enter start date (yyyy-MM-dd)", field4,
-        "Please enter end date (yyyy-MM-dd)", field5,
-        "Please enter the interval at which you want to periodically invest", field6,
-        "Please enter the number of stocks you want to invest in", field7
+            "Please enter your portfolio name", fields.get(0),
+            "Please enter amount you want to invest", fields.get(1),
+            "Please enter the commission fee", fields.get(2),
+            "Please enter start date (yyyy-MM-dd)", fields.get(3),
+            "Please enter end date (yyyy-MM-dd)", fields.get(4),
+            "Please enter the interval at which you want to periodically invest", fields.get(5),
+            "Please enter the number of stocks you want to invest in", fields.get(6)
     };
-    int option = JOptionPane.showConfirmDialog(null, message, "Enter all values",
-        JOptionPane.OK_CANCEL_OPTION);
-    String pName = "";
-    String amount = "";
-    String sDate = "";
-    String eDate = "";
-    String commissionFee = "";
-    String interval = "";
-    String num = "";
-    if (option == JOptionPane.OK_OPTION) {
-      pName = field1.getText();
-      amount = field2.getText();
-      commissionFee = field3.getText();
-      sDate = field4.getText();
-      eDate = field5.getText();
-      interval = field6.getText();
-      num = field7.getText();
-    }
-    if (pName.equals("") || amount.equals("") || commissionFee.equals("") || sDate.equals("")
-        || interval.equals("") || num.equals("")) {
-      throw new IllegalArgumentException("Input fields cannot be blank");
-    }
-    ArrayList<String> output = new ArrayList<>();
-    output.add(pName);
-    output.add(amount);
-    output.add(commissionFee);
-    output.add(sDate);
-    output.add(eDate);
-    output.add(interval);
-    output.add(num);
-    return output;
+    ArrayList<String> result;
+    result = inputFieldHelper(message, fields);
+    return result;
   }
 
   @Override
@@ -416,12 +352,12 @@ public class JFrameView extends JFrame implements IView {
 
     CategoryDataset dataset = createDataset(m);
     JFreeChart chart = ChartFactory.createStackedBarChart(
-        "Performace of Portfolio " + pName + " from " + sdate + " to " + eDate,
-        "Dates",
-        "Value",
-        dataset,
-        PlotOrientation.VERTICAL,
-        false, true, false
+            "Performace of Portfolio " + pName + " from " + sdate + " to " + eDate,
+            "Dates",
+            "Value",
+            dataset,
+            PlotOrientation.VERTICAL,
+            false, true, false
     );
     CategoryAxis axis = chart.getCategoryPlot().getDomainAxis();
     axis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
