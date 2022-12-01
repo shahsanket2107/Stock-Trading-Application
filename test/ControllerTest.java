@@ -26,7 +26,7 @@ public class ControllerTest extends TestCase {
   public void setUp() {
     UserModelExtensionImpl user = new UserModelExtensionImpl();
     controller = new Controller(user, "Deadpool");
-    GuiView view = new mockView();
+    GuiView view = new MockView();
     controller.setView(view);
     b = new ByteArrayOutputStream();
     out = new PrintStream(b);
@@ -112,7 +112,7 @@ public class ControllerTest extends TestCase {
   }
 
 
-  private class mockView implements GuiView {
+  private class MockView implements GuiView {
 
     @Override
     public void addFeatures(Features features) {
