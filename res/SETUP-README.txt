@@ -20,6 +20,16 @@ The dependency will be added, click apply and then click ok.
 
 Now you can run the main method and it will work just as running the jar file.
 
+These are the steps to run the jar file
+
+1. Open the res folder in cmd.
+2. Write the command java -jar Assignment6.jar
+3. You will get a prompt -> Enter 1 for text-based view and 2 for GUI view. So, if you press 1 your text-based view would work
+and if you press 2 you will enter GUI view.
+4. Now once you enter GUI view, you will be prompted to enter your name.
+5. Once you enter your name, the GUI menu would pop up with all the options. You can choose any option and the program will run perfectly.
+
+
 -------------Till Assignment 5 i.e. the Text - based view-----------------------
 
 After running the jar file if you would directly like to run flexible portfolio methods for assignment-2

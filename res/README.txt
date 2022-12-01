@@ -1,6 +1,17 @@
 Features incorporated :-
 
-For previous inflexible portfolios :-
+For assignment6 new strategy features and GUI :-
+
+1. User can invest a certain amount in an existing portfolio across a series of stocks based on their fractional weights.
+2. User can create a new portfolio according to dollar cost average strategy where he can invest a certain amount periodically
+from a given start date to a given end date.
+3. End date can be in the future or End date can be not specified.
+4. User can also create the strategy on an existing portfolio.
+5. GUI is implemented where user can access all the methods of the flexible portfolio as well as the new strategy methods.
+6. For extra credit the display chart is also implemented using GUI.
+
+
+For assignment4 inflexible portfolios :-
 
 1.	User can create multiple portfolios with multiple stocks and quantities.
 2.	Quantities cannot be 0, negative or fractional. If a user enters any such quantity then he would be prompted to enter the quantity again.
@@ -22,7 +33,7 @@ For previous inflexible portfolios :-
 18.	If a user enters date in incorrect format, invalid date or a future date (or any weekend date for which data does not exists) then he would be prompted that no data found for that date.
 19.	If everything is correct i.e. correct portfolio name as well as date then user will be displayed the correct portfolio valuation at that date along with the individual stocks valuation at that date.
 
-For this assignment flexible portfolios :-
+For assignment5 flexible portfolios :-
 
 20.	User can create flexible portfolios which can be edited.
 21. 	User can buy and sell stocks on particular dates. If on that day, the market is closed, appropriate message is displayed.
