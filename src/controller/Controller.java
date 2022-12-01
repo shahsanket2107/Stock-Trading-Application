@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Stocks;
 import model.StocksImpl;
 import model.UserModelExtension;
-import view.guiView;
+import view.GuiView;
 
 /**
  * This controller class has all the methods for features to be implemented in the GUI. This
@@ -25,14 +25,14 @@ import view.guiView;
 public class Controller implements Features {
 
   private final UserModelExtension user;
-  private guiView view;
+  private GuiView view;
 
   public Controller(UserModelExtension m, String name) {
     this.user = m;
     user.setName(name);
   }
 
-  public void setView(guiView v) {
+  public void setView(GuiView v) {
     view = v;
     view.addFeatures(this);
   }

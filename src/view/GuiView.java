@@ -8,7 +8,7 @@ import java.util.Map;
  * This is the interface for the GUI view. All the output to be shown in the GUI including making
  * the JFame and showing pop-ups everything will be done in this class.
  */
-public interface guiView {
+public interface GuiView {
 
   /**
    * This method is used to set the action listeners of the buttons and call the corresponding

@@ -10,7 +10,7 @@ import controller.Features;
 import model.UserModelExtensionImpl;
 import org.junit.Before;
 import org.junit.Test;
-import view.guiView;
+import view.GuiView;
 
 /**
  * This class has tests for the controller. Here we are making a mock view for the GUI and testing
@@ -26,7 +26,7 @@ public class ControllerTest extends TestCase {
   public void setUp() {
     UserModelExtensionImpl user = new UserModelExtensionImpl();
     controller = new Controller(user, "Deadpool");
-    guiView view = new mockView();
+    GuiView view = new mockView();
     controller.setView(view);
     b = new ByteArrayOutputStream();
     out = new PrintStream(b);
@@ -112,7 +112,7 @@ public class ControllerTest extends TestCase {
   }
 
 
-  private class mockView implements guiView {
+  private class mockView implements GuiView {
 
     @Override
     public void addFeatures(Features features) {

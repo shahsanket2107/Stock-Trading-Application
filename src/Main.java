@@ -3,8 +3,8 @@ import controller.UserControllerImpl;
 import java.util.Scanner;
 import model.UserImpl;
 import model.UserModelExtensionImpl;
-import view.guiView;
-import view.guiViewImpl;
+import view.GuiView;
+import view.GuiViewImpl;
 import view.ViewImpl;
 
 /**
@@ -30,7 +30,7 @@ public class Main {
         System.out.println("Please enter your name: ");
         String name = scan.nextLine();
         Controller controller = new Controller(new UserModelExtensionImpl(), name);
-        guiView view = new guiViewImpl(name);
+        GuiView view = new GuiViewImpl(name);
         controller.setView(view);
         break;
       default:
