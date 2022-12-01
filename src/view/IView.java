@@ -31,7 +31,7 @@ public interface IView {
    * buy and sell portfolio methods.
    *
    * @return an output array consisting of all the inputs taken from the user, so it can be fetched
-   * from the controller.
+   *         from the controller.
    * @throws IllegalArgumentException if input fields are blank
    */
   ArrayList<String> createPortfolioInput() throws IllegalArgumentException;
@@ -41,7 +41,7 @@ public interface IView {
    * getCostBasis and getComposition methods.
    *
    * @return an output array consisting of all the inputs taken from the user, so it can be fetched
-   * from the controller.
+   *         from the controller.
    * @throws IllegalArgumentException if input fields are blank
    */
   ArrayList<String> getInput() throws IllegalArgumentException;
@@ -51,7 +51,7 @@ public interface IView {
    * getPortfolioPerformance method.
    *
    * @return an output array consisting of all the inputs taken from the user, so it can be fetched
-   * from the controller.
+   *         from the controller.
    * @throws IllegalArgumentException if input fields are blank
    */
   ArrayList<String> getInputForPerformance() throws IllegalArgumentException;
@@ -61,7 +61,7 @@ public interface IView {
    * investInPortfolio method.
    *
    * @return an output array consisting of all the inputs taken from the user, so it can be fetched
-   * from the controller.
+   *         from the controller.
    * @throws IllegalArgumentException if input fields are blank
    */
   ArrayList<String> getInvestmentDetails() throws IllegalArgumentException;
@@ -81,7 +81,7 @@ public interface IView {
    * dollar cost.
    *
    * @return an output array consisting of all the inputs taken from the user, so it can be fetched
-   * from the controller.
+   *         from the controller.
    * @throws IllegalArgumentException if input fields are blank
    */
   ArrayList<String> getDollarCostDetails() throws IllegalArgumentException;

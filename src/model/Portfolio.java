@@ -15,7 +15,7 @@ public interface Portfolio extends SuperPortfolio {
    *
    * @param date the date at which you want to find the value
    * @return a map containing the stock ticker mapped to it's value based on the quantity at that
-   * date.
+   *         date.
    */
   Map<String, Double> getValuationAtDate(String date);
 

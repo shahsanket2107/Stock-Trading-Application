@@ -19,7 +19,7 @@ public interface User {
    * @throws IllegalArgumentException if there is some error in writing to a xml file.
    */
   void createPortfolio(String portfolioName, Map<String, Integer> stocks)
-          throws IllegalArgumentException;
+      throws IllegalArgumentException;
 
   /**
    * This function gives the composition of portfolio in terms of portfolio name, stock ticker and
@@ -96,7 +96,7 @@ public interface User {
    *
    * @param pName the name of portfolio which you need to check.
    * @return 1 if the portfolio is present as an inflexible portfolio and return 2 is the portfolio
-   * is present as a flexible portfolio.
+   *         is present as a flexible portfolio.
    */
 
   int checkPortfolioExists(String pName);
@@ -113,7 +113,7 @@ public interface User {
    *                                  error encountered while writing to the file.
    */
   void createFlexiblePortfolio(String portfolioName, List<Stocks> stocks, double commissionFee)
-          throws IllegalArgumentException;
+      throws IllegalArgumentException;
 
   /**
    * This method is used to get the composition of a flexible portfolio.
@@ -126,7 +126,7 @@ public interface User {
    * @throws IllegalArgumentException when date is invalid.
    */
   StringBuilder getFlexiblePortfolioComposition(String pName, String date)
-          throws IllegalArgumentException;
+      throws IllegalArgumentException;
 
   /**
    * This method loads the Flexible Portfolio from the .json file.
@@ -150,7 +150,7 @@ public interface User {
    * @throws IllegalArgumentException when date is invalid.
    */
   String buyStocks(String ticker, double qty, String pName, String date, double commissionFee)
-          throws IllegalArgumentException;
+      throws IllegalArgumentException;
 
   /**
    * This method is used to sell stocks in a particular flexible portfolio.
@@ -163,7 +163,8 @@ public interface User {
    * @return the appropriate message of successful/unsuccessful selling of stocks.
    * @throws IllegalArgumentException when date is invalid.
    */
-  String sellStocks(String ticker, double qty, String pName, String date, double commissionFee) throws IllegalArgumentException;
+  String sellStocks(String ticker, double qty, String pName, String date, double commissionFee)
+      throws IllegalArgumentException;
 
   /**
    * This method is used to get total valuation of Flexible Portfolio on a particular date.
@@ -174,7 +175,7 @@ public interface User {
    * @throws IllegalArgumentException when date is invalid.
    */
   StringBuilder getFlexiblePortfolioTotalValuation(String date, String pName)
-          throws IllegalArgumentException;
+      throws IllegalArgumentException;
 
   /**
    * This method determines if data for a particular date exists in the API call result or not.
@@ -205,7 +206,7 @@ public interface User {
    * @throws IllegalArgumentException if there is any error in parsing date.
    */
   StringBuilder displayChart(String sDate, String eDate, String pName) throws
-          IllegalArgumentException;
+      IllegalArgumentException;
 
   /**
    * This method is a getter for flexible portfolios list.

@@ -13,6 +13,12 @@ import view.ViewImpl;
  */
 public class Main {
 
+  /**
+   * The main class to run the program. The user gets the option of text-based view or gui view
+   * here.
+   *
+   * @param args argument passed to main method.
+   */
   public static void main(String[] args) {
     System.out.println("Enter 1 for text-based view and 2 for GUI view: ");
     Scanner scan = new Scanner(System.in);

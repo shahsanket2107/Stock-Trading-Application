@@ -12,6 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import view.IView;
 
+/**
+ * This class has tests for the controller. Here we are making a mock view for the GUI and testing
+ * our controller.
+ */
 public class ControllerTest extends TestCase {
 
   private PrintStream out;
@@ -113,7 +117,7 @@ public class ControllerTest extends TestCase {
 
     @Override
     public void addFeatures(Features features) {
-
+      // This is just to add action listeners and call the methods in the controller.
     }
 
     @Override
@@ -184,7 +188,7 @@ public class ControllerTest extends TestCase {
 
     @Override
     public void showChart(Map<String, Double> m, String pName, String sDate, String eDate) {
-
+      // This method is for displaying the bar chart showing performance of portfolio.
     }
   }
 }
