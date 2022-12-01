@@ -398,24 +398,33 @@
   }, {
     "ticker" : "MSFT",
     "date" : "2022-11-19",
-    "qty" : 0.8180128072712249,
-    "costBasis" : 203.0
+    "qty" : 0.8262755629002272,
+    "costBasis" : 200.0
   }, {
     "ticker" : "AAPL",
     "date" : "2022-11-19",
-    "qty" : 7.3576109722316065,
-    "costBasis" : 1094.0
+    "qty" : 7.43193027498142,
+    "costBasis" : 1100.0
   }, {
     "ticker" : "TSLA",
     "date" : "2022-11-19",
-    "qty" : 1.1794841246202419,
-    "costBasis" : 203.0
+    "qty" : 1.191398105677012,
+    "costBasis" : 200.0
   }, {
     "ticker" : "ZS",
     "date" : "2022-11-19",
-    "qty" : 3.641848145968217,
+    "qty" : 3.678634490876987,
     "costBasis" : 500.0
   } ]
+}, {
+  "name" : "test_p1",
+  "stocks" : [ ]
+}, {
+  "name" : "test_p1",
+  "stocks" : [ ]
+}, {
+  "name" : "test_p1",
+  "stocks" : [ ]
 }, {
   "name" : "test_p1",
   "stocks" : [ ]
