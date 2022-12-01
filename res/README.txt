@@ -8,7 +8,7 @@ from a given start date to a given end date.
 3. End date can be in the future or End date can be not specified.
 4. User can also create the strategy on an existing portfolio.
 5. GUI is implemented where user can access all the methods of the flexible portfolio as well as the new strategy methods.
-6. For extra credit the display chart is also implemented using GUI.
+6. For extra credit the performace of portfolio using bar chart is also implemented using GUI.
 
 
 For assignment4 inflexible portfolios :-

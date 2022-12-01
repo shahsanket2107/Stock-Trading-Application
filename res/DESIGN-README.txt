@@ -1,4 +1,33 @@
-The design of the assignment is as follows :-
+For this assignment we have first changed a few things as per the codewalk review and the self eval review.
+-> We have now taken commission fees as static that is entered by the user while running the program.
+-> We have created a super portfolio interface and the flexible and inflexible portfolio interfaces extend that interface. Super portfolio will have all
+the common functionalities of all portfolios and then if in future new portfolios with new definitions are added then they would just be implementing
+the super portfolio interface.
+-> Then based on the feedback of the assignment this time we are doing exception handling both at model as well as controller level, so even if in
+this design our model does not receive any invalid inputs; this model can work fine with any different controller and it will throw an exception if it
+is given an invalid input.
+
+Now for the new features implemented we have made a new interface called UserModelExtension which extends the UserModel, and it's impl extends UserImpl.
+This is done because using strategy user also have the option to make an investment in the future, so all future investments are written to a file named user_persistance.json and
+whenever portfolio compositon or valuation or any methods are called first that file is loaded and it is checked that from the time when the file was written to
+present date if any investesments are to be made then it is made and the files are updated accordingly.
+
+And then for all normal cases where start date and end date are in range that is less than current date then investment is done according to the fractional
+distribution provided for all the time intervals.
+
+Commission fee is deducted from the amount to be invested beforehand and the remaining amount is then distributed among all the shares.
+
+- Here, we made a new controller gor the GUI part. In the main we are giving the option to the user to choose text based view or GUI view.
+- Depending on the option chosen by the user, we would call the controller in the main method.
+- The new controller has a Features interface which consists of all the features that our program supports and are included in the main menu.
+- This controller is coupled with UserModelExtension and the methods are called for the functionalities.
+- We have made a new GuiView class which is also coupled with the controller.
+- The GuiView class has all the code required for the GUI part. It initializes the Jframe, and all the panels and buttons are made here.
+- All the input and output dialog boxes are also made here.
+- We have attempted to find performance of portfolio using bar chart and for that we have used JFreeChart library which is implemented in the view.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+The design of the previous assignment was as follows :-
 
 The entire design is divided into MVC framework. There are 7 models, 1 view and 1 controller.
 src folder contains 3 packages of model, view and controller and 1 Main methdod.
