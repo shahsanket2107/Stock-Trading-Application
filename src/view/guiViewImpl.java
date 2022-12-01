@@ -34,7 +34,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * This class is the view class for displaying GUI. The GUI frame and all the buttons and
  * input/output boxes are created here. Also, the bar chart is created here.
  */
-public class JFrameView extends JFrame implements IView {
+public class guiViewImpl extends JFrame implements guiView {
 
   private final JButton cpBtn;
   private final JButton bsBtn;
@@ -52,7 +52,7 @@ public class JFrameView extends JFrame implements IView {
    * This is constructor of the view which sets the frame for the gui and initializes the buttons.
    * @param name the name of the user.
    */
-  public JFrameView(String name) {
+  public guiViewImpl(String name) {
 
     setTitle("ASSIGNMENT 6");
     setSize(400, 500);

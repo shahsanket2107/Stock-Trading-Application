@@ -287,7 +287,8 @@ public class UserControllerImplFlexiblePortfolioTest extends UserControllerImplT
   @Test
   public void testBuyStocks() {
     InputStream input = new ByteArrayInputStream(
-        "samved\n6\np1\n1\naapl\n10\n2022-10-21\nq\n3\n9\np1\naapl\n30\n2022-10-21\n3\nq".getBytes());
+        "samved\n6\np1\n1\naapl\n10\n2022-10-21\nq\n3\n9\np1\naapl\n30\n2022-10-21\n3\nq"
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
@@ -312,7 +313,8 @@ public class UserControllerImplFlexiblePortfolioTest extends UserControllerImplT
   @Test
   public void testBuyStocksOnWeekends() {
     InputStream input = new ByteArrayInputStream(
-        "samved\n6\np1\n1\naapl\n10\n2022-10-21\nq\n3\n9\np1\naapl\n30\n2022-11-06\n3\nq\n".getBytes());
+        "samved\n6\np1\n1\naapl\n10\n2022-10-21\nq\n3\n9\np1\naapl\n30\n2022-11-06\n3\nq\n"
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
@@ -382,7 +384,8 @@ public class UserControllerImplFlexiblePortfolioTest extends UserControllerImplT
   @Test
   public void testSellStocks() {
     InputStream input = new ByteArrayInputStream(
-        "samved\n6\np1\n1\naapl\n10\n2022-10-21\nq\n2\n10\np1\naapl\n5\n2022-10-25\n2\nq\n".getBytes());
+        "samved\n6\np1\n1\naapl\n10\n2022-10-21\nq\n2\n10\np1\naapl\n5\n2022-10-25\n2\nq\n"
+            .getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     UserController controller = new UserControllerImpl(input, output, new UserImpl(),
